@@ -41,4 +41,8 @@ describe("applyRunEvent", () => {
       status: "preparing",
     });
   });
+
+  it("returns a reviewed run to work when the reviewer asks for a revision", () => {
+    expect(applyRunEvent({ status: "reviewing" }, { kind: "revisionRequested" })).toEqual({ status: "running" });
+  });
 });

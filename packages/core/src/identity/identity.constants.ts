@@ -1,0 +1,2 @@
+export const SESSION_LIFETIME_DAYS = 30;
+export const MILLISECONDS_PER_DAY = 86_400_000;

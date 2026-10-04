@@ -1,0 +1,5 @@
+export const CHECK_TIMEOUT_SECONDS = 900;
+export const CHECK_ATTEMPT_LIMIT = 3;
+export const CHECK_OUTPUT_LIMIT = 4000;
+export const QUESTION_PREVIEW_LIMIT = 2000;
+export const REVIEW_SUMMARY_LIMIT = 2000;

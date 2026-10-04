@@ -1,0 +1,16 @@
+{
+  "name": "@work-os/package-store",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "@work-os/core": "workspace:*",
+    "@work-os/domain": "workspace:*",
+    "@work-os/protocol": "workspace:*",
+    "@work-os/sdk": "workspace:*",
+    "@work-os/shared": "workspace:*",
+    "yaml": "2.9.1"
+  }
+}

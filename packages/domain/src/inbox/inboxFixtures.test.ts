@@ -17,7 +17,8 @@ const approvalPayload: InboxPayload = {
 const createItem = (id: string, payload: InboxPayload, overrides: Partial<InboxItem> = {}): InboxItem => ({
   id: toInboxItemId(id),
   workspaceId: toWorkspaceId("workspace-1"),
-  runId: undefined,
+  runId: null,
+  origin: { kind: "runInput" },
   title: id,
   isBlocking: true,
   payload,

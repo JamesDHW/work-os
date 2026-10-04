@@ -18,6 +18,12 @@ export type InboxPayload =
 
 export type InboxItemKind = InboxPayload["kind"];
 
+export type InboxOrigin =
+  | { readonly kind: "agentQuestion"; readonly taskId: string }
+  | { readonly kind: "runInput" }
+  | { readonly kind: "capabilityApproval"; readonly taskId: string }
+  | { readonly kind: "runReview" };
+
 export type InboxItemState =
   | { readonly status: "open" }
   | {
@@ -31,7 +37,8 @@ export type InboxItemState =
 export type InboxItem = {
   readonly id: InboxItemId;
   readonly workspaceId: WorkspaceId;
-  readonly runId: RunId | undefined;
+  readonly runId: RunId | null;
+  readonly origin: InboxOrigin;
   readonly title: string;
   readonly isBlocking: boolean;
   readonly payload: InboxPayload;

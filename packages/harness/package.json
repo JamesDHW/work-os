@@ -1,0 +1,17 @@
+{
+  "name": "@work-os/harness",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "@earendil-works/chord": "1.0.2",
+    "@earendil-works/pi-ai": "1.0.2",
+    "@earendil-works/pi-durable": "1.0.2",
+    "@work-os/core": "workspace:*",
+    "@work-os/domain": "workspace:*",
+    "@work-os/protocol": "workspace:*",
+    "@work-os/shared": "workspace:*"
+  }
+}

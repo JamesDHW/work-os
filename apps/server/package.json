@@ -1,0 +1,24 @@
+{
+  "name": "@work-os/server",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "work-os-server": "./src/main.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "2.1.1",
+    "@hono/node-ws": "1.3.1",
+    "@work-os/api": "workspace:*",
+    "@work-os/config": "workspace:*",
+    "@work-os/core": "workspace:*",
+    "@work-os/db": "workspace:*",
+    "@work-os/domain": "workspace:*",
+    "@work-os/harness": "workspace:*",
+    "@work-os/package-store": "workspace:*",
+    "@work-os/protocol": "workspace:*",
+    "@work-os/push": "workspace:*",
+    "@work-os/secrets": "workspace:*",
+    "@work-os/shared": "workspace:*",
+    "hono": "4.13.8"
+  }
+}

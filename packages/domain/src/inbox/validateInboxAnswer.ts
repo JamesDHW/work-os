@@ -1,11 +1,12 @@
-import { WorkOsError } from "@work-os/shared/WorkOsError";
+import { ConflictError } from "@work-os/shared/ConflictError";
+import { InvalidRequestError } from "@work-os/shared/InvalidRequestError";
 
 import type { InboxAnswer, InboxAnswerKind } from "./InboxAnswer.ts";
 import type { InboxItem, InboxPayload } from "./InboxItem.ts";
 import { ANSWERS_BY_ITEM_KIND } from "./validateInboxAnswer.constants.ts";
 
-export class InboxAnswerMismatchError extends WorkOsError {}
-export class InboxItemClosedError extends WorkOsError {}
+export class InboxAnswerMismatchError extends InvalidRequestError {}
+export class InboxItemClosedError extends ConflictError {}
 
 export const validateInboxAnswer = (
   inboxItem: InboxItem,

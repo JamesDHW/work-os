@@ -8,6 +8,7 @@ export type RunEvent =
   | { readonly kind: "checksFailed" }
   | { readonly kind: "checksPassed"; readonly isReviewRequired: boolean }
   | { readonly kind: "reviewDecided"; readonly outcome: RunOutcome }
+  | { readonly kind: "revisionRequested" }
   | { readonly kind: "reopened" }
   | { readonly kind: "stopped" }
   | { readonly kind: "failed"; readonly message: string };

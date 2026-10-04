@@ -1,0 +1,16 @@
+{
+  "name": "@work-os/push",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "@work-os/core": "workspace:*",
+    "@work-os/shared": "workspace:*",
+    "web-push": "3.6.7"
+  },
+  "devDependencies": {
+    "@types/web-push": "3.6.4"
+  }
+}

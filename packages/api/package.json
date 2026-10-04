@@ -1,0 +1,18 @@
+{
+  "name": "@work-os/api",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "@hono/zod-openapi": "1.6.3",
+    "@simplewebauthn/server": "14.0.2",
+    "@work-os/core": "workspace:*",
+    "@work-os/domain": "workspace:*",
+    "@work-os/protocol": "workspace:*",
+    "@work-os/shared": "workspace:*",
+    "hono": "4.13.8",
+    "zod": "4.6.5"
+  }
+}

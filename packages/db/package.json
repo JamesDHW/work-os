@@ -1,0 +1,17 @@
+{
+  "name": "@work-os/db",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "@work-os/core": "workspace:*",
+    "@work-os/domain": "workspace:*",
+    "@work-os/shared": "workspace:*",
+    "drizzle-orm": "0.45.2"
+  },
+  "devDependencies": {
+    "drizzle-kit": "0.31.10"
+  }
+}

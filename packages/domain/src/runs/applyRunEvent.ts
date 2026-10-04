@@ -1,9 +1,9 @@
-import { WorkOsError } from "@work-os/shared/WorkOsError";
+import { ConflictError } from "@work-os/shared/ConflictError";
 
 import type { RunEvent } from "./RunEvent.ts";
 import type { RunState } from "./RunState.ts";
 
-export class InvalidRunTransitionError extends WorkOsError {}
+export class InvalidRunTransitionError extends ConflictError {}
 
 export const applyRunEvent = (state: RunState, event: RunEvent): RunState | InvalidRunTransitionError => {
   switch (event.kind) {
@@ -25,6 +25,8 @@ export const applyRunEvent = (state: RunState, event: RunEvent): RunState | Inva
       return requireStatus(state, ["checking"], event, decideAfterChecks(event.isReviewRequired));
     case "reviewDecided":
       return requireStatus(state, ["reviewing"], event, { status: "completed", outcome: event.outcome });
+    case "revisionRequested":
+      return requireStatus(state, ["reviewing"], event, { status: "running" });
     case "reopened":
       return requireStatus(state, ["completed", "stopped", "failed"], event, { status: "preparing" });
     default:

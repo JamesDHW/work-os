@@ -1,0 +1,12 @@
+{
+  "name": "@work-os/core",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "@work-os/domain": "workspace:*",
+    "@work-os/shared": "workspace:*"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@work-os/sdk",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "@work-os/domain": "workspace:*",
+    "@work-os/protocol": "workspace:*",
+    "@work-os/shared": "workspace:*",
+    "zod": "4.6.5"
+  }
+}

@@ -3,7 +3,18 @@ packages:
   - packages/*
   - bundled/*
 
+# Install scripts: only esbuild (used by drizzle-kit) needs one.
+allowBuilds:
+  '@google/genai': false
+  esbuild: true
+  protobufjs: false
+
 # STYLE.md §10: 14-day minimum release age (minutes). D52 exempts the experimental Pi Durable packages.
 minimumReleaseAge: 20160
 minimumReleaseAgeExclude:
   - "@earendil-works/*"
+  # Exact versions pinned by @earendil-works/pi-ai 1.0.2 itself (D52 scope).
+  - "@anthropic-ai/sdk@0.129.0"
+
+# Exact versions for every added dependency (STYLE.md §10).
+savePrefix: ""

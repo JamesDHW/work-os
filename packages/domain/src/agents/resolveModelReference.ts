@@ -1,9 +1,9 @@
-import { WorkOsError } from "@work-os/shared/WorkOsError";
+import { InvalidRequestError } from "@work-os/shared/InvalidRequestError";
 
 import type { ModelReference } from "./ModelReference.ts";
 import { PROVIDER_SEPARATOR } from "./resolveModelReference.constants.ts";
 
-export class UnknownModelError extends WorkOsError {}
+export class UnknownModelError extends InvalidRequestError {}
 
 export const resolveModelReference = (
   model: string,
