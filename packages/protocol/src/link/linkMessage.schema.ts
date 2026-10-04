@@ -11,7 +11,7 @@ export const ServerLinkMessageSchema = z.discriminatedUnion("type", [
 ]);
 
 export const RunnerLinkMessageSchema = z.discriminatedUnion("type", [
-  z.object({ type: z.literal("hello"), name: z.string().min(1).max(100), platform: z.enum(["darwin", "linux", "windows"]) }),
+  z.object({ type: z.literal("hello"), token: z.string().min(1), version: z.string().min(1) }),
   z.object({ type: z.literal("succeeded"), requestId: RequestIdSchema, result: RunnerResultSchema }),
   z.object({ type: z.literal("failed"), requestId: RequestIdSchema, message: z.string() }),
   z.object({ type: z.literal("output"), requestId: RequestIdSchema, chunk: z.string() }),
