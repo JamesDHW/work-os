@@ -144,13 +144,13 @@ export default defineArchitecture({
       description: "Runner process: pairing, outbound link, handlers that call sandbox.",
       files: ["apps/runner/src/**/*.ts"],
       exclude: TESTS,
-      imports: { internal: ["runnerApp", "sandbox", "config", "protocol", "domain", "shared"], builtins: ["process"] },
+      imports: { internal: ["runnerApp", "sandbox", "config", "protocol", "domain", "shared"], builtins: ["process", "fs/promises", "path", "crypto"] },
     },
     egressGateway: {
       description: "Allowlisting proxy: the only route out of a run's container.",
       files: ["apps/egress-gateway/src/**/*.ts"],
       exclude: TESTS,
-      imports: { internal: ["egressGateway", "protocol", "shared"], builtins: ["http", "net", "process"] },
+      imports: { internal: ["egressGateway", "protocol", "domain", "shared"], builtins: ["http", "net", "process"] },
     },
     cli: {
       description: "work-os command: install services, pair a runner, doctor.",
@@ -250,7 +250,7 @@ export default defineArchitecture({
     },
     tooling: {
       description: "Build, lint, test and migration configuration.",
-      files: ["*.config.ts", "apps/web/vite.config.ts", "packages/db/drizzle.config.ts"],
+      files: ["*.config.ts", "apps/*/vite.config.ts", "packages/db/drizzle.config.ts"],
       naming: { case: "camel", suffixes: [".config"] },
       rules: { "max-file-lines": { severity: "off", reason: "Declarative configuration tables; splitting them hides the whole picture." } },
       imports: {

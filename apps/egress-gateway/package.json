@@ -1,0 +1,13 @@
+{
+  "name": "@work-os/egress-gateway",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@work-os/domain": "workspace:*",
+    "@work-os/protocol": "workspace:*",
+    "@work-os/shared": "workspace:*"
+  },
+  "scripts": {
+    "build": "vite build"
+  }
+}

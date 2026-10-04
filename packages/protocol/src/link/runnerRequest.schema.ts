@@ -23,6 +23,7 @@ export const RunnerRequestSchema = z.discriminatedUnion("kind", [
     stdin: z.string().exactOptional(),
     cwd: z.string().exactOptional(),
     timeoutSeconds: z.number().int().positive(),
+    streamsOutput: z.literal(true).exactOptional(),
   }),
   z.object({ kind: z.literal("collectChanges"), runId: RunIdSchema }),
   z.object({

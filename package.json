@@ -13,7 +13,9 @@
     "format": "oxfmt",
     "test": "vitest run",
     "check": "pnpm typecheck && pnpm architecture:check && pnpm test",
-    "api-types": "scripts/generate-api-types.sh"
+    "api-types": "scripts/generate-api-types.sh",
+    "egress:image": "pnpm --filter @work-os/egress-gateway build && docker build --tag work-os/egress-gateway:local ${WORK_OS_NODE_IMAGE:+--build-arg NODE_IMAGE=$WORK_OS_NODE_IMAGE} apps/egress-gateway",
+    "smoke": "scripts/smoke-host.sh"
   },
   "devDependencies": {
     "@types/node": "24.13.6",
@@ -22,6 +24,7 @@
     "oxlint": "1.80.0",
     "oxlint-tsgolint": "7.0.2001",
     "typescript": "7.0.2",
+    "vite": "8.3.0",
     "vitest": "4.1.11"
   }
 }

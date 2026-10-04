@@ -26,9 +26,45 @@ importers:
       typescript:
         specifier: 7.0.2
         version: 7.0.2
+      vite:
+        specifier: 8.3.0
+        version: 8.3.0(@types/node@24.13.6)(esbuild@0.28.2)(tsx@4.23.15)(yaml@2.9.1)
       vitest:
         specifier: 4.1.11
         version: 4.1.11(@types/node@24.13.6)(vite@8.3.0(@types/node@24.13.6)(esbuild@0.28.2)(tsx@4.23.15)(yaml@2.9.1))
+
+  apps/egress-gateway:
+    dependencies:
+      '@work-os/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
+      '@work-os/protocol':
+        specifier: workspace:*
+        version: link:../../packages/protocol
+      '@work-os/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
+
+  apps/runner:
+    dependencies:
+      '@devcontainers/cli':
+        specifier: 0.89.0
+        version: 0.89.0
+      '@work-os/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@work-os/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
+      '@work-os/protocol':
+        specifier: workspace:*
+        version: link:../../packages/protocol
+      '@work-os/sandbox':
+        specifier: workspace:*
+        version: link:../../packages/sandbox
+      '@work-os/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
 
   apps/server:
     dependencies:
@@ -245,6 +281,18 @@ importers:
         specifier: 3.6.4
         version: 3.6.4
 
+  packages/sandbox:
+    dependencies:
+      '@work-os/domain':
+        specifier: workspace:*
+        version: link:../domain
+      '@work-os/protocol':
+        specifier: workspace:*
+        version: link:../protocol
+      '@work-os/shared':
+        specifier: workspace:*
+        version: link:../shared
+
   packages/sdk:
     dependencies:
       '@work-os/domain':
@@ -387,6 +435,11 @@ packages:
 
   '@cacheable/utils@2.5.0':
     resolution: {integrity: sha512-buipgOVDkkPXNR5+xBpDw7Zk2n1EvU7qBJCNUcL7rhQ//kfpOXPAvQ511Os0vpLYJ1pZnvudNytkQt2hst3wqA==}
+
+  '@devcontainers/cli@0.89.0':
+    resolution: {integrity: sha512-LzaoOGKQ/Zql6PsiZ4hVIYVZagzWkD65aG/1ou5/Kly5Y1PtjLg1yn7qu+LZCzVoAl6DZZ/pbz8qOO4RLNlqMg==}
+    engines: {node: '>=20.0.0'}
+    hasBin: true
 
   '@drizzle-team/brocli@0.10.2':
     resolution: {integrity: sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w==}
@@ -2933,6 +2986,8 @@ snapshots:
     dependencies:
       hashery: 1.5.1
       keyv: 5.6.0
+
+  '@devcontainers/cli@0.89.0': {}
 
   '@drizzle-team/brocli@0.10.2': {}
 

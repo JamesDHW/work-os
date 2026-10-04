@@ -26,6 +26,17 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 - **Drizzle:** the stable release (0.45.x) has no `node:sqlite` driver (only the 1.0 release candidates do). Decision: Drizzle's `sqlite-proxy` driver over `node:sqlite` `DatabaseSync`. Same schema API; Postgres later.
 - **Release ages (D52):** every dependency resolved at a version ≥14 days old except `@earendil-works/*` 1.0.2.
 
+## M3 — Runner, sandbox and egress gateway
+
+- **Drivers:** `docker` (default) runs `devcontainer up` with an app-composed config (`--override-config`), the project folder bind-mounted at `/workspace`, the container on the internal `work-os-egress` network and labelled `work-os.run=<run id>`; tool calls are `docker exec … bash -c`. `unsafeHost` runs commands directly in the project folder and exists for tests and for machines without Docker; it is never chosen implicitly (`WORK_OS_RUNNER_DRIVER=unsafeHost`).
+- **Egress gateway:** a container on both the default bridge and the internal network. It accepts CONNECT and plain HTTP proxy requests from registered container IPs to allowlisted hosts on ports 80/443 only, and reports blocked requests, which the runner forwards to the server as `egressBlocked` observations. The control API listens on `127.0.0.1:3129` with a per-runner-process bearer token. Verified here: the internal network has no direct route out, the gateway answers 403 for unlisted hosts, and blocked hosts are reported.
+- **Changed files** come from content-hash manifests taken when the environment is first prepared and when the run completes (`.git` and `node_modules` skipped; files over 5 MB compared by size and modification time). A Git diff for the changed paths is added when the folder is a repository. Reopened runs keep their original start manifest, so the review shows everything the run changed.
+- **Host commands:** only `git`, run in the project folder with `GIT_TERMINAL_PROMPT=0`; the credential travels per call as an `http.extraHeader` in `GIT_CONFIG_*` environment variables, never on the command line or on disk.
+- **Pairing:** `work-os-runner pair <server URL> <code>` exchanges a one-time code (10 minutes) for a runner id and token, stored in `~/.work-os/runner/credentials.json` (0600).
+- **Gateway image:** `pnpm egress:image` bundles the gateway with Vite into one file and builds `work-os/egress-gateway:local` from `node:24-alpine`. In this workspace (registries blocked) the image and the dev container image were built from a debootstrapped Ubuntu rootfs; `WORK_OS_NODE_IMAGE` overrides the base.
+- **Smoke test:** `pnpm smoke` (`scripts/smoke-host.sh`) drives the public API end to end: setup, pairing, runner, project, run with the scripted model (bash writes `hello.txt`, then `complete`), review, accept. Passed with the host driver and, using local images, with the Docker driver.
+- **Not done in M3:** the server ↔ runner link is tested through real processes in the smoke test rather than in-process in Vitest.
+
 ## Decisions taken during the run
 
 - **D49 (web data loading)** was still proposed; took the recommendation (loaders + `router.invalidate()` from SSE, no client cache library).
@@ -68,4 +79,8 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 
 ## To verify on your machine
 
-- Runner pairing writes `~/.work-os/runner/credentials.json` (mode 0600). Check the mode after `work-os runner pair`.
+- Runner pairing writes `~/.work-os/runner/credentials.json` (mode 0600). Check the mode after `work-os-runner pair`.
+- Build the egress gateway image once: `pnpm egress:image` (pulls `node:24-alpine`).
+- Docker Desktop for Mac: run the Docker smoke test, `WORK_OS_RUNNER_DRIVER=docker pnpm smoke`. It pulls `mcr.microsoft.com/devcontainers/base:ubuntu-24.04` the first time. Check that a run container cannot reach the internet directly and that an allowlisted host works through the gateway (`curl https://<allowed host>` inside a run).
+- macOS keychain: the server asks for keychain access on first start to create its master key. On Linux without a secret service, set `WORK_OS_MASTER_KEY`.
+- Model access: set `ANTHROPIC_API_KEY` (or another provider key) or `WORK_OS_LMSTUDIO_URL=http://localhost:1234/v1`, then set the workspace's `models.default` in `~/.work-os/server/workspaces/<id>/workos.yaml` (for example `lmstudio/<model id>`).

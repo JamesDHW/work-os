@@ -22,6 +22,7 @@ export type RunnerRequest =
       readonly stdin?: string;
       readonly cwd?: string;
       readonly timeoutSeconds: number;
+      readonly streamsOutput?: true;
     }
   | { readonly kind: "collectChanges"; readonly runId: RunId }
   | {

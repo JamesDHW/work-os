@@ -18,6 +18,8 @@ export const createExecInRun = (dependencies: ExecInRunDependencies): ExecInRun 
     if (run instanceof WorkOsError) return run;
 
     const { onOutput, ...command } = input;
-    return dependencies.runnerGateway.request(run.spec.project.runnerId, { kind: "exec", ...command }, onOutput);
+    if (onOutput === undefined) return dependencies.runnerGateway.request(run.spec.project.runnerId, { kind: "exec", ...command });
+
+    return dependencies.runnerGateway.request(run.spec.project.runnerId, { kind: "exec", ...command, streamsOutput: true }, onOutput);
   };
 };

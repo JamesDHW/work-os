@@ -1,0 +1,16 @@
+{
+  "name": "@work-os/runner",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "work-os-runner": "./src/main.ts"
+  },
+  "dependencies": {
+    "@devcontainers/cli": "0.89.0",
+    "@work-os/config": "workspace:*",
+    "@work-os/domain": "workspace:*",
+    "@work-os/protocol": "workspace:*",
+    "@work-os/sandbox": "workspace:*",
+    "@work-os/shared": "workspace:*"
+  }
+}
