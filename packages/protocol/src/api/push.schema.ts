@@ -12,3 +12,5 @@ export const PushPublicKeyResponseSchema = z.object({ publicKey: z.string() }).m
 export const DeletePushSubscriptionRequestSchema = z
   .object({ endpoint: z.url() })
   .meta({ id: "DeletePushSubscriptionRequest" });
+
+export const PushKeysSchema = z.object({ publicKey: z.string().min(1), privateKey: z.string().min(1) });

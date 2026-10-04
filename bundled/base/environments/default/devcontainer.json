@@ -1,0 +1,9 @@
+{
+  "name": "work-os default",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "customizations": {
+    "workos": {
+      "egress": []
+    }
+  }
+}

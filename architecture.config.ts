@@ -226,7 +226,7 @@ export default defineArchitecture({
           "shared", "domain", "protocol", "config", "core", "api", "db", "harness", "secrets", "push", "packageStore",
           "sandbox", "egressGateway", "cli", "sdk", "extension", "webApi", "webShell", "webScreen", "webUi", "test",
         ],
-        external: ["vitest", "@testing-library/react"],
+        external: ["vitest", "@testing-library/react", "zod"],
         builtins: ["fs/promises", "path", "os"],
       },
     },

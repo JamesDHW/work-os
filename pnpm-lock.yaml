@@ -75,6 +75,24 @@ importers:
         specifier: 4.13.8
         version: 4.13.8
 
+  bundled/base:
+    dependencies:
+      '@work-os/sdk':
+        specifier: workspace:*
+        version: link:../../packages/sdk
+      zod:
+        specifier: 4.6.5
+        version: 4.6.5
+
+  bundled/github:
+    dependencies:
+      '@work-os/sdk':
+        specifier: workspace:*
+        version: link:../../packages/sdk
+      zod:
+        specifier: 4.6.5
+        version: 4.6.5
+
   packages/api:
     dependencies:
       '@hono/zod-openapi':

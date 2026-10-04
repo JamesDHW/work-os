@@ -1,0 +1,9 @@
+{
+  "name": "@work-os/bundled-github",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@work-os/sdk": "workspace:*",
+    "zod": "4.6.5"
+  }
+}

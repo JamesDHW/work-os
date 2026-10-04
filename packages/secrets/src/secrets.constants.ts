@@ -1,0 +1,9 @@
+export const TOKEN_BYTES = 32;
+export const MASTER_KEY_BYTES = 32;
+export const IV_BYTES = 12;
+export const SEALED_SECRET_VERSION = "v1";
+export const CIPHER_ALGORITHM = "aes-256-gcm";
+export const PAIRING_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+export const PAIRING_CODE_GROUP_LENGTH = 4;
+export const KEYRING_SERVICE = "work-os";
+export const KEYRING_MASTER_KEY_ACCOUNT = "master-key";

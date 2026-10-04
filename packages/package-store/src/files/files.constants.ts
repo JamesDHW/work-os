@@ -1,0 +1,14 @@
+export const FRONTMATTER_PATTERN = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/u;
+export const STANDARDS_FOLDER = "standards";
+export const AGENTS_FOLDER = "agents";
+export const ENVIRONMENTS_FOLDER = "environments";
+export const SKILLS_FOLDER = "skills";
+export const MANIFEST_FILE = "workos.yaml";
+export const STANDARD_FILE = "STANDARD.md";
+export const METHOD_FILE = "METHOD.md";
+export const AGENT_FILE = "AGENT.md";
+export const SKILL_FILE = "SKILL.md";
+export const DEVCONTAINER_FILE = "devcontainer.json";
+export const EXTENSION_ENTRY = "src/extension.ts";
+export const SAFE_ENTRY_NAME_PATTERN = /^[a-z0-9][a-z0-9-]*$/u;
+export const SAFE_RELATIVE_PATH_PATTERN = /^(?:standards|agents|skills|environments)\/[a-z0-9][a-z0-9-]*\/[A-Za-z0-9._-]+$/u;

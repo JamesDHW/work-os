@@ -1,6 +1,7 @@
 import type { AgentPreset } from "@work-os/domain/agents/AgentPreset";
 import type { EnvironmentDefinition } from "@work-os/domain/environments/EnvironmentDefinition";
 import type { AgentId, EnvironmentId, StandardId, WorkspaceId } from "@work-os/domain/identifiers/Identifiers";
+import type { Skill } from "@work-os/domain/skills/Skill";
 import type { Standard } from "@work-os/domain/standards/Standard";
 import type { Workspace } from "@work-os/domain/workspaces/Workspace";
 import type { NotFoundError } from "@work-os/shared/NotFoundError";
@@ -21,5 +22,6 @@ export type WorkspacePackages = {
     workspaceId: WorkspaceId,
     environmentId: EnvironmentId,
   ) => Promise<EnvironmentDefinition | NotFoundError | WorkOsError>;
+  readonly readSkill: (workspaceId: WorkspaceId, name: string) => Promise<Skill | NotFoundError | WorkOsError>;
   readonly readModelAliases: (workspaceId: WorkspaceId) => Promise<ModelAliases | WorkOsError>;
 };
