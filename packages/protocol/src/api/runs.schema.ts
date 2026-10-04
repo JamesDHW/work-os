@@ -3,7 +3,7 @@ import { z } from "zod";
 import type { RunState } from "@work-os/domain/runs/RunState";
 
 import { CapabilityIdSchema, ProjectIdSchema, RunIdSchema, StandardIdSchema } from "../common/identifiers.schema.ts";
-import { JsonObjectSchema } from "../common/json.schema.ts";
+import { OpaqueJsonObjectSchema } from "../common/json.schema.ts";
 
 export const RunStateSchema = z
   .discriminatedUnion("status", [
@@ -50,7 +50,7 @@ export const CapabilityCallRecordSchema = z
     id: z.string(),
     capabilityId: CapabilityIdSchema,
     target: z.string(),
-    arguments: JsonObjectSchema,
+    arguments: OpaqueJsonObjectSchema,
     status: z.enum(["pending", "succeeded", "failed", "refused"]),
     result: z.string().nullable(),
     createdAt: z.string(),
@@ -60,7 +60,7 @@ export const CapabilityCallRecordSchema = z
 export const RunDetailSchema = z
   .object({
     run: RunSummarySchema,
-    spec: JsonObjectSchema,
+    spec: OpaqueJsonObjectSchema,
     transcript: z.array(TranscriptEntrySchema),
     streamingText: z.string().nullable(),
     changedFiles: z.array(ChangedFileSchema),

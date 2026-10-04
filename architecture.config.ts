@@ -40,7 +40,12 @@ export default defineArchitecture({
     apiTypes: {
       description: "openapi-typescript output. Regenerate; never edit.",
       files: ["packages/api-types/src/**/*.ts"],
-      rules: { "max-file-lines": { severity: "off", reason: "Generated from the OpenAPI document." } },
+      rules: {
+        "max-file-lines": { severity: "off", reason: "Generated from the OpenAPI document." },
+        "max-file-lines-warn": { severity: "off", reason: "Generated from the OpenAPI document." },
+        "readonly-type-properties": { severity: "off", reason: "openapi-typescript --immutable leaves header maps mutable; generated, never edited." },
+        "type-aliases": { severity: "off", reason: "openapi-typescript emits interfaces for paths and components; generated, never edited." },
+      },
     },
     config: {
       description: "Runtime configuration schemas and parsing for server, runner and CLI.",
@@ -120,8 +125,8 @@ export default defineArchitecture({
       exclude: TESTS,
       imports: {
         internal: ["serverApp", "config", "core", "api", "db", "harness", "secrets", "push", "packageStore", "protocol", "domain", "shared"],
-        external: ["hono", "@hono/node-server", "@hono/node-ws"],
-        builtins: ["process"],
+        external: ["hono", "@hono/node-server", "@hono/node-server/**", "@hono/node-ws"],
+        builtins: ["process", "fs/promises"],
       },
     },
 

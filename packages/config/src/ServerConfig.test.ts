@@ -17,6 +17,10 @@ describe("parseServerConfig", () => {
       webDistDirectory: null,
       lmStudioUrl: null,
       bundledPackagesDirectory: "/opt/work-os/bundled",
+      defaultModel: "anthropic/claude-sonnet-5-5",
+      masterKey: null,
+      scriptedResponses: null,
+      setupCode: null,
     });
   });
 

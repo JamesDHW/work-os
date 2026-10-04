@@ -23,7 +23,7 @@ import { respondWithError } from "../http/respondWithError.ts";
 import { createRequireUser } from "../middleware/requireUser.ts";
 import { createChallengeStore } from "./createChallengeStore.ts";
 import { writeSessionCookie } from "./sessionCookie.ts";
-import { toJsonObject } from "./toJsonObject.ts";
+import { toOpaqueJson } from "../http/toOpaqueJson.ts";
 
 export const registerPasskeyRoutes = (app: OpenAPIHono<ApiEnv>, services: ApiServices): void => {
   const requireUser = createRequireUser(services);
@@ -55,9 +55,7 @@ export const registerPasskeyRoutes = (app: OpenAPIHono<ApiEnv>, services: ApiSer
     if (options instanceof WorkOsError) return respondWithError(context, options);
 
     challenges.remember(options.challenge, user.id);
-    const body = toJsonObject(options);
-    if (body instanceof WorkOsError) return respondWithError(context, body);
-    return context.json({ options: body }, 200);
+    return context.json({ options: toOpaqueJson(options) }, 200);
   });
 
   const registrationRoute = createRoute({
@@ -102,9 +100,7 @@ export const registerPasskeyRoutes = (app: OpenAPIHono<ApiEnv>, services: ApiSer
     if (options instanceof WorkOsError) return respondWithError(context, options);
 
     challenges.remember(options.challenge, null);
-    const body = toJsonObject(options);
-    if (body instanceof WorkOsError) return respondWithError(context, body);
-    return context.json({ options: body }, 200);
+    return context.json({ options: toOpaqueJson(options) }, 200);
   });
 
   const signInRoute = createRoute({

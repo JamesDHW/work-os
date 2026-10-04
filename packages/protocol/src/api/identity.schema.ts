@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { JsonObjectSchema } from "../common/json.schema.ts";
+import { OpaqueJsonObjectSchema } from "../common/json.schema.ts";
 
 const base64Url = z.string().min(1);
 const TransportSchema = z.enum(["ble", "cable", "hybrid", "internal", "nfc", "smart-card", "usb"]);
@@ -11,7 +11,7 @@ export const SetupRequestSchema = z
 
 export const SetupStatusResponseSchema = z.object({ isSetUp: z.boolean() }).meta({ id: "SetupStatusResponse" });
 
-export const PasskeyOptionsResponseSchema = z.object({ options: JsonObjectSchema }).meta({ id: "PasskeyOptionsResponse" });
+export const PasskeyOptionsResponseSchema = z.object({ options: OpaqueJsonObjectSchema }).meta({ id: "PasskeyOptionsResponse" });
 
 export const RegistrationResponseSchema = z.object({
   id: base64Url,

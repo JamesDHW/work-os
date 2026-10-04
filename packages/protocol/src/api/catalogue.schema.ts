@@ -10,7 +10,7 @@ import {
   EnvironmentIdSchema,
   StandardIdSchema,
 } from "../common/identifiers.schema.ts";
-import { JsonObjectSchema } from "../common/json.schema.ts";
+import { OpaqueJsonObjectSchema } from "../common/json.schema.ts";
 import { ThinkingLevelSchema } from "../package/agentFrontmatter.schema.ts";
 import { CheckSchema, ReviewPolicySchema } from "../package/standardFrontmatter.schema.ts";
 
@@ -45,7 +45,7 @@ export const AgentPresetSchema = z
   .meta({ id: "AgentPreset" }) satisfies z.ZodType<AgentPreset>;
 
 export const EnvironmentSchema = z
-  .object({ id: EnvironmentIdSchema, devcontainer: JsonObjectSchema, egress: z.array(z.string()) })
+  .object({ id: EnvironmentIdSchema, devcontainer: OpaqueJsonObjectSchema, egress: z.array(z.string()) })
   .meta({ id: "Environment" });
 
 export const CapabilitySchema = z

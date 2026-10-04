@@ -12,7 +12,8 @@
     "lint": "architecture-check",
     "format": "oxfmt",
     "test": "vitest run",
-    "check": "pnpm typecheck && pnpm architecture:check && pnpm test"
+    "check": "pnpm typecheck && pnpm architecture:check && pnpm test",
+    "api-types": "scripts/generate-api-types.sh"
   },
   "devDependencies": {
     "@types/node": "24.13.6",
