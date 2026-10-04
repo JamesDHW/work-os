@@ -8,6 +8,7 @@ export type StartConversationInput = {
   readonly runId: RunId;
   readonly spec: RunSpec;
   readonly instructions: string;
+  readonly workspacePath: string;
 };
 
 export type SubmitMessageInput = {

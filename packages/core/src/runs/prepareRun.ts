@@ -42,7 +42,7 @@ const startEnvironmentAndAgent = async (dependencies: PrepareRunDependencies, ru
   });
   if (environment instanceof WorkOsError) return environment;
 
-  const conversationId = await ensureConversation(dependencies, run);
+  const conversationId = await ensureConversation(dependencies, run, environment.workspacePath);
   if (conversationId instanceof WorkOsError) return conversationId;
 
   const running = await dependencies.transitionRun({ run, event: { kind: "environmentReady" }, change: { conversationId } });
@@ -54,8 +54,9 @@ const startEnvironmentAndAgent = async (dependencies: PrepareRunDependencies, ru
   return dependencies.agentRuntime.submitMessage({ conversationId, text: message.text, mode: "followUp", requestId: message.requestId });
 };
 
-const ensureConversation = async (dependencies: PrepareRunDependencies, run: Run): Promise<string | WorkOsError> => {
+const ensureConversation = async (dependencies: PrepareRunDependencies, run: Run, workspacePath: string): Promise<string | WorkOsError> => {
   if (run.conversationId !== null) return run.conversationId;
 
-  return dependencies.agentRuntime.startConversation({ runId: run.id, spec: run.spec, instructions: composeRunInstructions(run.spec) });
+  const instructions = composeRunInstructions(run.spec);
+  return dependencies.agentRuntime.startConversation({ runId: run.id, spec: run.spec, instructions, workspacePath });
 };

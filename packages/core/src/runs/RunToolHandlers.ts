@@ -1,7 +1,7 @@
 import type { RunId } from "@work-os/domain/identifiers/Identifiers";
 import type { JsonObject } from "@work-os/domain/json/Json";
-import type { CommandOutcome } from "@work-os/domain/runners/RunnerResult";
 import type { CapabilityId } from "@work-os/domain/identifiers/Identifiers";
+import type { CommandOutcome } from "@work-os/domain/runners/RunnerResult";
 import type { WorkOsError } from "@work-os/shared/WorkOsError";
 
 export type AskUserInput = {
@@ -38,6 +38,11 @@ export type ExecInRunInput = {
   readonly onOutput?: (chunk: string) => void;
 };
 
+export type LoadSkillInput = {
+  readonly runId: RunId;
+  readonly name: string;
+};
+
 export type TurnSettledInput = {
   readonly runId: RunId;
   readonly answerText: string;
@@ -48,6 +53,7 @@ export type RunToolHandlers = {
   readonly callCapability: (input: CallCapabilityInput) => Promise<string | WorkOsError>;
   readonly completeRun: (input: CompleteRunInput) => Promise<CompletionResult | WorkOsError>;
   readonly execInRun: (input: ExecInRunInput) => Promise<CommandOutcome | WorkOsError>;
+  readonly loadSkill: (input: LoadSkillInput) => Promise<string | WorkOsError>;
   readonly handleTurnSettled: (input: TurnSettledInput) => Promise<WorkOsError | undefined>;
   readonly reportRunActivity: (runId: RunId) => Promise<undefined>;
 };

@@ -1,0 +1,12 @@
+export const WORK_OS_EXTENSION_NAME = "work-os";
+export const DEFAULT_EXEC_TIMEOUT_SECONDS = 1800;
+export const FILE_OPERATION_TIMEOUT_SECONDS = 120;
+export const ACTIVITY_REPORT_INTERVAL_MILLISECONDS = 400;
+export const EXIT_NOT_FOUND = 3;
+export const EXIT_IS_DIRECTORY = 4;
+export const EXIT_NOT_DIRECTORY = 5;
+export const LM_STUDIO_PROVIDER_ID = "lmstudio";
+export const LOCAL_MODEL_CONTEXT_WINDOW = 32_768;
+export const LOCAL_MODEL_MAX_TOKENS = 8192;
+export const SCRIPTED_PROVIDER_ID = "scripted";
+export const SCRIPTED_MODEL_ID = "scripted";

@@ -82,7 +82,14 @@ export default defineArchitecture({
       exclude: TESTS,
       imports: {
         internal: ["harness", "core", "protocol", "domain", "shared"],
-        external: ["@earendil-works/pi-durable", "@earendil-works/pi-ai", "@earendil-works/chord"],
+        external: [
+          "@earendil-works/pi-durable",
+          "@earendil-works/pi-durable/**",
+          "@earendil-works/pi-ai",
+          "@earendil-works/pi-ai/**",
+          "@earendil-works/chord",
+          "@earendil-works/chord/**",
+        ],
       },
     },
     secrets: {

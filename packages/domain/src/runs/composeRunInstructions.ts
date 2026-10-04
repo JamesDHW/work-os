@@ -8,6 +8,7 @@ export const composeRunInstructions = (spec: RunSpec): string => {
     tagSection("standard", spec.standard.criteria),
     tagSection("method", spec.standard.method),
     tagSection("capabilities", describeCapabilities(spec)),
+    tagSection("skills", describeSkills(spec)),
   ];
   return sections.filter((section) => section.length > 0).join("\n\n");
 };
@@ -23,4 +24,10 @@ const describeCapabilities = (spec: RunSpec): string => {
   if (spec.capabilities.length === 0) return "No capabilities are declared for this run.";
 
   return `Declared capabilities: ${spec.capabilities.join(", ")}.`;
+};
+
+const describeSkills = (spec: RunSpec): string => {
+  if (spec.skills.length === 0) return "";
+
+  return `Skills you can load with load_skill: ${spec.skills.join(", ")}.`;
 };
