@@ -1,0 +1,9 @@
+packages:
+  - apps/*
+  - packages/*
+  - bundled/*
+
+# STYLE.md §10: 14-day minimum release age (minutes). D52 exempts the experimental Pi Durable packages.
+minimumReleaseAge: 20160
+minimumReleaseAgeExclude:
+  - "@earendil-works/*"

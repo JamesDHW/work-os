@@ -1,0 +1,12 @@
+{
+  "name": "@work-os/config",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "@work-os/shared": "workspace:*",
+    "zod": "4.6.5"
+  }
+}

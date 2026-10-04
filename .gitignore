@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.architecture-rules*/
+*.sqlite
+*.sqlite-*
+.env
+.env.*
+.DS_Store
+coverage/
+test-results/
+playwright-report/

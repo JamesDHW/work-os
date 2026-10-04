@@ -1,0 +1,26 @@
+{
+  "name": "work-os",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.27.1",
+  "engines": {
+    "node": ">=24.11.0"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "architecture:check": "architecture-check",
+    "lint": "architecture-check",
+    "format": "oxfmt",
+    "test": "vitest run",
+    "check": "pnpm typecheck && pnpm architecture:check && pnpm test"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.6",
+    "architecture-rules": "github:JamesDHW/architecture-rules#eb48638febc4944aa00b0adb2aa00e860bb92174",
+    "oxfmt": "0.68.0",
+    "oxlint": "1.80.0",
+    "oxlint-tsgolint": "7.0.2001",
+    "typescript": "7.0.2",
+    "vitest": "4.1.11"
+  }
+}
