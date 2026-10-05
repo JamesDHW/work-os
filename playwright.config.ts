@@ -5,7 +5,6 @@ import { E2E_SERVER_URL } from "./e2e/e2e.constants.ts";
 const chromiumPath = process.env["WORK_OS_CHROMIUM"];
 const launchOptions = chromiumPath === undefined ? {} : { launchOptions: { executablePath: chromiumPath } };
 
-// oxlint-disable-next-line import/no-default-export -- Playwright loads its configuration from the default export.
 export default defineConfig({
   testDir: "e2e",
   timeout: 120_000,

@@ -60,6 +60,13 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 - **Development:** `pnpm dev:server` (port 4311, `node --watch`, data in `~/.work-os/dev-server`, public origin `http://localhost:5173`), `pnpm dev:web` (Vite on 5173, proxying `/api` and WebSockets to 4311) and `pnpm dev:runner` (credentials in `~/.work-os/dev-runner`). Checked here: setup and sessions through the proxy, server-sent events through the proxy, pairing and a connected runner, and a server restart on an edit inside `packages/`.
 - **Installed:** `work-os install` now also writes `~/.work-os/server.env` and `~/.work-os/runner.env` (mode 600, never overwritten), which the services load with `node --env-file-if-exists`. The server's file starts with `WORK_OS_WEB_DIST` pointing at the built app and commented entries for the public origin and model keys. Before this, an installed server would not have served the web app and had no way to receive a model key. Services also get the installing shell's `PATH` through the LaunchAgent or unit itself (Node's env file cannot override a variable launchd already set), because a login service's bare `PATH` misses `docker`, `git` and the `node` that the devcontainer CLI's launcher needs. Checked here by starting the server with the exact command line of a generated unit: it served the web app.
 
+## Rule changes after the build
+
+- **architecture-rules is linked locally** (`"architecture-rules": "link:../architecture-rules"`), so work-os uses the sibling checkout's committed `dist` instead of the pushed GitHub commit. Switch back to a `github:` spec once those commits are pushed.
+- **Generated file types:** `apiTypes` and `webRouteTree` are marked `generated: { reason }` and lost their 13 rule overrides. The TanStack plugin writes its default header again.
+- **Configuration files may default-export:** architecture-rules exempts `*.config.ts` (and the `.mts`, `.cts`, `.js`, `.mjs` and `.cjs` forms) from `named-exports`, so the five suppressions are gone.
+- `apps/web/vite.config.ts` is now in the root `tsconfig.json`. It was in neither TypeScript program, so it was never type-checked or linted.
+
 ## Deviations from ARCHITECTURE.md
 
 - No `shiki`, `react-diff-view` or `cmdk`. The diff view is a small line-classifying component, code is not syntax-highlighted, and there is no command palette. The file types still allow these packages.

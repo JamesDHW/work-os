@@ -40,19 +40,14 @@ The counts below come from the checker output captured in the build log. They ar
 
 ### Generated code
 
-The TanStack Router route tree (`apps/web/src/routeTree.gen.ts`) produced 24 type-safety findings (`no-unsafe-argument` and `no-unsafe-type-assertion` on its `as any` casts) plus interface, readonly, alias and length findings once its default `/* eslint-disable */` header was removed. `reasoned-suppressions` is a mandatory structural check and rejects that file-wide disable, so the plugin's header is replaced through `routeTreeFileHeader` and the `webRouteTree` file type turns those rules off with a reason. The OpenAPI types in `packages/api-types` get the same treatment.
+The TanStack Router route tree and the OpenAPI types are file types marked `generated: { reason }` (added to architecture-rules after the build). They are still classified, named, import-checked and type-checked, but never linted, and their generators' file-wide disables are not checked. During the build they needed 13 rule overrides and a replaced plugin header instead.
 
 ## Every suppression
 
-There are 18 `oxlint-disable-next-line` comments. Each names its rule and gives the concrete reason.
+There are 13 `oxlint-disable-next-line` comments. (There were 18; the five default-export suppressions in configuration files went when architecture-rules started exempting `*.config.ts` files from `named-exports`.) Each names its rule and gives the concrete reason.
 
 | File | Rule | Reason |
 | --- | --- | --- |
-| `vitest.config.ts:3` | `import/no-default-export` | Vitest loads its configuration from the default export. |
-| `playwright.config.ts:8` | `import/no-default-export` | Playwright loads its configuration from the default export. |
-| `apps/web/vite.config.ts:6` | `import/no-default-export` | Vite loads its configuration from the default export. |
-| `apps/egress-gateway/vite.config.ts:3` | `import/no-default-export` | Vite loads its configuration from the default export. |
-| `packages/db/drizzle.config.ts:3` | `import/no-default-export` | drizzle-kit loads its configuration from the default export. |
 | `packages/shared/src/tryCatch.ts:6` | `architecture/no-raw-exceptions` | `tryCatch` is the one place that converts thrown values into `WorkOsError`. |
 | `packages/shared/src/tryCatch.ts:15` | `architecture/no-raw-exceptions` | `tryCatchAsync` is the one place that converts rejections into `WorkOsError`. |
 | `apps/web/src/api/captureFailure.ts:4` | `architecture/no-raw-exceptions` | Browser APIs such as WebAuthn report cancellation by throwing; this adapter turns that into a message. |
@@ -67,7 +62,7 @@ There are 18 `oxlint-disable-next-line` comments. Each names its rule and gives 
 | `packages/harness/src/runs/toConversationId.ts:8` | `architecture/no-type-assertions`, `typescript/no-unsafe-type-assertion` | Pi Durable brands conversation ids and exports no constructor; this text came from `createConversation`. |
 | `packages/package-store/src/extensions/loadExtension.ts:18` | `architecture/allowed-imports` | Bundled extensions are named in `workos.yaml`, so their entry path is only known at runtime. |
 
-By kind: five framework configuration files, six thrown-value boundaries (two of them `tryCatch` itself, three TanStack redirects, one WebAuthn adapter), three external `data` fields, two brand constructors, one interface merge and one runtime import.
+By kind: six thrown-value boundaries (two of them `tryCatch` itself, three TanStack redirects, one WebAuthn adapter), three external `data` fields, two brand constructors, one interface merge and one runtime import.
 
 ## Rules that never fired
 
@@ -77,7 +72,7 @@ No finding from these rules appeared in the build log. Some of them were never t
 - **Style the code already followed:** `collection-loops`, `guard-clauses`, `no-else`, `no-loop-jumps`, `no-finally`, `no-for-each`, `reduce-simple-folds`, `no-var`, `prefer-const`, `prefer-arrow-callback`, `no-param-reassign`, `no-enums`, `no-boolean-if-else`, `no-boolean-assignment-branches`, `no-boolean-cast`, `no-collapsible-if`, `no-unneeded-ternary`, `prefer-logical-over-ternary`, `prefer-single-boolean-return`, `subject-first-comparisons`, `scoped-case-declarations`, `no-duplicate-switch-cases`, `no-empty-branches`, `named-divisibility`, `grouped-logical-operators`, `nullish-defaults`, `prefer-at`, `eqeqeq`, `direct-boolean-conditions`, `neutral-collection-results`, `no-useless-assignment`, `no-unreachable-statements`, `explicit-conditional-effects`, `unnecessary-conditions`, `exhaustive-value-mappings`, `domain-owned-dispatch`, `preserve-cleanup-failures`.
 - **Safety rules with no violations:** `await-thenable`, `no-floating-promises`, `no-non-null-assertion`, `no-ts-comments`, `no-unsafe-call`, `no-cycle`.
 - **React:** `exhaustive-deps`, `jsx-key`, `module-scope-components`, `rules-of-hooks`.
-- **Always suppressed up front:** `named-exports` (the five configuration files) and `max-file-lines` (no file reached the error limit; one reached the warning limit).
+- **Not reached:** `named-exports` (configuration files are exempt) and `max-file-lines` (no file reached the error limit; one reached the warning limit).
 
 ## Configuration overrides
 
@@ -87,11 +82,11 @@ Each override is also logged with its reason in `BUILD-NOTES.md`.
 - `projects.tsconfigs` += `apps/web/tsconfig.json`.
 - Import widenings: `test` += `zod`; `harness` += `@earendil-works/*/**`; `serverApp` += `@hono/node-server/**` and `fs/promises`; `egressGateway` internal += `domain`; `runnerApp` builtins += `process`, `fs/promises`, `path`, `crypto`; `webUi` += `react-markdown`, `remark-gfm`; `tooling` internal += `e2e` (the Playwright config reads the e2e port).
 - File types: `tooling` += `apps/*/vite.config.ts`; `WEB_CONCEPTS` += `settings`; `e2e` covers `e2e/**/*.ts` with `.spec` and `.constants` suffixes and the `child_process`, `fs/promises`, `os` and `path` builtins (the spec starts a runner and makes a scratch project).
-- Generated files: `apiTypes` and `webRouteTree` turn off the rules their generators break, each with a reason.
+- Generated files: `apiTypes` and `webRouteTree` are marked `generated: { reason }`.
 
 ## Observations for the rules
 
 - **`no-misused-promises` and `named-jsx-handlers` together shape React code.** Every async handler needs a `void` wrapper and every list row needs a handler that does not close over the row. One helper (`startAction`) and the `value` attribute pattern satisfied both without suppressions. STYLE.md could name this pattern.
 - **`id-denylist` on `data`** fires wherever an external API names a field `data`. The three suppressions are at the single point that touches each external shape.
-- **`reasoned-suppressions` cannot be relaxed for generated files.** That is reasonable, but generators that write a file-wide disable need their header replaced, which only works when the generator exposes that option (TanStack Router does).
+- **Generated files** used to need a per-rule override for every rule their generator broke, plus a replaced header because `reasoned-suppressions` rejects file-wide disables. Resolved by the `generated` file-type setting.
 - **Reassigned `let` is not reported.** `prefer-const` fires only when a binding is never reassigned, and no rule bans `let`. STYLE.md bans it; the code follows STYLE.md, but the checker does not enforce it.

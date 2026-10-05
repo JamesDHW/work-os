@@ -25,7 +25,7 @@
   "devDependencies": {
     "@playwright/test": "1.63.0",
     "@types/node": "24.13.6",
-    "architecture-rules": "github:JamesDHW/architecture-rules#eb48638febc4944aa00b0adb2aa00e860bb92174",
+    "architecture-rules": "link:../architecture-rules",
     "oxfmt": "0.68.0",
     "oxlint": "1.80.0",
     "oxlint-tsgolint": "7.0.2001",
