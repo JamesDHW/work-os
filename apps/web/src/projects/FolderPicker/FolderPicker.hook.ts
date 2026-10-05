@@ -3,13 +3,12 @@ import { useState, type MouseEvent } from "react";
 import type { FolderListing } from "../../api/apiTypes.ts";
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 
 export type FolderPickerModel = {
   readonly listing: FolderListing | null;
   readonly errorMessage: string | null;
   readonly isBusy: boolean;
-  readonly handleBrowseClick: (event: MouseEvent<HTMLButtonElement>) => void;
+  readonly handleBrowseClick: (event: MouseEvent<HTMLButtonElement>) => Promise<void>;
   readonly handleUseClick: () => void;
 };
 
@@ -35,5 +34,5 @@ export const useFolderPicker = (workspaceId: string, runnerId: string, onSelect:
     }
   };
 
-  return { listing, errorMessage, isBusy, handleBrowseClick: startAction(browse), handleUseClick };
+  return { listing, errorMessage, isBusy, handleBrowseClick: browse, handleUseClick };
 };

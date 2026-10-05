@@ -3,7 +3,6 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 
 import { apiClient } from "../../api/client.ts";
 import { captureFailure } from "../../api/captureFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
 import { registerPasskey } from "../registerPasskey.ts";
 import { signInWithPasskey } from "../signInWithPasskey.ts";
@@ -18,10 +17,10 @@ export type SignInScreenModel = {
   readonly isBusy: boolean;
   readonly handleSetupCodeChange: (event: ChangeEvent<HTMLInputElement>) => void;
   readonly handleDisplayNameChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  readonly handleSetupSubmit: (event: FormEvent) => void;
-  readonly handlePasskeySignInClick: () => void;
-  readonly handleCreatePasskeyClick: () => void;
-  readonly handleSkipPasskeyClick: () => void;
+  readonly handleSetupSubmit: (event: FormEvent) => Promise<void>;
+  readonly handlePasskeySignInClick: () => Promise<void>;
+  readonly handleCreatePasskeyClick: () => Promise<void>;
+  readonly handleSkipPasskeyClick: () => Promise<void>;
 };
 
 export const useSignInScreen = (isSetUp: boolean): SignInScreenModel => {
@@ -57,9 +56,9 @@ export const useSignInScreen = (isSetUp: boolean): SignInScreenModel => {
     isBusy,
     handleSetupCodeChange: (event) => setSetupCode(event.target.value),
     handleDisplayNameChange: (event) => setDisplayName(event.target.value),
-    handleSetupSubmit: startAction(submitSetup),
-    handlePasskeySignInClick: startAction(async () => runStep(signInWithPasskey, goHome)),
-    handleCreatePasskeyClick: startAction(async () => runStep(registerPasskey, goHome)),
-    handleSkipPasskeyClick: startAction(goHome),
+    handleSetupSubmit: submitSetup,
+    handlePasskeySignInClick: async () => runStep(signInWithPasskey, goHome),
+    handleCreatePasskeyClick: async () => runStep(registerPasskey, goHome),
+    handleSkipPasskeyClick: goHome,
   };
 };

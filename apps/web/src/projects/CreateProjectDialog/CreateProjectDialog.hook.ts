@@ -3,7 +3,6 @@ import { useState, type ChangeEvent } from "react";
 
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 
 export type CreateProjectDialogModel = {
   readonly isOpen: boolean;
@@ -21,7 +20,7 @@ export type CreateProjectDialogModel = {
   readonly handleFolderSelect: (path: string) => void;
   readonly handleEnvironmentChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   readonly handleConnectionToggle: (event: ChangeEvent<HTMLInputElement>) => void;
-  readonly handleCreateClick: () => void;
+  readonly handleCreateClick: () => Promise<void>;
 };
 
 export type CreateProjectDefaults = {
@@ -81,6 +80,6 @@ export const useCreateProjectDialog = (workspaceId: string, defaults: CreateProj
       const { checked: isChecked, value: connectionId } = event.target;
       setConnectionIds((previousIds) => (isChecked ? [...previousIds, connectionId] : previousIds.filter((previousId) => previousId !== connectionId)));
     },
-    handleCreateClick: startAction(createProject),
+    handleCreateClick: createProject,
   };
 };

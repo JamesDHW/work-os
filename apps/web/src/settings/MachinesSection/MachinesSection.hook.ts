@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 
 export type PairingCode = {
   readonly code: string;
@@ -13,7 +12,7 @@ export type MachinesSectionModel = {
   readonly pairingCode: PairingCode | null;
   readonly errorMessage: string | null;
   readonly isBusy: boolean;
-  readonly handlePairClick: () => void;
+  readonly handlePairClick: () => Promise<void>;
 };
 
 export const useMachinesSection = (workspaceId: string): MachinesSectionModel => {
@@ -29,5 +28,5 @@ export const useMachinesSection = (workspaceId: string): MachinesSectionModel =>
     setPairingCode(result.data ?? null);
   };
 
-  return { pairingCode, errorMessage, isBusy, handlePairClick: startAction(createPairingCode) };
+  return { pairingCode, errorMessage, isBusy, handlePairClick: createPairingCode };
 };

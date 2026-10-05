@@ -4,7 +4,6 @@ import { useState, type ChangeEvent, type MouseEvent } from "react";
 import type { InboxAnswer, InboxItem } from "../../api/apiTypes.ts";
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 import { APPROVAL_DURATIONS } from "../inbox.constants.ts";
 
 export type AnswerFormModel = {
@@ -14,13 +13,13 @@ export type AnswerFormModel = {
   readonly isBusy: boolean;
   readonly handleReplyChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   readonly handleFieldChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-  readonly handleReplyClick: () => void;
-  readonly handleOptionClick: (event: MouseEvent<HTMLButtonElement>) => void;
-  readonly handleApproveClick: (event: MouseEvent<HTMLButtonElement>) => void;
-  readonly handleRejectClick: () => void;
-  readonly handleAcceptClick: () => void;
-  readonly handleRequestRevisionClick: () => void;
-  readonly handleAcknowledgeClick: () => void;
+  readonly handleReplyClick: () => Promise<void>;
+  readonly handleOptionClick: (event: MouseEvent<HTMLButtonElement>) => Promise<void>;
+  readonly handleApproveClick: (event: MouseEvent<HTMLButtonElement>) => Promise<void>;
+  readonly handleRejectClick: () => Promise<void>;
+  readonly handleAcceptClick: () => Promise<void>;
+  readonly handleRequestRevisionClick: () => Promise<void>;
+  readonly handleAcknowledgeClick: () => Promise<void>;
 };
 
 export const useAnswerForm = (workspaceId: string, inboxItem: InboxItem): AnswerFormModel => {
@@ -57,13 +56,13 @@ export const useAnswerForm = (workspaceId: string, inboxItem: InboxItem): Answer
       const { name, value } = event.target;
       setEditedFields((previousFields) => ({ ...previousFields, [name]: value }));
     },
-    handleReplyClick: startAction(async () => submitAnswer({ kind: "reply", text: replyText })),
-    handleOptionClick: startAction(async (event: MouseEvent<HTMLButtonElement>) => submitAnswer({ kind: "reply", text: event.currentTarget.value })),
-    handleApproveClick: startAction(approve),
-    handleRejectClick: startAction(async () => submitAnswer({ kind: "reject", reason: replyText })),
-    handleAcceptClick: startAction(async () => submitAnswer({ kind: "accept" })),
-    handleRequestRevisionClick: startAction(async () => submitAnswer({ kind: "requestRevision", comment: replyText })),
-    handleAcknowledgeClick: startAction(async () => submitAnswer({ kind: "acknowledge" })),
+    handleReplyClick: async () => submitAnswer({ kind: "reply", text: replyText }),
+    handleOptionClick: async (event: MouseEvent<HTMLButtonElement>) => submitAnswer({ kind: "reply", text: event.currentTarget.value }),
+    handleApproveClick: approve,
+    handleRejectClick: async () => submitAnswer({ kind: "reject", reason: replyText }),
+    handleAcceptClick: async () => submitAnswer({ kind: "accept" }),
+    handleRequestRevisionClick: async () => submitAnswer({ kind: "requestRevision", comment: replyText }),
+    handleAcknowledgeClick: async () => submitAnswer({ kind: "acknowledge" }),
   };
 };
 

@@ -3,7 +3,6 @@ import { useState, type ChangeEvent } from "react";
 
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 
 export type StartRunDialogModel = {
   readonly isOpen: boolean;
@@ -16,7 +15,7 @@ export type StartRunDialogModel = {
   readonly handleProjectChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   readonly handleStandardChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   readonly handlePromptChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-  readonly handleStartClick: () => void;
+  readonly handleStartClick: () => Promise<void>;
 };
 
 export type StartRunDefaults = {
@@ -57,6 +56,6 @@ export const useStartRunDialog = (workspaceId: string, defaults: StartRunDefault
     handleProjectChange: (event) => setProjectId(event.target.value),
     handleStandardChange: (event) => setStandardId(event.target.value),
     handlePromptChange: (event) => setPrompt(event.target.value),
-    handleStartClick: startAction(startRun),
+    handleStartClick: startRun,
   };
 };

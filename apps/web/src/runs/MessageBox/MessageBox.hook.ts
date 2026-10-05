@@ -3,7 +3,6 @@ import { useState, type ChangeEvent } from "react";
 
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 
 export type MessageMode = "followUp" | "steer";
 
@@ -12,8 +11,8 @@ export type MessageBoxModel = {
   readonly errorMessage: string | null;
   readonly isBusy: boolean;
   readonly handleTextChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-  readonly handleSteerClick: () => void;
-  readonly handleFollowUpClick: () => void;
+  readonly handleSteerClick: () => Promise<void>;
+  readonly handleFollowUpClick: () => Promise<void>;
 };
 
 export const useMessageBox = (workspaceId: string, runId: string): MessageBoxModel => {
@@ -40,7 +39,7 @@ export const useMessageBox = (workspaceId: string, runId: string): MessageBoxMod
     errorMessage,
     isBusy,
     handleTextChange: (event) => setText(event.target.value),
-    handleSteerClick: startAction(async () => send("steer")),
-    handleFollowUpClick: startAction(async () => send("followUp")),
+    handleSteerClick: async () => send("steer"),
+    handleFollowUpClick: async () => send("followUp"),
   };
 };

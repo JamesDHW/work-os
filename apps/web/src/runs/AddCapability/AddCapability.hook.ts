@@ -3,14 +3,13 @@ import { useState, type ChangeEvent } from "react";
 
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 
 export type AddCapabilityModel = {
   readonly capabilityId: string;
   readonly errorMessage: string | null;
   readonly isBusy: boolean;
   readonly handleCapabilityChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-  readonly handleAddClick: () => void;
+  readonly handleAddClick: () => Promise<void>;
 };
 
 export const useAddCapability = (workspaceId: string, runId: string, initialCapabilityId: string): AddCapabilityModel => {
@@ -28,5 +27,5 @@ export const useAddCapability = (workspaceId: string, runId: string, initialCapa
     await router.invalidate();
   };
 
-  return { capabilityId, errorMessage, isBusy, handleCapabilityChange: (event) => setCapabilityId(event.target.value), handleAddClick: startAction(addCapability) };
+  return { capabilityId, errorMessage, isBusy, handleCapabilityChange: (event) => setCapabilityId(event.target.value), handleAddClick: addCapability };
 };

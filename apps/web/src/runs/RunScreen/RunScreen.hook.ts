@@ -3,12 +3,11 @@ import { useState } from "react";
 
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 
 export type RunScreenModel = {
   readonly errorMessage: string | null;
   readonly isStopping: boolean;
-  readonly handleStopClick: () => void;
+  readonly handleStopClick: () => Promise<void>;
 };
 
 export const useRunScreen = (workspaceId: string, runId: string): RunScreenModel => {
@@ -24,5 +23,5 @@ export const useRunScreen = (workspaceId: string, runId: string): RunScreenModel
     await router.invalidate();
   };
 
-  return { errorMessage, isStopping, handleStopClick: startAction(stopRun) };
+  return { errorMessage, isStopping, handleStopClick: stopRun };
 };

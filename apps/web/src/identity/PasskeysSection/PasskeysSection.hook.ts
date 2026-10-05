@@ -1,14 +1,13 @@
 import { useState } from "react";
 
 import { captureFailure } from "../../api/captureFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 import { registerPasskey } from "../registerPasskey.ts";
 
 export type PasskeysSectionModel = {
   readonly message: string | null;
   readonly errorMessage: string | null;
   readonly isBusy: boolean;
-  readonly handleAddClick: () => void;
+  readonly handleAddClick: () => Promise<void>;
 };
 
 export const usePasskeysSection = (): PasskeysSectionModel => {
@@ -24,5 +23,5 @@ export const usePasskeysSection = (): PasskeysSectionModel => {
     setMessage(failure === null ? "Passkey added. You can sign in with it from this device." : null);
   };
 
-  return { message, errorMessage, isBusy, handleAddClick: startAction(addPasskey) };
+  return { message, errorMessage, isBusy, handleAddClick: addPasskey };
 };

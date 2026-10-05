@@ -9,7 +9,7 @@ The counts below come from the checker output captured in the build log. They ar
 | Rule id | Reported as | Findings | How they were fixed |
 | --- | --- | ---: | --- |
 | no-deep-relative-imports | architecture/no-deep-relative-imports | 45 | Web routes import through a `#web/*` subpath import instead of `../../../../`. |
-| no-misused-promises | typescript/no-misused-promises | 29 | Async click and submit handlers go through `startAction`, which returns `void` and owns the promise. |
+| no-misused-promises | typescript/no-misused-promises | 29 | Wrapped in a `startAction` helper during the build. After the build, architecture-rules stopped checking JSX props for this (React ignores a handler's return value), and the wrapper was deleted. |
 | named-jsx-handlers | architecture/named-jsx-handlers | 22 | Curried `onClick={handle(id)}` became one named handler that reads the row id from the element's `value` or `name`. |
 | control-flow-braces | architecture/control-flow-braces | 20 | Braces on non-terminal single-line `if` statements. |
 | named-predicates | architecture/named-predicates | 15 | Compound conditions became named constants (`const hasArguments = …`). |
@@ -86,7 +86,7 @@ Each override is also logged with its reason in `BUILD-NOTES.md`.
 
 ## Observations for the rules
 
-- **`no-misused-promises` and `named-jsx-handlers` together shape React code.** Every async handler needs a `void` wrapper and every list row needs a handler that does not close over the row. One helper (`startAction`) and the `value` attribute pattern satisfied both without suppressions. STYLE.md could name this pattern.
+- **`no-misused-promises` on JSX props** forced a `startAction` wrapper that only hid a `void`. Resolved in architecture-rules: JSX props are no longer checked for this; conditions, spreads and other callbacks still are.
 - **`id-denylist` on `data`** fires wherever an external API names a field `data`. The three suppressions are at the single point that touches each external shape.
 - **Generated files** used to need a per-rule override for every rule their generator broke, plus a replaced header because `reasoned-suppressions` rejects file-wide disables. Resolved by the `generated` file-type setting.
 - **Reassigned `let` is not reported.** `prefer-const` fires only when a binding is never reassigned, and no rule bans `let`. STYLE.md bans it; the code follows STYLE.md, but the checker does not enforce it.

@@ -2,14 +2,13 @@ import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 
 import { apiClient } from "../../api/client.ts";
-import { startAction } from "../../api/startAction.ts";
 import { readThemeMode, setThemeMode, type ThemeMode } from "../../ui/theme.ts";
 import { useServerEvents } from "../useServerEvents.ts";
 
 export type AppShellModel = {
   readonly themeMode: ThemeMode;
   readonly handleThemeClick: () => void;
-  readonly handleSignOutClick: () => void;
+  readonly handleSignOutClick: () => Promise<void>;
 };
 
 export const useAppShell = (workspaceId: string): AppShellModel => {
@@ -28,5 +27,5 @@ export const useAppShell = (workspaceId: string): AppShellModel => {
     await navigate({ to: "/signIn" });
   };
 
-  return { themeMode, handleThemeClick, handleSignOutClick: startAction(signOut) };
+  return { themeMode, handleThemeClick, handleSignOutClick: signOut };
 };

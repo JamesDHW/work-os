@@ -1,14 +1,13 @@
 import { useState } from "react";
 
 import { captureFailure } from "../../api/captureFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 import { enablePushNotifications } from "./enablePushNotifications.ts";
 
 export type NotificationsSectionModel = {
   readonly message: string | null;
   readonly errorMessage: string | null;
   readonly isBusy: boolean;
-  readonly handleEnableClick: () => void;
+  readonly handleEnableClick: () => Promise<void>;
 };
 
 export const useNotificationsSection = (): NotificationsSectionModel => {
@@ -24,5 +23,5 @@ export const useNotificationsSection = (): NotificationsSectionModel => {
     setMessage(failure === null ? "Notifications are on for this device." : null);
   };
 
-  return { message, errorMessage, isBusy, handleEnableClick: startAction(enableNotifications) };
+  return { message, errorMessage, isBusy, handleEnableClick: enableNotifications };
 };

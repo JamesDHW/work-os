@@ -3,7 +3,6 @@ import { useState, type ChangeEvent, type MouseEvent } from "react";
 
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 
 export type ConnectionsSectionModel = {
   readonly kind: string;
@@ -14,8 +13,8 @@ export type ConnectionsSectionModel = {
   readonly handleKindChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   readonly handleLabelChange: (event: ChangeEvent<HTMLInputElement>) => void;
   readonly handleSecretChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  readonly handleAddClick: () => void;
-  readonly handleRemoveClick: (event: MouseEvent<HTMLButtonElement>) => void;
+  readonly handleAddClick: () => Promise<void>;
+  readonly handleRemoveClick: (event: MouseEvent<HTMLButtonElement>) => Promise<void>;
 };
 
 export const useConnectionsSection = (workspaceId: string, initialKind: string): ConnectionsSectionModel => {
@@ -55,7 +54,7 @@ export const useConnectionsSection = (workspaceId: string, initialKind: string):
     handleKindChange: (event) => setKind(event.target.value),
     handleLabelChange: (event) => setLabel(event.target.value),
     handleSecretChange: (event) => setSecret(event.target.value),
-    handleAddClick: startAction(addConnection),
-    handleRemoveClick: startAction(removeConnection),
+    handleAddClick: addConnection,
+    handleRemoveClick: removeConnection,
   };
 };

@@ -4,7 +4,6 @@ import { useState, type ChangeEvent } from "react";
 import type { Standard } from "../../api/apiTypes.ts";
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 import { toReviewMode, toSaveStandardRequest, toStandardForm, toStandardTextField, type StandardForm } from "../standardForm.ts";
 
 type TextControl = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
@@ -17,7 +16,7 @@ export type StandardEditorModel = {
   readonly handleTextChange: (event: ChangeEvent<TextControl>) => void;
   readonly handleReviewChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   readonly handleCapabilityToggle: (event: ChangeEvent<HTMLInputElement>) => void;
-  readonly handleSaveClick: () => void;
+  readonly handleSaveClick: () => Promise<void>;
 };
 
 export const useStandardEditor = (workspaceId: string, standard: Standard): StandardEditorModel => {
@@ -62,5 +61,5 @@ export const useStandardEditor = (workspaceId: string, standard: Standard): Stan
     });
   };
 
-  return { form, errorMessage, savedMessage, isBusy, handleTextChange, handleReviewChange, handleCapabilityToggle, handleSaveClick: startAction(save) };
+  return { form, errorMessage, savedMessage, isBusy, handleTextChange, handleReviewChange, handleCapabilityToggle, handleSaveClick: save };
 };

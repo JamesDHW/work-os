@@ -3,11 +3,10 @@ import { useState, type MouseEvent } from "react";
 
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { startAction } from "../../api/startAction.ts";
 
 export type GrantsSectionModel = {
   readonly errorMessage: string | null;
-  readonly handleRevokeClick: (event: MouseEvent<HTMLButtonElement>) => void;
+  readonly handleRevokeClick: (event: MouseEvent<HTMLButtonElement>) => Promise<void>;
 };
 
 export const useGrantsSection = (workspaceId: string): GrantsSectionModel => {
@@ -21,5 +20,5 @@ export const useGrantsSection = (workspaceId: string): GrantsSectionModel => {
     await router.invalidate();
   };
 
-  return { errorMessage, handleRevokeClick: startAction(revoke) };
+  return { errorMessage, handleRevokeClick: revoke };
 };

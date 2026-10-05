@@ -42,7 +42,7 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 - Screens: home (blocking inbox and active runs), inbox with question, approval, review and escalation answers, runs list with a start-run dialog, run page (transcript with live streaming text, steer and follow-up messages, changed files with a coloured diff, capability calls, add a capability, stop), projects with a machine folder browser, project page, standards list and editor, settings (machines and pairing codes, connections, standing approvals, passkeys, push notifications).
 - Routes load data in TanStack loaders and return a `LoadResult` (`toFailure` / `toReady`), so a failed request renders an error notice instead of throwing. `useServerEvents` re-runs loaders on every server event.
 - Routes import through a `#web/*` subpath import (`apps/web/package.json` `imports`), which TypeScript, Vite and the checker all resolve. This replaces `../../../../` chains (`no-deep-relative-imports`).
-- Event handlers are named and return `void`. Async work starts through `startAction` (`api/startAction.ts`), which owns the promise (`no-misused-promises`). List items pass their id through the element's `value` or `name` attribute so one named handler serves every row (`named-jsx-handlers`).
+- Event handlers are named. During the build, async handlers went through a `startAction` wrapper to satisfy `no-misused-promises`; it was removed after the build (see "Rule changes after the build"). List items pass their id through the element's `value` or `name` attribute so one named handler serves every row (`named-jsx-handlers`).
 
 - Verified in a browser (Playwright, Chromium) against the built app served by the server: every main screen renders in light and dark themes, and the end-to-end test below drives the core loop through the UI.
 - After the first browser pass: tool entries in the transcript show a one-line preview of their arguments or output, the run page keeps the message box on finished runs (sending reopens the run, which the server already supports), and the connection-kind list skips capabilities that need no connection.
@@ -52,7 +52,7 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 - **CLI** (`apps/cli`, `work-os`): `doctor` checks Node.js, Docker, the egress gateway image, this machine's runner pairing and the server; `pair <server URL> <code>` runs the runner's own pair command (the runner owns its credentials file); `install [--server-only | --runner-only]` writes a LaunchAgent (macOS) or a systemd user unit (Linux) per service and prints the command that starts it. It never starts or loads services itself.
 - **End-to-end test** (`pnpm e2e`, `e2e/coreLoop.spec.ts`): Playwright starts a throwaway server with the built web app, a scripted model and a fixed setup code (`scripts/e2e-server.sh`). The test creates the account through the setup screen, pairs a machine from Settings and starts a host-driver runner with the code shown on screen, adds a project through the dialog, starts a run, waits for review, accepts it from the inbox and checks the file on disk. Passes here in about 12 seconds. Set `WORK_OS_CHROMIUM` to use an installed Chromium instead of Playwright's download.
 - **Lint report:** `docs/lint-report.md` (findings by rule, every suppression with its reason, rules that never fired, configuration overrides).
-- **Docs:** `README.md` (how to run and check it). STYLE.md §7 now records the loader pattern (`LoadResult`, props into screens, `#web/…` imports) and the handler pattern (`startAction`, row ids through `value` or `name`).
+- **Docs:** `README.md` (how to run and check it). STYLE.md §7 now records the loader pattern (`LoadResult`, props into screens, `#web/…` imports) and the handler pattern (row ids through `value` or `name`).
 - **Final state:** typecheck clean (both programs), `architecture-check` clean, 96 unit tests, `pnpm smoke` passes with the host driver and with the Docker driver (local images), `pnpm e2e` passes.
 
 ## After the build — development and installed modes
@@ -66,6 +66,8 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 - **Generated file types:** `apiTypes` and `webRouteTree` are marked `generated: { reason }` and lost their 13 rule overrides. The TanStack plugin writes its default header again.
 - **Configuration files may default-export:** architecture-rules exempts `*.config.ts` (and the `.mts`, `.cts`, `.js`, `.mjs` and `.cjs` forms) from `named-exports`, so the five suppressions are gone.
 - `apps/web/vite.config.ts` is now in the root `tsconfig.json`. It was in neither TypeScript program, so it was never type-checked or linted.
+
+- **Async JSX handlers:** architecture-rules configures `no-misused-promises` with `checksVoidReturn: { attributes: false }`. React ignores a handler's return value, and the package's own RULES.md example passes an async `handleSave` to `onClick`. The other checks (conditions, spreads, non-JSX callbacks) stay on. `startAction` is deleted; 26 handlers are passed directly.
 
 ## Deviations from ARCHITECTURE.md
 
@@ -117,7 +119,7 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 
 - **`id-denylist` on `data`** where an external API names a field `data` (OpenAI model lists, WebSocket message events, Hono SSE messages). Suppressed at the single point that touches the external shape, with the API named in the reason.
 
-- **`no-misused-promises` on async handlers.** Every async click or submit handler returned a promise to a `void` prop. Resolved once with `startAction` rather than per-site suppressions.
+- **`no-misused-promises` on async handlers.** Every async click or submit handler returned a promise to a `void` prop. Resolved once with `startAction` rather than per-site suppressions. Later replaced: architecture-rules no longer checks JSX props for this, and `startAction` is gone.
 
 ## Tool failures
 
