@@ -7,7 +7,7 @@ import type { RunnerStore } from "./RunnerStore.ts";
 export type ListRunnerFoldersInput = {
   readonly workspaceId: WorkspaceId;
   readonly runnerId: RunnerId;
-  readonly path?: string;
+  readonly path?: string | undefined;
 };
 
 type ListRunnerFoldersDependencies = {

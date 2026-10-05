@@ -17,7 +17,7 @@ export type Standard = {
   readonly egress: readonly string[];
   readonly checks: readonly Check[];
   readonly review: ReviewPolicy;
-  readonly inputHint?: string;
+  readonly inputHint?: string | undefined;
   readonly criteria: string;
   readonly method: string;
 };

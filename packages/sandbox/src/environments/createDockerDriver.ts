@@ -46,8 +46,7 @@ export const createDockerDriver = (options: DockerDriverOptions): EnvironmentDri
       if (containerId instanceof WorkOsError) return containerId;
 
       const dockerArguments = ["exec", "--interactive", "--workdir", input.cwd ?? WORKSPACE_MOUNT_PATH, containerId, "bash", "-c", input.command];
-      const { stdin, timeoutSeconds, onOutput } = input;
-      return runProcess({ command: "docker", arguments: dockerArguments, timeoutSeconds, onOutput, ...(stdin === undefined ? {} : { stdin }) });
+      return runProcess({ command: "docker", arguments: dockerArguments, timeoutSeconds: input.timeoutSeconds, onOutput: input.onOutput, stdin: input.stdin });
     },
     stop: async (runId) => {
       const containerId = await containerFor(runId);

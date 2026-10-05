@@ -19,7 +19,7 @@ export const StandardFrontmatterSchema = z.object({
   egress: z.array(z.string().min(1)).default([]),
   checks: z.array(CheckSchema).default([]),
   review: ReviewPolicySchema.default("required"),
-  input: z.string().exactOptional(),
+  input: z.string().optional(),
 });
 
 export type StandardFrontmatter = z.infer<typeof StandardFrontmatterSchema>;

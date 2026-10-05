@@ -36,4 +36,4 @@ export const FolderListingSchema = z
   .meta({ id: "FolderListing" });
 
 export const RunnerParamsSchema = z.object({ runnerId: RunnerIdSchema });
-export const FolderQuerySchema = z.object({ path: z.string().exactOptional() });
+export const FolderQuerySchema = z.object({ path: z.string().optional() });

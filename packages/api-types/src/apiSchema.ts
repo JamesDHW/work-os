@@ -4,4023 +4,4027 @@
  */
 
 export interface paths {
-    readonly "/api/setup": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/setup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path?: never;
-                readonly cookie?: never;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Whether the first user exists. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["SetupStatusResponse"];
+                        "application/json": components["schemas"]["SetupStatusResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path?: never;
-                readonly cookie?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["SetupRequest"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["SetupRequest"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description The first user, signed in. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["SessionResponse"];
+                        "application/json": components["schemas"]["SessionResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/session": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/session": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path?: never;
-                readonly cookie?: never;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description The signed-in user and their workspaces. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["SessionResponse"];
+                        "application/json": components["schemas"]["SessionResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path?: never;
-                readonly cookie?: never;
+        put?: never;
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Signed out. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["OkResponse"];
+                        "application/json": components["schemas"]["OkResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/passkeys/registration-options": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/passkeys/registration-options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path?: never;
-                readonly cookie?: never;
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Options for navigator.credentials.create. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["PasskeyOptionsResponse"];
+                        "application/json": components["schemas"]["PasskeyOptionsResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/passkeys": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/passkeys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path?: never;
-                readonly cookie?: never;
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["PasskeyRegistrationRequest"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["PasskeyRegistrationRequest"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description The passkey is registered. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["OkResponse"];
+                        "application/json": components["schemas"]["OkResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/passkeys/sign-in-options": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/passkeys/sign-in-options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path?: never;
-                readonly cookie?: never;
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Options for navigator.credentials.get. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["PasskeyOptionsResponse"];
+                        "application/json": components["schemas"]["PasskeyOptionsResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/passkeys/sign-in": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/passkeys/sign-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path?: never;
-                readonly cookie?: never;
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["PasskeySignInRequest"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["PasskeySignInRequest"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description Signed in. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["OkResponse"];
+                        "application/json": components["schemas"]["OkResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/runners/pairing-codes": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/runners/pairing-codes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description A one-time code for pairing a machine. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["PairingCodeResponse"];
+                        "application/json": components["schemas"]["PairingCodeResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/runners/pair": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/runners/pair": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path?: never;
-                readonly cookie?: never;
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["PairRunnerRequest"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["PairRunnerRequest"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description The machine's identity and token. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["PairRunnerResponse"];
+                        "application/json": components["schemas"]["PairRunnerResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/runners": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/runners": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Paired machines and whether they are online. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": readonly components["schemas"]["Runner"][];
+                        "application/json": components["schemas"]["Runner"][];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/runners/{runnerId}/folders": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/runners/{runnerId}/folders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query: {
-                    readonly path: string;
+        get: {
+            parameters: {
+                query?: {
+                    path?: string;
                 };
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
-                    readonly runnerId: string;
+                header?: never;
+                path: {
+                    workspaceId: string;
+                    runnerId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Folders on the machine. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["FolderListing"];
+                        "application/json": components["schemas"]["FolderListing"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/projects": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/projects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Projects in the workspace. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": readonly components["schemas"]["Project"][];
+                        "application/json": components["schemas"]["Project"][];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["CreateProjectRequest"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["CreateProjectRequest"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description The new project. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["Project"];
+                        "application/json": components["schemas"]["Project"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/projects/{projectId}": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/projects/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
-                    readonly projectId: string;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
+                    projectId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description The project. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["Project"];
+                        "application/json": components["schemas"]["Project"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/standards": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/standards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Standards in the workspace and the packages it extends. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": readonly components["schemas"]["Standard"][];
+                        "application/json": components["schemas"]["Standard"][];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/standards/{standardId}": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/standards/{standardId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
-                    readonly standardId: string;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
+                    standardId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description The standard. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["Standard"];
+                        "application/json": components["schemas"]["Standard"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
-                    readonly standardId: string;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
+                    standardId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["SaveStandardRequest"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["SaveStandardRequest"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description The saved standard. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["Standard"];
+                        "application/json": components["schemas"]["Standard"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly post?: never;
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/agents": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/agents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Agent presets. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": readonly components["schemas"]["AgentPreset"][];
+                        "application/json": components["schemas"]["AgentPreset"][];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/environments": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/environments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Environment definitions. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": readonly components["schemas"]["Environment"][];
+                        "application/json": components["schemas"]["Environment"][];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/capabilities": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/capabilities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Capabilities the workspace's packages provide. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": readonly components["schemas"]["Capability"][];
+                        "application/json": components["schemas"]["Capability"][];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/connections": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/connections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Connections; secrets are never returned. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": readonly components["schemas"]["Connection"][];
+                        "application/json": components["schemas"]["Connection"][];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["CreateConnectionRequest"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["CreateConnectionRequest"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description The new connection. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["Connection"];
+                        "application/json": components["schemas"]["Connection"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/connections/{connectionId}": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/connections/{connectionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
-                    readonly connectionId: string;
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
+                    connectionId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description The connection is deleted. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["OkResponse"];
+                        "application/json": components["schemas"]["OkResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/runs": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query: {
-                    readonly projectId: string;
+        get: {
+            parameters: {
+                query?: {
+                    projectId?: string;
                 };
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Recent runs, newest first. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": readonly components["schemas"]["RunSummary"][];
+                        "application/json": components["schemas"]["RunSummary"][];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["StartRunRequest"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["StartRunRequest"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description The run. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["RunSummary"];
+                        "application/json": components["schemas"]["RunSummary"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/runs/{runId}": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/runs/{runId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
-                    readonly runId: string;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
+                    runId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description The run with its transcript and outputs. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["RunDetail"];
+                        "application/json": components["schemas"]["RunDetail"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/runs/{runId}/messages": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/runs/{runId}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
-                    readonly runId: string;
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
+                    runId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["SendRunMessageRequest"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["SendRunMessageRequest"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description The run. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["RunSummary"];
+                        "application/json": components["schemas"]["RunSummary"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/runs/{runId}/stop": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/runs/{runId}/stop": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
-                    readonly runId: string;
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
+                    runId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description The run. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["RunSummary"];
+                        "application/json": components["schemas"]["RunSummary"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/runs/{runId}/capabilities": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/runs/{runId}/capabilities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
-                    readonly runId: string;
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
+                    runId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["AddRunCapabilityRequest"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["AddRunCapabilityRequest"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description The run. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["RunSummary"];
+                        "application/json": components["schemas"]["RunSummary"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/inbox": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/inbox": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Inbox items, blocking first. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": readonly components["schemas"]["InboxItem"][];
+                        "application/json": components["schemas"]["InboxItem"][];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/inbox/{inboxItemId}/answer": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/inbox/{inboxItemId}/answer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
-                    readonly inboxItemId: string;
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
+                    inboxItemId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["AnswerInboxItemRequest"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["AnswerInboxItemRequest"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description The answered item. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["InboxItem"];
+                        "application/json": components["schemas"]["InboxItem"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/grants": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/grants": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description Standing approvals. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": readonly components["schemas"]["Grant"][];
+                        "application/json": components["schemas"]["Grant"][];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/w/{workspaceId}/grants/{grantId}": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/w/{workspaceId}/grants/{grantId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path: {
-                    readonly workspaceId: string;
-                    readonly grantId: string;
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    workspaceId: string;
+                    grantId: string;
                 };
-                readonly cookie?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description The approval is revoked. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["OkResponse"];
+                        "application/json": components["schemas"]["OkResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/push/public-key": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/push/public-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path?: never;
-                readonly cookie?: never;
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
             };
-            readonly requestBody?: never;
-            readonly responses: {
+            requestBody?: never;
+            responses: {
                 /** @description The VAPID public key for subscriptions. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["PushPublicKeyResponse"];
+                        "application/json": components["schemas"]["PushPublicKeyResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly put?: never;
-        readonly post?: never;
-        readonly delete?: never;
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    readonly "/api/push/subscriptions": {
-        readonly parameters: {
-            readonly query?: never;
-            readonly header?: never;
-            readonly path?: never;
-            readonly cookie?: never;
+    "/api/push/subscriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        readonly get?: never;
-        readonly put?: never;
-        readonly post: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path?: never;
-                readonly cookie?: never;
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["PushSubscription"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["PushSubscription"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description Subscribed. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["OkResponse"];
+                        "application/json": components["schemas"]["OkResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly delete: {
-            readonly parameters: {
-                readonly query?: never;
-                readonly header?: never;
-                readonly path?: never;
-                readonly cookie?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
             };
-            readonly requestBody: {
-                readonly content: {
-                    readonly "application/json": components["schemas"]["DeletePushSubscriptionRequest"];
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["DeletePushSubscriptionRequest"];
                 };
             };
-            readonly responses: {
+            responses: {
                 /** @description Unsubscribed. */
-                readonly 200: {
+                200: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["OkResponse"];
+                        "application/json": components["schemas"]["OkResponse"];
                     };
                 };
                 /** @description The request is invalid. */
-                readonly 400: {
+                400: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Sign in first. */
-                readonly 401: {
+                401: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not allowed. */
-                readonly 403: {
+                403: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Not found. */
-                readonly 404: {
+                404: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description The request conflicts with the current state. */
-                readonly 409: {
+                409: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description Unexpected server error. */
-                readonly 500: {
+                500: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
                 /** @description A machine or service is unavailable. */
-                readonly 503: {
+                503: {
                     headers: {
-                        readonly [name: string]: unknown;
+                        [name: string]: unknown;
                     };
                     content: {
-                        readonly "application/json": components["schemas"]["ErrorBody"];
+                        "application/json": components["schemas"]["ErrorBody"];
                     };
                 };
             };
         };
-        readonly options?: never;
-        readonly head?: never;
-        readonly patch?: never;
-        readonly trace?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        readonly SetupStatusResponse: {
-            readonly isSetUp: boolean;
+        SetupStatusResponse: {
+            isSetUp: boolean;
         };
-        readonly ErrorBody: {
-            readonly error: {
-                readonly code: string;
-                readonly message: string;
+        ErrorBody: {
+            error: {
+                code: string;
+                message: string;
             };
         };
-        readonly SessionResponse: {
-            readonly user: components["schemas"]["User"];
-            readonly workspaces: readonly components["schemas"]["Workspace"][];
+        SessionResponse: {
+            user: components["schemas"]["User"];
+            workspaces: components["schemas"]["Workspace"][];
         };
-        readonly User: {
-            readonly id: string;
-            readonly displayName: string;
-            readonly createdAt: string;
+        User: {
+            id: string;
+            displayName: string;
+            createdAt: string;
         };
-        readonly Workspace: {
-            readonly id: string;
-            readonly name: string;
+        Workspace: {
+            id: string;
+            name: string;
             /** @enum {string} */
-            readonly kind: "personal" | "organisation";
-            readonly createdAt: string;
+            kind: "personal" | "organisation";
+            createdAt: string;
         };
-        readonly SetupRequest: {
-            readonly setupCode: string;
-            readonly displayName: string;
+        SetupRequest: {
+            setupCode: string;
+            displayName: string;
         };
-        readonly OkResponse: {
+        OkResponse: {
             /** @enum {boolean} */
-            readonly ok: true;
+            ok: true;
         };
-        readonly PasskeyOptionsResponse: {
-            readonly options: components["schemas"]["JsonObject"];
+        PasskeyOptionsResponse: {
+            options: components["schemas"]["JsonObject"];
         };
-        readonly JsonObject: {
-            readonly [key: string]: unknown;
+        JsonObject: {
+            [key: string]: unknown;
         };
-        readonly PasskeyRegistrationRequest: {
-            readonly response: {
-                readonly id: string;
-                readonly rawId: string;
-                readonly response: {
-                    readonly clientDataJSON: string;
-                    readonly attestationObject: string;
-                    readonly authenticatorData: string;
-                    readonly transports: readonly ("ble" | "cable" | "hybrid" | "internal" | "nfc" | "smart-card" | "usb")[];
-                    readonly publicKeyAlgorithm: number;
-                    readonly publicKey: string;
+        PasskeyRegistrationRequest: {
+            response: {
+                id: string;
+                rawId: string;
+                response: {
+                    clientDataJSON: string;
+                    attestationObject: string;
+                    authenticatorData?: string;
+                    transports?: string[];
+                    publicKeyAlgorithm?: number;
+                    publicKey?: string;
                 };
                 /** @enum {string} */
-                readonly authenticatorAttachment: "cross-platform" | "platform";
-                readonly clientExtensionResults: Record<string, never>;
-                /** @enum {string} */
-                readonly type: "public-key";
-            };
-        };
-        readonly PasskeySignInRequest: {
-            readonly response: {
-                readonly id: string;
-                readonly rawId: string;
-                readonly response: {
-                    readonly clientDataJSON: string;
-                    readonly authenticatorData: string;
-                    readonly signature: string;
-                    readonly userHandle: string;
+                authenticatorAttachment?: "cross-platform" | "platform";
+                clientExtensionResults: {
+                    [key: string]: unknown;
                 };
                 /** @enum {string} */
-                readonly authenticatorAttachment: "cross-platform" | "platform";
-                readonly clientExtensionResults: Record<string, never>;
-                /** @enum {string} */
-                readonly type: "public-key";
+                type: "public-key";
             };
         };
-        readonly PairingCodeResponse: {
-            readonly code: string;
-            readonly expiresAt: string;
+        PasskeySignInRequest: {
+            response: {
+                id: string;
+                rawId: string;
+                response: {
+                    clientDataJSON: string;
+                    authenticatorData: string;
+                    signature: string;
+                    userHandle?: string;
+                };
+                /** @enum {string} */
+                authenticatorAttachment?: "cross-platform" | "platform";
+                clientExtensionResults: {
+                    [key: string]: unknown;
+                };
+                /** @enum {string} */
+                type: "public-key";
+            };
         };
-        readonly PairRunnerResponse: {
-            readonly runnerId: string;
-            readonly token: string;
+        PairingCodeResponse: {
+            code: string;
+            expiresAt: string;
         };
-        readonly PairRunnerRequest: {
-            readonly code: string;
-            readonly name: string;
+        PairRunnerResponse: {
+            runnerId: string;
+            token: string;
+        };
+        PairRunnerRequest: {
+            code: string;
+            name: string;
             /** @enum {string} */
-            readonly platform: "darwin" | "linux" | "windows";
+            platform: "darwin" | "linux" | "windows";
         };
-        readonly Runner: {
-            readonly id: string;
-            readonly name: string;
+        Runner: {
+            id: string;
+            name: string;
             /** @enum {string} */
-            readonly platform: "darwin" | "linux" | "windows";
-            readonly isOnline: boolean;
-            readonly lastSeenAt: string | null;
-            readonly pairedAt: string;
+            platform: "darwin" | "linux" | "windows";
+            isOnline: boolean;
+            lastSeenAt: string | null;
+            pairedAt: string;
         };
-        readonly FolderListing: {
-            readonly path: string;
-            readonly parentPath: string | null;
-            readonly folders: readonly {
-                readonly name: string;
-                readonly path: string;
-                readonly isGitRepository: boolean;
+        FolderListing: {
+            path: string;
+            parentPath: string | null;
+            folders: {
+                name: string;
+                path: string;
+                isGitRepository: boolean;
             }[];
         };
-        readonly Project: {
-            readonly id: string;
-            readonly workspaceId: string;
-            readonly name: string;
-            readonly location: {
-                readonly runnerId: string;
-                readonly path: string;
+        Project: {
+            id: string;
+            workspaceId: string;
+            name: string;
+            location: {
+                runnerId: string;
+                path: string;
             };
-            readonly environmentId: string;
-            readonly connectionIds: readonly string[];
-            readonly createdAt: string;
+            environmentId: string;
+            connectionIds: string[];
+            createdAt: string;
         };
-        readonly CreateProjectRequest: {
-            readonly name: string;
-            readonly runnerId: string;
-            readonly path: string;
-            readonly environmentId: string;
+        CreateProjectRequest: {
+            name: string;
+            runnerId: string;
+            path: string;
+            environmentId: string;
             /** @default [] */
-            readonly connectionIds: readonly string[];
+            connectionIds: string[];
         };
-        readonly Standard: {
-            readonly id: string;
-            readonly describes: string;
-            readonly consumer: string;
-            readonly agentId: string;
-            readonly skills: readonly string[];
-            readonly capabilities: readonly string[];
-            readonly egress: readonly string[];
-            readonly checks: readonly {
-                readonly name: string;
-                readonly command: string;
+        Standard: {
+            id: string;
+            describes: string;
+            consumer: string;
+            agentId: string;
+            skills: string[];
+            capabilities: string[];
+            egress: string[];
+            checks: {
+                name: string;
+                command: string;
             }[];
             /** @enum {string} */
-            readonly review: "required" | "optional" | "none";
-            readonly inputHint: string;
-            readonly criteria: string;
-            readonly method: string;
+            review: "required" | "optional" | "none";
+            inputHint?: string;
+            criteria: string;
+            method: string;
         };
-        readonly SaveStandardRequest: {
-            readonly id: string;
-            readonly describes: string;
-            readonly consumer: string;
-            readonly agentId: string;
-            readonly skills: readonly string[];
-            readonly capabilities: readonly string[];
-            readonly egress: readonly string[];
-            readonly checks: readonly {
-                readonly name: string;
-                readonly command: string;
+        SaveStandardRequest: {
+            id: string;
+            describes: string;
+            consumer: string;
+            agentId: string;
+            skills: string[];
+            capabilities: string[];
+            egress: string[];
+            checks: {
+                name: string;
+                command: string;
             }[];
             /** @enum {string} */
-            readonly review: "required" | "optional" | "none";
-            readonly inputHint: string;
-            readonly criteria: string;
-            readonly method: string;
+            review: "required" | "optional" | "none";
+            inputHint?: string;
+            criteria: string;
+            method: string;
         };
-        readonly AgentPreset: {
-            readonly id: string;
-            readonly name: string;
-            readonly model: string;
+        AgentPreset: {
+            id: string;
+            name: string;
+            model: string;
             /** @enum {string} */
-            readonly thinkingLevel: "off" | "minimal" | "low" | "medium" | "high";
-            readonly skills: readonly string[];
-            readonly instructions: string;
+            thinkingLevel: "off" | "minimal" | "low" | "medium" | "high";
+            skills: string[];
+            instructions: string;
         };
-        readonly Environment: {
-            readonly id: string;
-            readonly devcontainer: components["schemas"]["JsonObject"];
-            readonly egress: readonly string[];
+        Environment: {
+            id: string;
+            devcontainer: components["schemas"]["JsonObject"];
+            egress: string[];
         };
-        readonly Capability: {
-            readonly id: string;
-            readonly connectionKind: string;
-            readonly description: string;
+        Capability: {
+            id: string;
+            connectionKind: string;
+            description: string;
             /** @enum {string} */
-            readonly effect: "read" | "reversible" | "irreversible";
+            effect: "read" | "reversible" | "irreversible";
             /** @enum {string} */
-            readonly executionSite: "server" | "runnerHost";
-            readonly editableFields: readonly string[];
+            executionSite: "server" | "runnerHost";
+            editableFields: string[];
         };
-        readonly Connection: {
-            readonly id: string;
-            readonly kind: string;
-            readonly label: string;
-            readonly createdAt: string;
+        Connection: {
+            id: string;
+            kind: string;
+            label: string;
+            createdAt: string;
         };
-        readonly CreateConnectionRequest: {
-            readonly kind: string;
-            readonly label: string;
-            readonly secret: string;
+        CreateConnectionRequest: {
+            kind: string;
+            label: string;
+            secret: string;
         };
-        readonly RunSummary: {
-            readonly id: string;
-            readonly projectId: string;
-            readonly standardId: string;
-            readonly prompt: string;
-            readonly state: components["schemas"]["RunState"];
-            readonly summary: string | null;
-            readonly createdAt: string;
-            readonly updatedAt: string;
+        RunSummary: {
+            id: string;
+            projectId: string;
+            standardId: string;
+            prompt: string;
+            state: components["schemas"]["RunState"];
+            summary: string | null;
+            createdAt: string;
+            updatedAt: string;
         };
-        readonly RunState: {
+        RunState: {
             /** @enum {string} */
-            readonly status: "preparing";
+            status: "preparing";
         } | {
             /** @enum {string} */
-            readonly status: "running";
+            status: "running";
         } | {
             /** @enum {string} */
-            readonly status: "waiting";
+            status: "waiting";
             /** @enum {string} */
-            readonly reason: "approval" | "question" | "input" | "runnerOffline";
+            reason: "approval" | "question" | "input" | "runnerOffline";
         } | {
             /** @enum {string} */
-            readonly status: "checking";
+            status: "checking";
         } | {
             /** @enum {string} */
-            readonly status: "reviewing";
+            status: "reviewing";
         } | {
             /** @enum {string} */
-            readonly status: "completed";
+            status: "completed";
             /** @enum {string} */
-            readonly outcome: "accepted" | "rejected" | "unreviewed";
+            outcome: "accepted" | "rejected" | "unreviewed";
         } | {
             /** @enum {string} */
-            readonly status: "failed";
-            readonly message: string;
+            status: "failed";
+            message: string;
         } | {
             /** @enum {string} */
-            readonly status: "stopped";
+            status: "stopped";
         };
-        readonly StartRunRequest: {
-            readonly projectId: string;
-            readonly standardId: string;
-            readonly prompt: string;
+        StartRunRequest: {
+            projectId: string;
+            standardId: string;
+            prompt: string;
         };
-        readonly RunDetail: {
-            readonly run: components["schemas"]["RunSummary"];
-            readonly spec: components["schemas"]["JsonObject"];
-            readonly transcript: readonly components["schemas"]["TranscriptEntry"][];
-            readonly streamingText: string | null;
-            readonly changedFiles: readonly components["schemas"]["ChangedFile"][];
-            readonly diff: string | null;
-            readonly capabilityCalls: readonly components["schemas"]["CapabilityCallRecord"][];
-            readonly capabilities: readonly string[];
+        RunDetail: {
+            run: components["schemas"]["RunSummary"];
+            spec: components["schemas"]["JsonObject"];
+            transcript: components["schemas"]["TranscriptEntry"][];
+            streamingText: string | null;
+            changedFiles: components["schemas"]["ChangedFile"][];
+            diff: string | null;
+            capabilityCalls: components["schemas"]["CapabilityCallRecord"][];
+            capabilities: string[];
         };
-        readonly TranscriptEntry: {
-            readonly id: string;
+        TranscriptEntry: {
+            id: string;
             /** @enum {string} */
-            readonly role: "user" | "assistant" | "tool";
-            readonly text: string;
-            readonly toolName: string | null;
-            readonly isError: boolean;
+            role: "user" | "assistant" | "tool";
+            text: string;
+            toolName: string | null;
+            isError: boolean;
         };
-        readonly ChangedFile: {
-            readonly path: string;
+        ChangedFile: {
+            path: string;
             /** @enum {string} */
-            readonly change: "added" | "modified" | "deleted";
+            change: "added" | "modified" | "deleted";
         };
-        readonly CapabilityCallRecord: {
-            readonly id: string;
-            readonly capabilityId: string;
-            readonly target: string;
-            readonly arguments: components["schemas"]["JsonObject"];
+        CapabilityCallRecord: {
+            id: string;
+            capabilityId: string;
+            target: string;
+            arguments: components["schemas"]["JsonObject"];
             /** @enum {string} */
-            readonly status: "pending" | "succeeded" | "failed" | "refused";
-            readonly result: string | null;
-            readonly createdAt: string;
+            status: "pending" | "succeeded" | "failed" | "refused";
+            result: string | null;
+            createdAt: string;
         };
-        readonly SendRunMessageRequest: {
-            readonly text: string;
+        SendRunMessageRequest: {
+            text: string;
             /**
              * @default followUp
              * @enum {string}
              */
-            readonly mode: "steer" | "followUp";
+            mode: "steer" | "followUp";
         };
-        readonly AddRunCapabilityRequest: {
-            readonly capabilityId: string;
+        AddRunCapabilityRequest: {
+            capabilityId: string;
         };
-        readonly InboxItem: {
-            readonly id: string;
-            readonly runId: string | null;
-            readonly title: string;
-            readonly isBlocking: boolean;
-            readonly payload: components["schemas"]["InboxPayload"];
+        InboxItem: {
+            id: string;
+            runId: string | null;
+            title: string;
+            isBlocking: boolean;
+            payload: components["schemas"]["InboxPayload"];
             /** @enum {string} */
-            readonly status: "open" | "answered" | "withdrawn";
-            readonly answeredBy: string | null;
-            readonly createdAt: string;
+            status: "open" | "answered" | "withdrawn";
+            answeredBy: string | null;
+            createdAt: string;
         };
-        readonly InboxPayload: {
+        InboxPayload: {
             /** @enum {string} */
-            readonly kind: "question";
-            readonly question: string;
-            readonly options: readonly string[];
+            kind: "question";
+            question: string;
+            options: string[];
         } | {
             /** @enum {string} */
-            readonly kind: "approval";
-            readonly capabilityId: string;
-            readonly target: string;
-            readonly arguments: components["schemas"]["JsonObject"];
-            readonly editableFields: readonly string[];
-            readonly durations: readonly ("once" | "run" | "standard")[];
+            kind: "approval";
+            capabilityId: string;
+            target: string;
+            arguments: components["schemas"]["JsonObject"];
+            editableFields: string[];
+            durations: ("once" | "run" | "standard")[];
         } | {
             /** @enum {string} */
-            readonly kind: "review";
-            readonly summary: string;
-            readonly changedFileCount: number;
+            kind: "review";
+            summary: string;
+            changedFileCount: number;
         } | {
             /** @enum {string} */
-            readonly kind: "escalation";
-            readonly reason: string;
+            kind: "escalation";
+            reason: string;
         };
-        readonly AnswerInboxItemRequest: {
-            readonly answer: components["schemas"]["InboxAnswer"];
+        AnswerInboxItemRequest: {
+            answer: components["schemas"]["InboxAnswer"];
         };
-        readonly InboxAnswer: {
+        InboxAnswer: {
             /** @enum {string} */
-            readonly kind: "reply";
-            readonly text: string;
+            kind: "reply";
+            text: string;
         } | {
             /** @enum {string} */
-            readonly kind: "approve";
+            kind: "approve";
             /** @enum {string} */
-            readonly duration: "once" | "run" | "standard";
-            readonly editedArguments: {
-                readonly [key: string]: string;
+            duration: "once" | "run" | "standard";
+            editedArguments?: {
+                [key: string]: string;
             };
         } | {
             /** @enum {string} */
-            readonly kind: "reject";
-            readonly reason: string;
+            kind: "reject";
+            reason?: string;
         } | {
             /** @enum {string} */
-            readonly kind: "accept";
+            kind: "accept";
         } | {
             /** @enum {string} */
-            readonly kind: "requestRevision";
-            readonly comment: string;
+            kind: "requestRevision";
+            comment: string;
         } | {
             /** @enum {string} */
-            readonly kind: "acknowledge";
+            kind: "acknowledge";
         };
-        readonly Grant: {
-            readonly id: string;
-            readonly capabilityId: string;
-            readonly target: string;
-            readonly scope: components["schemas"]["GrantScope"];
-            readonly createdBy: string;
-            readonly createdAt: string;
+        Grant: {
+            id: string;
+            capabilityId: string;
+            target: string;
+            scope: components["schemas"]["GrantScope"];
+            createdBy: string;
+            createdAt: string;
         };
-        readonly GrantScope: {
+        GrantScope: {
             /** @enum {string} */
-            readonly kind: "run";
-            readonly runId: string;
+            kind: "run";
+            runId: string;
         } | {
             /** @enum {string} */
-            readonly kind: "standard";
-            readonly standardId: string;
+            kind: "standard";
+            standardId: string;
         };
-        readonly PushPublicKeyResponse: {
-            readonly publicKey: string;
+        PushPublicKeyResponse: {
+            publicKey: string;
         };
-        readonly PushSubscription: {
+        PushSubscription: {
             /** Format: uri */
-            readonly endpoint: string;
-            readonly keys: {
-                readonly p256dh: string;
-                readonly auth: string;
+            endpoint: string;
+            keys: {
+                p256dh: string;
+                auth: string;
             };
         };
-        readonly DeletePushSubscriptionRequest: {
+        DeletePushSubscriptionRequest: {
             /** Format: uri */
-            readonly endpoint: string;
+            endpoint: string;
         };
     };
     responses: never;

@@ -83,4 +83,4 @@ export const AddRunCapabilityRequestSchema = z
   .meta({ id: "AddRunCapabilityRequest" });
 
 export const RunParamsSchema = z.object({ runId: RunIdSchema });
-export const RunListQuerySchema = z.object({ projectId: ProjectIdSchema.exactOptional() });
+export const RunListQuerySchema = z.object({ projectId: ProjectIdSchema.optional() });

@@ -14,7 +14,7 @@ export type RunChange = {
 };
 
 export type RunListFilter = {
-  readonly projectId?: ProjectId;
+  readonly projectId?: ProjectId | undefined;
 };
 
 export type RunStore = {

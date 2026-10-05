@@ -1,0 +1,9 @@
+{
+  "name": "work-os",
+  "short_name": "work-os",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0D1014",
+  "theme_color": "#0D1014",
+  "icons": []
+}

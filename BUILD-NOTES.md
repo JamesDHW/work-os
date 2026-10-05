@@ -37,6 +37,13 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 - **Smoke test:** `pnpm smoke` (`scripts/smoke-host.sh`) drives the public API end to end: setup, pairing, runner, project, run with the scripted model (bash writes `hello.txt`, then `complete`), review, accept. Passed with the host driver and, using local images, with the Docker driver.
 - **Not done in M3:** the server ↔ runner link is tested through real processes in the smoke test rather than in-process in Vitest.
 
+## M4 — Web app
+
+- Screens: home (blocking inbox and active runs), inbox with question, approval, review and escalation answers, runs list with a start-run dialog, run page (transcript with live streaming text, steer and follow-up messages, changed files with a coloured diff, capability calls, add a capability, stop), projects with a machine folder browser, project page, standards list and editor, settings (machines and pairing codes, connections, standing approvals, passkeys, push notifications).
+- Routes load data in TanStack loaders and return a `LoadResult` (`toFailure` / `toReady`), so a failed request renders an error notice instead of throwing. `useServerEvents` re-runs loaders on every server event.
+- Routes import through a `#web/*` subpath import (`apps/web/package.json` `imports`), which TypeScript, Vite and the checker all resolve. This replaces `../../../../` chains (`no-deep-relative-imports`).
+- Event handlers are named and return `void`. Async work starts through `startAction` (`api/startAction.ts`), which owns the promise (`no-misused-promises`). List items pass their id through the element's `value` or `name` attribute so one named handler serves every row (`named-jsx-handlers`).
+
 ## Decisions taken during the run
 
 - **D49 (web data loading)** was still proposed; took the recommendation (loaders + `router.invalidate()` from SSE, no client cache library).
@@ -63,10 +70,16 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 - `harness.imports.external` += `@earendil-works/*/**` subpaths: Pi Durable and pi-ai publish their tools, storage, env and providers as subpath exports.
 - `serverApp.imports.external` += `@hono/node-server/**` (static file serving); `serverApp.imports.builtins` += `fs/promises` (create the data folder before opening SQLite).
 - `apiTypes.rules`: `max-file-lines-warn`, `readonly-type-properties` and `type-aliases` off for the generated file (the "exempt generated files" rule applied through configuration).
+- `projects.tsconfigs` += `apps/web/tsconfig.json`: the web app is a separate TypeScript program (DOM lib, JSX).
+- `WEB_CONCEPTS` += `settings`: the settings screen and its sections.
+- `webUi.imports.external` += `react-markdown`, `remark-gfm`: the Markdown primitive lives in the UI layer.
+- `webRouteTree.rules`: the generated route tree turns off the rules its generated code breaks (interfaces, `as any` casts, mutable maps, re-bound imports, length). The TanStack plugin's default `/* eslint-disable */` header is replaced through `routeTreeFileHeader`, because `reasoned-suppressions` is a mandatory structural check and rejects a file-wide disable.
 
 ## Recurring rule conflicts
 
 - **`id-denylist` on `data`** where an external API names a field `data` (OpenAI model lists, WebSocket message events, Hono SSE messages). Suppressed at the single point that touches the external shape, with the API named in the reason.
+
+- **`no-misused-promises` on async handlers.** Every async click or submit handler returned a promise to a `void` prop. Resolved once with `startAction` rather than per-site suppressions.
 
 ## Tool failures
 

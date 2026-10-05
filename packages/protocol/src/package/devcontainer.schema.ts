@@ -10,10 +10,10 @@ export const DevcontainerSchema = z
   .object({
     customizations: z
       .object({
-        workos: WorkOsCustomizationsSchema.exactOptional(),
+        workos: WorkOsCustomizationsSchema.optional(),
       })
       .catchall(JsonValueSchema)
-      .exactOptional(),
+      .optional(),
   })
   .catchall(JsonValueSchema);
 

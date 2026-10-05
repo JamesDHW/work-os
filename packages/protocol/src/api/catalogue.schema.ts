@@ -25,7 +25,7 @@ export const StandardSchema = z
     egress: z.array(z.string()),
     checks: z.array(CheckSchema),
     review: ReviewPolicySchema,
-    inputHint: z.string().exactOptional(),
+    inputHint: z.string().optional(),
     criteria: z.string(),
     method: z.string(),
   })

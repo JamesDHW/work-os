@@ -19,10 +19,10 @@ export type RunnerRequest =
       readonly kind: "exec";
       readonly runId: RunId;
       readonly command: string;
-      readonly stdin?: string;
-      readonly cwd?: string;
+      readonly stdin?: string | undefined;
+      readonly cwd?: string | undefined;
       readonly timeoutSeconds: number;
-      readonly streamsOutput?: true;
+      readonly streamsOutput?: true | undefined;
     }
   | { readonly kind: "collectChanges"; readonly runId: RunId }
   | {
@@ -30,8 +30,8 @@ export type RunnerRequest =
       readonly projectPath: string;
       readonly program: "git";
       readonly arguments: readonly string[];
-      readonly credential?: HostCredential;
+      readonly credential?: HostCredential | undefined;
     }
-  | { readonly kind: "listFolders"; readonly path?: string };
+  | { readonly kind: "listFolders"; readonly path?: string | undefined };
 
 export type RunnerRequestKind = RunnerRequest["kind"];

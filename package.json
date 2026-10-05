@@ -7,7 +7,7 @@
     "node": ">=24.11.0"
   },
   "scripts": {
-    "typecheck": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json && tsc -p apps/web/tsconfig.json",
     "architecture:check": "architecture-check",
     "lint": "architecture-check",
     "format": "oxfmt",
@@ -15,7 +15,8 @@
     "check": "pnpm typecheck && pnpm architecture:check && pnpm test",
     "api-types": "scripts/generate-api-types.sh",
     "egress:image": "pnpm --filter @work-os/egress-gateway build && docker build --tag work-os/egress-gateway:local ${WORK_OS_NODE_IMAGE:+--build-arg NODE_IMAGE=$WORK_OS_NODE_IMAGE} apps/egress-gateway",
-    "smoke": "scripts/smoke-host.sh"
+    "smoke": "scripts/smoke-host.sh",
+    "web:build": "pnpm --filter @work-os/web build"
   },
   "devDependencies": {
     "@types/node": "24.13.6",

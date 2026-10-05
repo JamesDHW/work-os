@@ -20,10 +20,10 @@ export const RunnerRequestSchema = z.discriminatedUnion("kind", [
     kind: z.literal("exec"),
     runId: RunIdSchema,
     command: z.string(),
-    stdin: z.string().exactOptional(),
-    cwd: z.string().exactOptional(),
+    stdin: z.string().optional(),
+    cwd: z.string().optional(),
     timeoutSeconds: z.number().int().positive(),
-    streamsOutput: z.literal(true).exactOptional(),
+    streamsOutput: z.literal(true).optional(),
   }),
   z.object({ kind: z.literal("collectChanges"), runId: RunIdSchema }),
   z.object({
@@ -31,7 +31,7 @@ export const RunnerRequestSchema = z.discriminatedUnion("kind", [
     projectPath: z.string().min(1),
     program: z.literal("git"),
     arguments: z.array(z.string()),
-    credential: HostCredentialSchema.exactOptional(),
+    credential: HostCredentialSchema.optional(),
   }),
-  z.object({ kind: z.literal("listFolders"), path: z.string().exactOptional() }),
+  z.object({ kind: z.literal("listFolders"), path: z.string().optional() }),
 ]) satisfies z.ZodType<RunnerRequest>;

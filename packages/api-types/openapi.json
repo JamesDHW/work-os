@@ -187,16 +187,7 @@
                   "transports": {
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "enum": [
-                        "ble",
-                        "cable",
-                        "hybrid",
-                        "internal",
-                        "nfc",
-                        "smart-card",
-                        "usb"
-                      ]
+                      "type": "string"
                     }
                   },
                   "publicKeyAlgorithm": {
@@ -209,11 +200,7 @@
                 },
                 "required": [
                   "clientDataJSON",
-                  "attestationObject",
-                  "authenticatorData",
-                  "transports",
-                  "publicKeyAlgorithm",
-                  "publicKey"
+                  "attestationObject"
                 ]
               },
               "authenticatorAttachment": {
@@ -225,7 +212,7 @@
               },
               "clientExtensionResults": {
                 "type": "object",
-                "properties": {}
+                "additionalProperties": {}
               },
               "type": {
                 "type": "string",
@@ -238,7 +225,6 @@
               "id",
               "rawId",
               "response",
-              "authenticatorAttachment",
               "clientExtensionResults",
               "type"
             ]
@@ -285,8 +271,7 @@
                 "required": [
                   "clientDataJSON",
                   "authenticatorData",
-                  "signature",
-                  "userHandle"
+                  "signature"
                 ]
               },
               "authenticatorAttachment": {
@@ -298,7 +283,7 @@
               },
               "clientExtensionResults": {
                 "type": "object",
-                "properties": {}
+                "additionalProperties": {}
               },
               "type": {
                 "type": "string",
@@ -311,7 +296,6 @@
               "id",
               "rawId",
               "response",
-              "authenticatorAttachment",
               "clientExtensionResults",
               "type"
             ]
@@ -643,7 +627,6 @@
           "egress",
           "checks",
           "review",
-          "inputHint",
           "criteria",
           "method"
         ]
@@ -732,7 +715,6 @@
           "egress",
           "checks",
           "review",
-          "inputHint",
           "criteria",
           "method"
         ]
@@ -1523,8 +1505,7 @@
             },
             "required": [
               "kind",
-              "duration",
-              "editedArguments"
+              "duration"
             ]
           },
           {
@@ -1541,8 +1522,7 @@
               }
             },
             "required": [
-              "kind",
-              "reason"
+              "kind"
             ]
           },
           {
@@ -2766,7 +2746,7 @@
             "schema": {
               "type": "string"
             },
-            "required": true,
+            "required": false,
             "name": "path",
             "in": "query"
           }
@@ -4130,7 +4110,7 @@
               "minLength": 1,
               "maxLength": 200
             },
-            "required": true,
+            "required": false,
             "name": "projectId",
             "in": "query"
           }

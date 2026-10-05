@@ -26,8 +26,8 @@ export const InboxPayloadSchema = z
 export const InboxAnswerSchema = z
   .discriminatedUnion("kind", [
     z.object({ kind: z.literal("reply"), text: z.string().min(1) }),
-    z.object({ kind: z.literal("approve"), duration: GrantDurationSchema, editedArguments: z.record(z.string(), z.string()).exactOptional() }),
-    z.object({ kind: z.literal("reject"), reason: z.string().exactOptional() }),
+    z.object({ kind: z.literal("approve"), duration: GrantDurationSchema, editedArguments: z.record(z.string(), z.string()).optional() }),
+    z.object({ kind: z.literal("reject"), reason: z.string().optional() }),
     z.object({ kind: z.literal("accept") }),
     z.object({ kind: z.literal("requestRevision"), comment: z.string().min(1) }),
     z.object({ kind: z.literal("acknowledge") }),

@@ -11,7 +11,7 @@ export type ProcessRequest = {
   readonly arguments: readonly string[];
   readonly cwd?: string;
   readonly environment?: Readonly<Record<string, string>>;
-  readonly stdin?: string;
+  readonly stdin?: string | undefined;
   readonly timeoutSeconds: number;
   readonly onOutput?: (chunk: string) => void;
 };

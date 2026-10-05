@@ -24,6 +24,7 @@ import { createRequireUser } from "../middleware/requireUser.ts";
 import { createChallengeStore } from "./createChallengeStore.ts";
 import { writeSessionCookie } from "./sessionCookie.ts";
 import { toOpaqueJson } from "../http/toOpaqueJson.ts";
+import { toAuthenticationResponse, toRegistrationResponse } from "./toWebAuthnResponses.ts";
 
 export const registerPasskeyRoutes = (app: OpenAPIHono<ApiEnv>, services: ApiServices): void => {
   const requireUser = createRequireUser(services);
@@ -69,7 +70,7 @@ export const registerPasskeyRoutes = (app: OpenAPIHono<ApiEnv>, services: ApiSer
     const user = context.get("user");
     const verification = await tryCatchAsync(() =>
       verifyRegistrationResponse({
-        response: context.req.valid("json").response,
+        response: toRegistrationResponse(context.req.valid("json").response),
         expectedChallenge: (challenge) => challenges.consume(challenge)?.userId === user.id,
         expectedOrigin: settings.publicOrigin,
         expectedRPID: settings.relyingPartyId,
@@ -110,7 +111,7 @@ export const registerPasskeyRoutes = (app: OpenAPIHono<ApiEnv>, services: ApiSer
     responses: { 200: jsonResponse(OkResponseSchema, "Signed in."), ...errorResponses },
   });
   app.openapi(signInRoute, async (context) => {
-    const { response } = context.req.valid("json");
+    const response = toAuthenticationResponse(context.req.valid("json").response);
     const verifyAssertion = async (passkey: Passkey): Promise<number | WorkOsError> => {
       const verification = await tryCatchAsync(() =>
         verifyAuthenticationResponse({

@@ -13,8 +13,8 @@ export type PrepareEnvironmentInput = {
 export type ExecInput = {
   readonly runId: RunId;
   readonly command: string;
-  readonly stdin?: string;
-  readonly cwd?: string;
+  readonly stdin?: string | undefined;
+  readonly cwd?: string | undefined;
   readonly timeoutSeconds: number;
   readonly onOutput: (chunk: string) => void;
 };
