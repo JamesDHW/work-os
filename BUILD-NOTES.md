@@ -55,6 +55,11 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 - **Docs:** `README.md` (how to run and check it). STYLE.md §7 now records the loader pattern (`LoadResult`, props into screens, `#web/…` imports) and the handler pattern (`startAction`, row ids through `value` or `name`).
 - **Final state:** typecheck clean (both programs), `architecture-check` clean, 96 unit tests, `pnpm smoke` passes with the host driver and with the Docker driver (local images), `pnpm e2e` passes.
 
+## After the build — development and installed modes
+
+- **Development:** `pnpm dev:server` (port 4311, `node --watch`, data in `~/.work-os/dev-server`, public origin `http://localhost:5173`), `pnpm dev:web` (Vite on 5173, proxying `/api` and WebSockets to 4311) and `pnpm dev:runner` (credentials in `~/.work-os/dev-runner`). Checked here: setup and sessions through the proxy, server-sent events through the proxy, pairing and a connected runner, and a server restart on an edit inside `packages/`.
+- **Installed:** `work-os install` now also writes `~/.work-os/server.env` and `~/.work-os/runner.env` (mode 600, never overwritten), which the services load with `node --env-file-if-exists`. The server's file starts with `WORK_OS_WEB_DIST` pointing at the built app and commented entries for the public origin and model keys. Before this, an installed server would not have served the web app and had no way to receive a model key. Services also get the installing shell's `PATH` through the LaunchAgent or unit itself (Node's env file cannot override a variable launchd already set), because a login service's bare `PATH` misses `docker`, `git` and the `node` that the devcontainer CLI's launcher needs. Checked here by starting the server with the exact command line of a generated unit: it served the web app.
+
 ## Deviations from ARCHITECTURE.md
 
 - No `shiki`, `react-diff-view` or `cmdk`. The diff view is a small line-classifying component, code is not syntax-highlighted, and there is no command palette. The file types still allow these packages.
@@ -65,6 +70,7 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 
 - **Changed files were empty once.** The first Docker-driver smoke run of the final session reported `reviewing` with no changed files although `hello.txt` was written. Five reruns reported the file correctly, and the stored run record of a kept rerun had it. Not reproduced; worth watching on the first real runs.
 - **Shutdown warning.** Stopping the server while a runner is connected logs `Failed query: update "runners" set "last_seen_at"`: the database closes before the runner's disconnect handler records the time. Harmless; the next connection updates it.
+- **One Docker-driver runner per machine.** Every runner process starts its egress gateway as the container `work-os-egress-gateway` on control port 3129, so a second Docker-driver runner (for example `pnpm dev:runner` beside the installed one) replaces the first one's gateway. Stop the installed runner while developing, or run the development runner with `WORK_OS_RUNNER_DRIVER=unsafeHost`. A per-runner gateway name and port would remove the limit.
 - **Peer dependency warning.** `@hono/node-ws` 1.3.1 declares `@hono/node-server ^1.19`; the build uses 2.1.1. WebSockets work (smoke and e2e), but `pnpm install` prints the warning.
 
 ## Decisions taken during the run

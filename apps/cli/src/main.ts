@@ -2,7 +2,7 @@ import { DEFAULT_SERVER_PORT } from "@work-os/config/config.constants";
 import { parseRunnerConfig } from "@work-os/config/RunnerConfig";
 import { WorkOsError } from "@work-os/shared/WorkOsError";
 import { homedir } from "os";
-import { resolve } from "path";
+import { dirname, resolve } from "path";
 import process from "process";
 
 import { USAGE } from "./cli.constants.ts";
@@ -48,7 +48,8 @@ const install = async (commandLine: CommandLine): Promise<undefined> => {
   if (isBothExcluded) return fail("Choose --server-only or --runner-only, not both.");
 
   const names = [...(commandLine.isRunnerOnly ? [] : ["server" as const]), ...(commandLine.isServerOnly ? [] : ["runner" as const])];
-  const services = describeServices({ nodePath: process.execPath, repositoryRoot, homeDirectory: homedir(), names });
+  const searchPath = `${dirname(process.execPath)}:${process.env["PATH"] ?? "/usr/bin:/bin"}`;
+  const services = describeServices({ nodePath: process.execPath, repositoryRoot, homeDirectory: homedir(), searchPath, names });
   const installed = await installServices({ platform: process.platform, homeDirectory: homedir(), services });
   if (installed instanceof WorkOsError) return fail(installed.message);
   return undefined;

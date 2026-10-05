@@ -12,6 +12,8 @@ export const SERVICE_DESCRIPTIONS = { server: "work-os server", runner: "work-os
 
 export const COMMAND_TIMEOUT_MILLISECONDS = 10_000;
 
+export const ENVIRONMENT_FILE_MODE = 0o600;
+
 export const DOCTOR_MARKS = { ok: "✓", warn: "!", fail: "✗" } as const;
 
 export const USAGE = `Usage:

@@ -4,28 +4,43 @@ A personal AI backbone: you start runs against your local projects, each run fol
 
 `CONTEXT.md` explains why, `DECISIONS.md` records the decisions, `ARCHITECTURE.md` describes the system, `STYLE.md` is the code style, and `BUILD-NOTES.md` is the log of the v1 build, including what still needs checking on a real machine.
 
-## Run it
+## Run it in development
 
-Requires Node.js 24 or later, pnpm 11 and Docker Desktop.
+Requires Node.js 24 or later, pnpm 11 and Docker Desktop. Three terminals:
 
 ```sh
 pnpm install
-pnpm web:build
-pnpm egress:image                         # once: the egress gateway container
-
-WORK_OS_WEB_DIST=apps/web/dist ANTHROPIC_API_KEY=… node apps/server/src/main.ts
+pnpm dev:server          # API on :4311, restarts on any source change, data in ~/.work-os/dev-server
+pnpm dev:web             # the web app with hot reload on http://localhost:5173 (proxies /api to :4311)
 ```
 
-Open http://localhost:4310 and enter the setup code from the server log. Then, in Settings > Machines, pair this machine and start the runner in a second terminal:
+Give `dev:server` a model first: `ANTHROPIC_API_KEY=… pnpm dev:server`, or `WORK_OS_LMSTUDIO_URL=http://localhost:1234/v1` for LM Studio. Open http://localhost:5173 and enter the setup code from the `dev:server` output. In Settings > Machines, pair a machine, then in the third terminal:
 
 ```sh
-node apps/cli/src/main.ts pair http://localhost:4310 <code>
-node apps/runner/src/main.ts
+pnpm dev:runner pair http://localhost:4311 <code>     # credentials in ~/.work-os/dev-runner
+pnpm dev:runner
 ```
 
-Add a folder as a project, start a run, and answer it from the inbox. `node apps/cli/src/main.ts doctor` checks the setup; `node apps/cli/src/main.ts install` writes login services for the server and the runner.
+The development setup uses its own port and data folders, so it runs beside an installed work-os. One limit: only one Docker-driver runner can run per machine (they share the egress gateway container). While the installed runner is running, either stop it (`launchctl bootout gui/$(id -u)/dev.work-os.runner`) or run `WORK_OS_RUNNER_DRIVER=unsafeHost pnpm dev:runner`, which runs commands directly in the project folder with no container; use that only on scratch folders.
 
-For a local model, start LM Studio's server and set `WORK_OS_LMSTUDIO_URL=http://localhost:1234/v1`, then set `models.default: lmstudio/<model id>` in `~/.work-os/server/workspaces/<id>/workos.yaml`.
+## Run it for real
+
+On the Mac that keeps your projects:
+
+```sh
+pnpm install && pnpm web:build && pnpm egress:image
+node apps/cli/src/main.ts install
+```
+
+`install` writes two LaunchAgents (server and runner, started at login and restarted if they exit) and two settings files, `~/.work-os/server.env` and `~/.work-os/runner.env`, readable only by you. Put your model key in `server.env` (`ANTHROPIC_API_KEY=…` or `WORK_OS_LMSTUDIO_URL=…`), then load both services with the `launchctl bootstrap` commands it printed.
+
+Open http://localhost:4310 and enter the setup code from `~/.work-os/server.log`. Pair the machine from Settings > Machines with `node apps/cli/src/main.ts pair http://localhost:4310 <code>`; the runner service keeps retrying until it is paired. `node apps/cli/src/main.ts doctor` checks the whole setup.
+
+- **From your phone:** run `tailscale serve --bg 4310`, set `WORK_OS_PUBLIC_ORIGIN=https://<mac>.<tailnet>.ts.net` in `server.env`, restart the server, and add a passkey on the phone from Settings > Passkeys.
+- **After pulling changes:** `pnpm install && pnpm web:build`, then `launchctl kickstart -k gui/$(id -u)/dev.work-os.server` (and `dev.work-os.runner`).
+- **Logs:** `~/.work-os/server.log` and `~/.work-os/runner.log`.
+
+The server listens on 127.0.0.1 only; reach it from other devices through Tailscale, not by opening the port.
 
 ## Check it
 

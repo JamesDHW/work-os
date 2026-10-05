@@ -15,6 +15,7 @@ export const renderSystemdUnit = (service: ServiceDefinition): string =>
     "[Service]",
     `ExecStart=${service.programArguments.map(quote).join(" ")}`,
     `WorkingDirectory=${service.workingDirectory}`,
+    `Environment=${quote(`PATH=${service.searchPath}`)}`,
     "Restart=on-failure",
     "RestartSec=5",
     "",

@@ -20,6 +20,7 @@ export const renderLaunchAgent = (service: ServiceDefinition): string =>
     ...service.programArguments.map((programArgument) => `    ${xmlString(programArgument)}`),
     "  </array>",
     `  <key>WorkingDirectory</key>${xmlString(service.workingDirectory)}`,
+    `  <key>EnvironmentVariables</key><dict><key>PATH</key>${xmlString(service.searchPath)}</dict>`,
     "  <key>RunAtLoad</key><true/>",
     "  <key>KeepAlive</key><true/>",
     `  <key>StandardOutPath</key>${xmlString(service.logPath)}`,
