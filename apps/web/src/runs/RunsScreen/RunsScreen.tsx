@@ -15,18 +15,18 @@ export type RunsScreenProps = {
   readonly standards: readonly Standard[];
 };
 
-export const RunsScreen: FC<RunsScreenProps> = (props) => {
-  const activeRuns = props.runs.filter(isActiveRun);
-  const finishedRuns = props.runs.filter((run) => !isActiveRun(run));
-  const actions = <StartRunDialog workspaceId={props.workspaceId} projects={props.projects} standards={props.standards} />;
+export const RunsScreen: FC<RunsScreenProps> = ({ runs, workspaceId, projects, standards }) => {
+  const activeRuns = runs.filter(isActiveRun);
+  const finishedRuns = runs.filter((run) => !isActiveRun(run));
+  const actions = <StartRunDialog workspaceId={workspaceId} projects={projects} standards={standards} />;
 
   return (
     <Stack gap="lg">
       <PageHeader title="Runs" description="Every run follows a standard against one project." actions={actions} />
       <Heading level="section">Active</Heading>
-      <RunList workspaceId={props.workspaceId} runs={activeRuns} emptyText="No runs are active." />
+      <RunList workspaceId={workspaceId} runs={activeRuns} emptyText="No runs are active." />
       <Heading level="section">Finished</Heading>
-      <RunList workspaceId={props.workspaceId} runs={finishedRuns} emptyText="No finished runs yet." />
+      <RunList workspaceId={workspaceId} runs={finishedRuns} emptyText="No finished runs yet." />
     </Stack>
   );
 };

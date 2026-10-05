@@ -8,8 +8,8 @@ export type MarkdownProps = {
   readonly text: string;
 };
 
-export const Markdown: FC<MarkdownProps> = (props) => (
+export const Markdown: FC<MarkdownProps> = ({ text }) => (
   <div className={markdown}>
-    <ReactMarkdown remarkPlugins={[remarkGfm]}>{props.text}</ReactMarkdown>
+    <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
   </div>
 );

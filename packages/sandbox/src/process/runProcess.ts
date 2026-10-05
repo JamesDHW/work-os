@@ -4,7 +4,7 @@ import { WorkOsError } from "@work-os/shared/WorkOsError";
 import { spawn } from "child_process";
 
 import { KILL_GRACE_MILLISECONDS, MAX_OUTPUT_BYTES, MILLISECONDS_PER_SECOND } from "../sandbox.constants.ts";
-import { createOutputBuffer } from "./createOutputBuffer.ts";
+import { createOutputBuffer } from "./outputBuffer.state.ts";
 
 export type ProcessRequest = {
   readonly command: string;
@@ -20,12 +20,14 @@ export class ProcessStartError extends WorkOsError {}
 
 export const runProcess = async (request: ProcessRequest): Promise<CommandOutcome | WorkOsError> => {
   const environment = { ...process.env, ...request.environment };
-  const child = tryCatch(() => spawn(request.command, [...request.arguments], { cwd: request.cwd, env: environment, stdio: "pipe" }));
+  const timeout = AbortSignal.timeout(request.timeoutSeconds * MILLISECONDS_PER_SECOND);
+  const child = tryCatch(() => spawn(request.command, [...request.arguments], { cwd: request.cwd, env: environment, stdio: "pipe", signal: timeout, killSignal: "SIGTERM" }));
   if (child instanceof WorkOsError) return new ProcessStartError(`Could not start ${request.command}.`, { cause: child });
 
   const output = createOutputBuffer(MAX_OUTPUT_BYTES);
   const completion = Promise.withResolvers<CommandOutcome | WorkOsError>();
-  const timeout = createTimeout(() => child.kill("SIGTERM"), () => child.kill("SIGKILL"), request.timeoutSeconds);
+  // The signal ends the process with SIGTERM when time runs out; SIGKILL follows if it ignores that.
+  timeout.addEventListener("abort", () => setTimeout(() => child.kill("SIGKILL"), KILL_GRACE_MILLISECONDS).unref(), { once: true });
   const collect = (chunk: Buffer): void => {
     const text = chunk.toString("utf8");
     output.append(text);
@@ -33,24 +35,12 @@ export const runProcess = async (request: ProcessRequest): Promise<CommandOutcom
   };
   child.stdout.on("data", collect);
   child.stderr.on("data", collect);
-  child.on("error", (error) => completion.resolve(new ProcessStartError(`${request.command} failed: ${error.message}`, { cause: error })));
-  child.on("close", (exitCode) => {
-    timeout.clear();
-    completion.resolve({ exitCode: exitCode ?? -1, output: output.text(), isTimedOut: timeout.hasFired() });
+  child.on("error", (error) => {
+    // A timeout surfaces as an AbortError before close; close reports it as isTimedOut.
+    if (timeout.aborted) return;
+    completion.resolve(new ProcessStartError(`${request.command} failed: ${error.message}`, { cause: error }));
   });
+  child.on("close", (exitCode) => completion.resolve({ exitCode: exitCode ?? -1, output: output.text(), isTimedOut: timeout.aborted }));
   child.stdin.end(request.stdin ?? "");
   return completion.promise;
-};
-
-const createTimeout = (terminate: () => void, kill: () => void, timeoutSeconds: number) => {
-  const firings: string[] = [];
-  const timer = setTimeout(() => {
-    firings.push("terminate");
-    terminate();
-    setTimeout(kill, KILL_GRACE_MILLISECONDS).unref();
-  }, timeoutSeconds * MILLISECONDS_PER_SECOND);
-  return {
-    clear: () => clearTimeout(timer),
-    hasFired: () => firings.length > 0,
-  };
 };

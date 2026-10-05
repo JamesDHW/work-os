@@ -8,7 +8,7 @@ import { NotFoundError } from "@work-os/shared/NotFoundError";
 import { tryCatchAsync } from "@work-os/shared/tryCatch";
 import { WorkOsError } from "@work-os/shared/WorkOsError";
 
-import { createConversationWatchers } from "./createConversationWatchers.ts";
+import { createConversationWatchers } from "./conversationWatchers.state.ts";
 import { findSettledAnswer } from "./findSettledAnswer.ts";
 import { readRunId } from "./readRunId.ts";
 import { readStreamingText } from "./readStreamingText.ts";

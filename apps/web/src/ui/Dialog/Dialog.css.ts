@@ -22,4 +22,4 @@ export const content = style({
   gap: vars.space.md,
 });
 
-export const title = style({ margin: 0, fontSize: vars.size.title, fontWeight: 600 });
+export const dialogTitle = style({ margin: 0, fontSize: vars.size.title, fontWeight: 600 });

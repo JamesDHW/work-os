@@ -14,13 +14,13 @@ export type StandardsScreenProps = {
   readonly standards: readonly Standard[];
 };
 
-export const StandardsScreen: FC<StandardsScreenProps> = (props) => (
+export const StandardsScreen: FC<StandardsScreenProps> = ({ standards, workspaceId }) => (
   <Stack gap="lg">
     <PageHeader title="Standards" description="Each kind of work, its criteria, its agent and what it may do." />
-    {props.standards.length === 0 ? <EmptyState>No standards are installed.</EmptyState> : null}
-    {props.standards.map((standard) => (
+    {standards.length === 0 ? <EmptyState>No standards are installed.</EmptyState> : null}
+    {standards.map((standard) => (
       <Card key={standard.id}>
-        <Link className={standardLink} to="/w/$workspaceId/standards/$standardId" params={{ workspaceId: props.workspaceId, standardId: standard.id }}>
+        <Link className={standardLink} to="/w/$workspaceId/standards/$standardId" params={{ workspaceId: workspaceId, standardId: standard.id }}>
           {standard.id}
         </Link>
         <MutedText>{standard.describes}</MutedText>

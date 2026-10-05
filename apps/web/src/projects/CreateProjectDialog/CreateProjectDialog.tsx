@@ -19,12 +19,12 @@ export type CreateProjectDialogProps = {
   readonly connections: readonly Connection[];
 };
 
-export const CreateProjectDialog: FC<CreateProjectDialogProps> = (props) => {
-  const defaults = { runnerId: props.runners[0]?.id ?? "", environmentId: props.environments[0]?.id ?? "" };
-  const model = useCreateProjectDialog(props.workspaceId, defaults);
+export const CreateProjectDialog: FC<CreateProjectDialogProps> = ({ runners, environments, workspaceId, connections }) => {
+  const defaults = { runnerId: runners[0]?.id ?? "", environmentId: environments[0]?.id ?? "" };
+  const model = useCreateProjectDialog(workspaceId, defaults);
   const canCreate = !model.isBusy && model.name.trim().length > 0 && model.path.length > 0 && model.runnerId.length > 0;
   const trigger = (
-    <Button tone="primary" disabled={props.runners.length === 0}>
+    <Button tone="primary" disabled={runners.length === 0}>
       Add a project
     </Button>
   );
@@ -34,7 +34,7 @@ export const CreateProjectDialog: FC<CreateProjectDialogProps> = (props) => {
       <Stack>
         <Field label="Machine">
           <SelectInput value={model.runnerId} onChange={model.handleRunnerChange}>
-            {props.runners.map((runner) => (
+            {runners.map((runner) => (
               <option key={runner.id} value={runner.id}>
                 {runner.name} {runner.isOnline ? "" : "(offline)"}
               </option>
@@ -44,28 +44,27 @@ export const CreateProjectDialog: FC<CreateProjectDialogProps> = (props) => {
         <Field label="Folder" hint="A folder on that machine. Runs mount it into their container.">
           <TextInput value={model.path} onChange={model.handlePathChange} placeholder="/Users/you/Repos/project" />
         </Field>
-        <FolderPicker key={model.runnerId} workspaceId={props.workspaceId} runnerId={model.runnerId} onSelect={model.handleFolderSelect} />
+        <FolderPicker key={model.runnerId} workspaceId={workspaceId} runnerId={model.runnerId} onSelect={model.handleFolderSelect} />
         <Field label="Name">
           <TextInput value={model.name} onChange={model.handleNameChange} />
         </Field>
         <Field label="Environment">
           <SelectInput value={model.environmentId} onChange={model.handleEnvironmentChange}>
-            {props.environments.map((environment) => (
+            {environments.map((environment) => (
               <option key={environment.id} value={environment.id}>
                 {environment.id}
               </option>
             ))}
           </SelectInput>
         </Field>
-        {props.connections.length > 0 ? (
+        {connections.length > 0 ? (
           <Field label="Connections this project may use">
-            {props.connections.map((connection) => (
+            {connections.map((connection) => (
               <Checkbox
                 key={connection.id}
                 label={`${connection.label} (${connection.kind})`}
-                value={connection.id}
                 isChecked={model.connectionIds.includes(connection.id)}
-                onChange={model.handleConnectionToggle}
+                onChange={model.handleConnectionToggle(connection.id)}
               />
             ))}
           </Field>

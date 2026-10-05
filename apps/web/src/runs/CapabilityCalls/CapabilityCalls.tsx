@@ -11,12 +11,12 @@ export type CapabilityCallsProps = {
   readonly calls: readonly CapabilityCallRecord[];
 };
 
-export const CapabilityCalls: FC<CapabilityCallsProps> = (props) => {
-  if (props.calls.length === 0) return <EmptyState>No capability calls yet.</EmptyState>;
+export const CapabilityCalls: FC<CapabilityCallsProps> = ({ calls }) => {
+  if (calls.length === 0) return <EmptyState>No capability calls yet.</EmptyState>;
 
   return (
     <ul className={callList}>
-      {props.calls.map((call) => (
+      {calls.map((call) => (
         <li key={call.id} className={callRow}>
           <Stack direction="row" gap="sm">
             <StatusBadge tone={CALL_STATUS_TONES[call.status]} label={call.status} />

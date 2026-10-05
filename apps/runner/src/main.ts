@@ -45,8 +45,12 @@ const start = async (): Promise<undefined> => {
   if (credentials instanceof WorkOsError) return fail(credentials.message);
 
   const { sandbox, egressController } = createRunnerSandbox(config);
-  const link = runLink({ credentials, sandbox, onUnauthorized: () => fail("The server rejected this machine's token. Pair it again.") });
-  startEgressReporting(egressController, link);
+  runLink({
+    credentials,
+    sandbox,
+    onUnauthorized: () => fail("The server rejected this machine's token. Pair it again."),
+    whileConnected: (send) => startEgressReporting(egressController, send),
+  });
   writeLogLine("info", "work-os runner started.", { driver: config.environmentDriver });
   return undefined;
 };

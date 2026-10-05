@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from "react";
 
-import { field, hint, label } from "./Field.css.ts";
+import { field, fieldHint, fieldLabel } from "./Field.css.ts";
 
 export type FieldProps = {
   readonly label: string;
@@ -8,10 +8,10 @@ export type FieldProps = {
   readonly children: ReactNode;
 };
 
-export const Field: FC<FieldProps> = (props) => (
+export const Field: FC<FieldProps> = ({ label, children, hint }) => (
   <label className={field}>
-    <span className={label}>{props.label}</span>
-    {props.children}
-    {props.hint === undefined ? null : <span className={hint}>{props.hint}</span>}
+    <span className={fieldLabel}>{label}</span>
+    {children}
+    {hint === undefined ? null : <span className={fieldHint}>{hint}</span>}
   </label>
 );

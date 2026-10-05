@@ -13,14 +13,14 @@ export type RunListProps = {
   readonly emptyText: string;
 };
 
-export const RunList: FC<RunListProps> = (props) => {
-  if (props.runs.length === 0) return <EmptyState>{props.emptyText}</EmptyState>;
+export const RunList: FC<RunListProps> = ({ runs, emptyText, workspaceId }) => {
+  if (runs.length === 0) return <EmptyState>{emptyText}</EmptyState>;
 
   return (
     <ul className={runList}>
-      {props.runs.map((run) => (
+      {runs.map((run) => (
         <li key={run.id}>
-          <Link className={runRow} to="/w/$workspaceId/runs/$runId" params={{ workspaceId: props.workspaceId, runId: run.id }}>
+          <Link className={runRow} to="/w/$workspaceId/runs/$runId" params={{ workspaceId: workspaceId, runId: run.id }}>
             <RunStatusBadge status={run.state.status} />
             <span className={runText}>{describeRun(run)}</span>
             <span className={runMeta}>

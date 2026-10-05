@@ -9,4 +9,4 @@ export type StatusBadgeProps = {
   readonly label: string;
 };
 
-export const StatusBadge: FC<StatusBadgeProps> = (props) => <span className={statusBadgeRecipe({ tone: props.tone })}>{props.label}</span>;
+export const StatusBadge: FC<StatusBadgeProps> = ({ tone, label }) => <span className={statusBadgeRecipe({ tone: tone })}>{label}</span>;

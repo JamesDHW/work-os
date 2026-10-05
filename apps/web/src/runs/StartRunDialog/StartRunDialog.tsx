@@ -18,13 +18,13 @@ export type StartRunDialogProps = {
   readonly projectId?: string | undefined;
 };
 
-export const StartRunDialog: FC<StartRunDialogProps> = (props) => {
-  const defaults = { projectId: props.projectId ?? props.projects[0]?.id ?? "", standardId: props.standards[0]?.id ?? "" };
-  const model = useStartRunDialog(props.workspaceId, defaults);
-  const selectedStandard = props.standards.find((standard) => standard.id === model.standardId);
+export const StartRunDialog: FC<StartRunDialogProps> = ({ projectId, projects, standards, workspaceId }) => {
+  const defaults = { projectId: projectId ?? projects[0]?.id ?? "", standardId: standards[0]?.id ?? "" };
+  const model = useStartRunDialog(workspaceId, defaults);
+  const selectedStandard = standards.find((standard) => standard.id === model.standardId);
   const canStart = !model.isBusy && model.projectId.length > 0 && model.standardId.length > 0;
   const trigger = (
-    <Button tone="primary" disabled={props.projects.length === 0}>
+    <Button tone="primary" disabled={projects.length === 0}>
       <Icon name="play" />
       Start a run
     </Button>
@@ -33,10 +33,10 @@ export const StartRunDialog: FC<StartRunDialogProps> = (props) => {
   return (
     <Dialog title="Start a run" trigger={trigger} isOpen={model.isOpen} onOpenChange={model.handleOpenChange}>
       <Stack>
-        {props.projectId === undefined ? (
+        {projectId === undefined ? (
           <Field label="Project">
             <SelectInput value={model.projectId} onChange={model.handleProjectChange}>
-              {props.projects.map((project) => (
+              {projects.map((project) => (
                 <option key={project.id} value={project.id}>
                   {project.name}
                 </option>
@@ -46,7 +46,7 @@ export const StartRunDialog: FC<StartRunDialogProps> = (props) => {
         ) : null}
         <Field label="Standard" hint={selectedStandard?.describes}>
           <SelectInput value={model.standardId} onChange={model.handleStandardChange}>
-            {props.standards.map((standard) => (
+            {standards.map((standard) => (
               <option key={standard.id} value={standard.id}>
                 {standard.id}
               </option>

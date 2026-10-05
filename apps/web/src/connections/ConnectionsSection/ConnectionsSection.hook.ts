@@ -1,5 +1,5 @@
 import { useRouter } from "@tanstack/react-router";
-import { useState, type ChangeEvent, type MouseEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
@@ -14,7 +14,7 @@ export type ConnectionsSectionModel = {
   readonly handleLabelChange: (event: ChangeEvent<HTMLInputElement>) => void;
   readonly handleSecretChange: (event: ChangeEvent<HTMLInputElement>) => void;
   readonly handleAddClick: () => Promise<void>;
-  readonly handleRemoveClick: (event: MouseEvent<HTMLButtonElement>) => Promise<void>;
+  readonly handleRemoveClick: (connectionId: string) => () => Promise<void>;
 };
 
 export const useConnectionsSection = (workspaceId: string, initialKind: string): ConnectionsSectionModel => {
@@ -38,8 +38,7 @@ export const useConnectionsSection = (workspaceId: string, initialKind: string):
     await router.invalidate();
   };
 
-  const removeConnection = async (event: MouseEvent<HTMLButtonElement>): Promise<void> => {
-    const connectionId = event.currentTarget.value;
+  const removeConnection = async (connectionId: string): Promise<void> => {
     const result = await apiClient.DELETE("/api/w/{workspaceId}/connections/{connectionId}", { params: { path: { workspaceId, connectionId } } });
     setErrorMessage(describeFailure(result));
     await router.invalidate();
@@ -55,6 +54,6 @@ export const useConnectionsSection = (workspaceId: string, initialKind: string):
     handleLabelChange: (event) => setLabel(event.target.value),
     handleSecretChange: (event) => setSecret(event.target.value),
     handleAddClick: addConnection,
-    handleRemoveClick: removeConnection,
+    handleRemoveClick: (connectionId) => async () => removeConnection(connectionId),
   };
 };

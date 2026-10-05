@@ -9,7 +9,7 @@ const VANILLA_EXTRACT = ["@vanilla-extract/css", "@vanilla-extract/recipes"];
 export default defineArchitecture({
   projects: { tsconfigs: ["tsconfig.json", "apps/web/tsconfig.json"], references: "follow" },
   defaults: {
-    naming: { case: "pascalOrCamel", suffixes: [".test", ".hook", ".constants", ".schema", ".css"] },
+    naming: { case: "pascalOrCamel", suffixes: [".test", ".hook", ".constants", ".schema", ".css", ".state"] },
     rules: {
       "unnecessary-conditions": {
         options: { checkTypePredicates: false, allowConstantLoopConditions: "never" },
@@ -154,7 +154,7 @@ export default defineArchitecture({
       imports: {
         internal: ["cli", "apiTypes", "config", "shared"],
         external: ["openapi-fetch"],
-        builtins: ["util", "fs/promises", "path", "os", "child_process", "process"],
+        builtins: ["util", "fs/promises", "path", "os", "child_process", "process", "stream/consumers"],
       },
     },
 
@@ -228,6 +228,7 @@ export default defineArchitecture({
       description: "Colocated unit and hook tests.",
       files: TESTS,
       naming: { case: "pascalOrCamel", suffixes: [".test"] },
+      rules: { "no-captured-mutation": { severity: "off", reason: "Test fakes record the calls they receive, and beforeEach/afterEach share fixture folders." } },
       imports: {
         internal: [
           "shared", "domain", "protocol", "config", "core", "api", "db", "harness", "secrets", "push", "packageStore",
@@ -241,6 +242,7 @@ export default defineArchitecture({
       description: "End-to-end tests against a real server and runner.",
       files: ["e2e/**/*.ts"],
       naming: { case: "camel", suffixes: [".spec", ".constants"] },
+      rules: { "no-captured-mutation": { severity: "off", reason: "The spec records the runner processes it starts so afterAll can stop them." } },
       imports: { internal: ["e2e", "apiTypes"], external: ["@playwright/test", "openapi-fetch"], builtins: ["child_process", "fs/promises", "os", "path"] },
     },
     tooling: {

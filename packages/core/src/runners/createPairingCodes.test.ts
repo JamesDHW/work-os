@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { toWorkspaceId } from "@work-os/domain/identifiers/Identifiers";
 import { NotFoundError } from "@work-os/shared/NotFoundError";
 
-import { createPairingCodes } from "./createPairingCodes.ts";
+import { createPairingCodes } from "./pairingCodes.state.ts";
 
 const workspaceId = toWorkspaceId("workspace-1");
 

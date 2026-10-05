@@ -1,7 +1,7 @@
 import { Content, Overlay, Portal, Root, Title, Trigger } from "@radix-ui/react-dialog";
 import type { FC, ReactNode } from "react";
 
-import { content, overlay, title } from "./Dialog.css.ts";
+import { content, dialogTitle, overlay } from "./Dialog.css.ts";
 
 export type DialogProps = {
   readonly title: string;
@@ -11,14 +11,14 @@ export type DialogProps = {
   readonly children: ReactNode;
 };
 
-export const Dialog: FC<DialogProps> = (props) => (
-  <Root open={props.isOpen} onOpenChange={props.onOpenChange}>
-    <Trigger asChild>{props.trigger}</Trigger>
+export const Dialog: FC<DialogProps> = ({ isOpen, onOpenChange, trigger, title, children }) => (
+  <Root open={isOpen} onOpenChange={onOpenChange}>
+    <Trigger asChild>{trigger}</Trigger>
     <Portal>
       <Overlay className={overlay} />
       <Content className={content} aria-describedby={undefined}>
-        <Title className={title}>{props.title}</Title>
-        {props.children}
+        <Title className={dialogTitle}>{title}</Title>
+        {children}
       </Content>
     </Portal>
   </Root>

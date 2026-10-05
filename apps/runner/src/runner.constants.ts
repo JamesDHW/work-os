@@ -1,4 +1,3 @@
-export const RUNNER_VERSION = "0.1.0";
 export const CREDENTIALS_FILE = "credentials.json";
 export const CREDENTIALS_FILE_MODE = 0o600;
 export const RECONNECT_DELAYS_MILLISECONDS: readonly number[] = [1000, 2000, 5000, 10_000, 30_000];

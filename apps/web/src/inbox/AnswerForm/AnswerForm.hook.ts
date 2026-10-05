@@ -1,10 +1,11 @@
 import { useRouter } from "@tanstack/react-router";
-import { useState, type ChangeEvent, type MouseEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 
 import type { InboxAnswer, InboxItem } from "../../api/apiTypes.ts";
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { APPROVAL_DURATIONS } from "../inbox.constants.ts";
+
+export type ApprovalDuration = Extract<InboxAnswer, { readonly kind: "approve" }>["duration"];
 
 export type AnswerFormModel = {
   readonly replyText: string;
@@ -12,10 +13,10 @@ export type AnswerFormModel = {
   readonly errorMessage: string | null;
   readonly isBusy: boolean;
   readonly handleReplyChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-  readonly handleFieldChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  readonly handleFieldChange: (field: string) => (event: ChangeEvent<HTMLTextAreaElement>) => void;
   readonly handleReplyClick: () => Promise<void>;
-  readonly handleOptionClick: (event: MouseEvent<HTMLButtonElement>) => Promise<void>;
-  readonly handleApproveClick: (event: MouseEvent<HTMLButtonElement>) => Promise<void>;
+  readonly handleOptionClick: (option: string) => () => Promise<void>;
+  readonly handleApproveClick: (duration: ApprovalDuration) => () => Promise<void>;
   readonly handleRejectClick: () => Promise<void>;
   readonly handleAcceptClick: () => Promise<void>;
   readonly handleRequestRevisionClick: () => Promise<void>;
@@ -38,13 +39,6 @@ export const useAnswerForm = (workspaceId: string, inboxItem: InboxItem): Answer
     await router.invalidate();
   };
 
-  const approve = async (event: MouseEvent<HTMLButtonElement>): Promise<void> => {
-    const chosenValue = event.currentTarget.value;
-    const duration = APPROVAL_DURATIONS.find((candidate) => candidate === chosenValue);
-    if (duration === undefined) return;
-
-    await submitAnswer({ kind: "approve", duration, editedArguments: editedFields });
-  };
 
   return {
     replyText,
@@ -52,13 +46,13 @@ export const useAnswerForm = (workspaceId: string, inboxItem: InboxItem): Answer
     errorMessage,
     isBusy,
     handleReplyChange: (event) => setReplyText(event.target.value),
-    handleFieldChange: (event) => {
-      const { name, value } = event.target;
-      setEditedFields((previousFields) => ({ ...previousFields, [name]: value }));
+    handleFieldChange: (field) => (event) => {
+      const { value } = event.target;
+      setEditedFields((previousFields) => ({ ...previousFields, [field]: value }));
     },
     handleReplyClick: async () => submitAnswer({ kind: "reply", text: replyText }),
-    handleOptionClick: async (event: MouseEvent<HTMLButtonElement>) => submitAnswer({ kind: "reply", text: event.currentTarget.value }),
-    handleApproveClick: approve,
+    handleOptionClick: (option) => async () => submitAnswer({ kind: "reply", text: option }),
+    handleApproveClick: (duration) => async () => submitAnswer({ kind: "approve", duration, editedArguments: editedFields }),
     handleRejectClick: async () => submitAnswer({ kind: "reject", reason: replyText }),
     handleAcceptClick: async () => submitAnswer({ kind: "accept" }),
     handleRequestRevisionClick: async () => submitAnswer({ kind: "requestRevision", comment: replyText }),

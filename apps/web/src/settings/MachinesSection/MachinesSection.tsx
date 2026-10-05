@@ -15,16 +15,16 @@ export type MachinesSectionProps = {
   readonly runners: readonly Runner[];
 };
 
-export const MachinesSection: FC<MachinesSectionProps> = (props) => {
-  const model = useMachinesSection(props.workspaceId);
+export const MachinesSection: FC<MachinesSectionProps> = ({ workspaceId, runners }) => {
+  const model = useMachinesSection(workspaceId);
 
   return (
     <Card>
       <Heading level="section">Machines</Heading>
       <MutedText>A machine runs the work-os runner. Projects are folders on a machine; runs execute in containers there.</MutedText>
-      {props.runners.length === 0 ? <EmptyState>No machines are paired yet.</EmptyState> : null}
+      {runners.length === 0 ? <EmptyState>No machines are paired yet.</EmptyState> : null}
       <ul className={settingsList}>
-        {props.runners.map((runner) => (
+        {runners.map((runner) => (
           <li key={runner.id} className={settingsRow}>
             <span>
               {runner.name} <span className={settingsMeta}>({runner.platform})</span>

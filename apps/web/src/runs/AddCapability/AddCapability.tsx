@@ -13,15 +13,15 @@ export type AddCapabilityProps = {
   readonly availableCapabilities: readonly Capability[];
 };
 
-export const AddCapability: FC<AddCapabilityProps> = (props) => {
-  const model = useAddCapability(props.workspaceId, props.runId, props.availableCapabilities[0]?.id ?? "");
-  if (props.availableCapabilities.length === 0) return null;
+export const AddCapability: FC<AddCapabilityProps> = ({ workspaceId, runId, availableCapabilities }) => {
+  const model = useAddCapability(workspaceId, runId, availableCapabilities[0]?.id ?? "");
+  if (availableCapabilities.length === 0) return null;
 
   return (
     <Stack gap="sm">
       <Stack direction="row" gap="sm">
         <SelectInput value={model.capabilityId} onChange={model.handleCapabilityChange} aria-label="Capability to add">
-          {props.availableCapabilities.map((capability) => (
+          {availableCapabilities.map((capability) => (
             <option key={capability.id} value={capability.id}>
               {capability.id} ({capability.effect})
             </option>

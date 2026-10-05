@@ -21,7 +21,7 @@ import type { ApiServices } from "../ApiServices.ts";
 import { errorResponses, jsonBody, jsonResponse } from "../http/errorResponses.ts";
 import { respondWithError } from "../http/respondWithError.ts";
 import { createRequireUser } from "../middleware/requireUser.ts";
-import { createChallengeStore } from "./createChallengeStore.ts";
+import { createChallengeStore } from "./challengeStore.state.ts";
 import { writeSessionCookie } from "./sessionCookie.ts";
 import { toOpaqueJson } from "../http/toOpaqueJson.ts";
 import { toAuthenticationResponse, toRegistrationResponse } from "./toWebAuthnResponses.ts";

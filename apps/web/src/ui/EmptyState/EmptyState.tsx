@@ -6,4 +6,4 @@ export type EmptyStateProps = {
   readonly children: ReactNode;
 };
 
-export const EmptyState: FC<EmptyStateProps> = (props) => <div className={emptyState}>{props.children}</div>;
+export const EmptyState: FC<EmptyStateProps> = ({ children }) => <div className={emptyState}>{children}</div>;

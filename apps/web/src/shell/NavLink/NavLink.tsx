@@ -12,9 +12,9 @@ export type NavLinkProps = {
   readonly icon: IconName;
 };
 
-export const NavLink: FC<NavLinkProps> = (props) => (
-  <Link className={navLink} to={props.to} params={{ workspaceId: props.workspaceId }} activeOptions={{ exact: props.to === "/w/$workspaceId" }}>
-    <Icon name={props.icon} />
-    {props.label}
+export const NavLink: FC<NavLinkProps> = ({ to, workspaceId, icon, label }) => (
+  <Link className={navLink} to={to} params={{ workspaceId: workspaceId }} activeOptions={{ exact: to === "/w/$workspaceId" }}>
+    <Icon name={icon} />
+    {label}
   </Link>
 );

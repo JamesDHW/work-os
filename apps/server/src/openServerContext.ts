@@ -1,8 +1,8 @@
 import type { ServerConfig } from "@work-os/config/ServerConfig";
-import { createEventBus } from "@work-os/core/events/createEventBus";
-import { createInboxWaiters } from "@work-os/core/inbox/createInboxWaiters";
+import { createEventBus } from "@work-os/core/events/eventBus.state";
+import { createInboxWaiters } from "@work-os/core/inbox/inboxWaiters.state";
 import { createEnsurePushKeys } from "@work-os/core/notifications/ensurePushKeys";
-import { createPairingCodes } from "@work-os/core/runners/createPairingCodes";
+import { createPairingCodes } from "@work-os/core/runners/pairingCodes.state";
 import { createRunnerHub } from "@work-os/core/runners/createRunnerHub";
 import type { Logger } from "@work-os/core/system/Logger";
 import { openDatabase } from "@work-os/db/openDatabase";

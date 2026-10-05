@@ -15,20 +15,20 @@ export type ProjectsScreenProps = {
   readonly connections: readonly Connection[];
 };
 
-export const ProjectsScreen: FC<ProjectsScreenProps> = (props) => {
-  const actions = <CreateProjectDialog workspaceId={props.workspaceId} runners={props.runners} environments={props.environments} connections={props.connections} />;
-  const emptyText = props.runners.length === 0 ? "Pair a machine in Settings first, then add a folder on it as a project." : "Add a local folder as your first project.";
+export const ProjectsScreen: FC<ProjectsScreenProps> = ({ workspaceId, runners, environments, connections, projects }) => {
+  const actions = <CreateProjectDialog workspaceId={workspaceId} runners={runners} environments={environments} connections={connections} />;
+  const emptyText = runners.length === 0 ? "Pair a machine in Settings first, then add a folder on it as a project." : "Add a local folder as your first project.";
 
   return (
     <Stack gap="lg">
       <PageHeader title="Projects" description="Local folders on your paired machines." actions={actions} />
-      {props.projects.length === 0 ? <EmptyState>{emptyText}</EmptyState> : null}
-      {props.projects.map((project) => (
+      {projects.length === 0 ? <EmptyState>{emptyText}</EmptyState> : null}
+      {projects.map((project) => (
         <ProjectCard
           key={project.id}
-          workspaceId={props.workspaceId}
+          workspaceId={workspaceId}
           project={project}
-          runner={props.runners.find((runner) => runner.id === project.location.runnerId)}
+          runner={runners.find((runner) => runner.id === project.location.runnerId)}
         />
       ))}
     </Stack>

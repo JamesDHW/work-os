@@ -19,38 +19,24 @@ export type DockerDriverOptions = {
   readonly egressController: EgressController;
 };
 
+// Each run's container is found by its work-os.run label on every call, so a runner restart loses nothing.
 export const createDockerDriver = (options: DockerDriverOptions): EnvironmentDriver => {
-  const containers = new Map<RunId, string>();
-
-  const containerFor = async (runId: RunId): Promise<string | WorkOsError> => {
-    const known = containers.get(runId);
-    if (known !== undefined) return known;
-
-    const found = await findRunContainer(runId);
-    if (!(found instanceof WorkOsError)) {
-      containers.set(runId, found);
-    }
-    return found;
-  };
-
   return {
     prepare: async (input) => {
       const containerId = await prepareContainer(options, input);
       if (containerId instanceof WorkOsError) return containerId;
 
-      containers.set(input.runId, containerId);
       return WORKSPACE_MOUNT_PATH;
     },
     exec: async (input) => {
-      const containerId = await containerFor(input.runId);
+      const containerId = await findRunContainer(input.runId);
       if (containerId instanceof WorkOsError) return containerId;
 
       const dockerArguments = ["exec", "--interactive", "--workdir", input.cwd ?? WORKSPACE_MOUNT_PATH, containerId, "bash", "-c", input.command];
       return runProcess({ command: "docker", arguments: dockerArguments, timeoutSeconds: input.timeoutSeconds, onOutput: input.onOutput, stdin: input.stdin });
     },
     stop: async (runId) => {
-      const containerId = await containerFor(runId);
-      containers.delete(runId);
+      const containerId = await findRunContainer(runId);
       if (containerId instanceof WorkOsError) return undefined;
 
       await options.egressController.revoke(containerId);

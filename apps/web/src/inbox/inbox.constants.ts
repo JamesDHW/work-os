@@ -10,5 +10,3 @@ export const KIND_LABELS = {
   review: "Review",
   escalation: "Escalation",
 } as const;
-
-export const APPROVAL_DURATIONS = ["once", "run", "standard"] as const;

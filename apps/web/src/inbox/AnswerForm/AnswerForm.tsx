@@ -15,9 +15,9 @@ export type AnswerFormProps = {
   readonly inboxItem: InboxItem;
 };
 
-export const AnswerForm: FC<AnswerFormProps> = (props) => {
-  const model = useAnswerForm(props.workspaceId, props.inboxItem);
-  const { payload } = props.inboxItem;
+export const AnswerForm: FC<AnswerFormProps> = ({ workspaceId, inboxItem }) => {
+  const model = useAnswerForm(workspaceId, inboxItem);
+  const { payload } = inboxItem;
 
   return (
     <Stack>

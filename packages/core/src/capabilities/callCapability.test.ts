@@ -10,7 +10,7 @@ import type { Project } from "@work-os/domain/projects/Project";
 import type { Run } from "@work-os/domain/runs/Run";
 import { ConflictError } from "@work-os/shared/ConflictError";
 
-import { createInboxWaiters } from "../inbox/createInboxWaiters.ts";
+import { createInboxWaiters } from "../inbox/inboxWaiters.state.ts";
 import type { InboxStore } from "../inbox/InboxStore.ts";
 import { createOpenInboxItem } from "../inbox/openInboxItem.ts";
 import { createAwaitRunDecision } from "../runs/awaitRunDecision.ts";

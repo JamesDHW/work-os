@@ -7,9 +7,9 @@ export type DiffViewProps = {
   readonly diff: string;
 };
 
-export const DiffView: FC<DiffViewProps> = (props) => (
+export const DiffView: FC<DiffViewProps> = ({ diff }) => (
   <pre className={diffView}>
-    {toDiffLines(props.diff).map((line) => (
+    {toDiffLines(diff).map((line) => (
       <code key={line.lineNumber} className={diffLineRecipe({ kind: line.kind })}>
         {line.text}
       </code>

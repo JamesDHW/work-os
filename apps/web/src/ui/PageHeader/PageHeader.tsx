@@ -9,12 +9,12 @@ export type PageHeaderProps = {
   readonly actions?: ReactNode;
 };
 
-export const PageHeader: FC<PageHeaderProps> = (props) => (
+export const PageHeader: FC<PageHeaderProps> = ({ title, description, actions }) => (
   <header className={pageHeader}>
     <div className={titles}>
-      <Heading level="page">{props.title}</Heading>
-      {props.description === undefined ? null : <MutedText>{props.description}</MutedText>}
+      <Heading level="page">{title}</Heading>
+      {description === undefined ? null : <MutedText>{description}</MutedText>}
     </div>
-    {props.actions}
+    {actions}
   </header>
 );

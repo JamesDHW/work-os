@@ -14,8 +14,8 @@ export type SignInScreenProps = {
   readonly isSetUp: boolean;
 };
 
-export const SignInScreen: FC<SignInScreenProps> = (props) => {
-  const model = useSignInScreen(props.isSetUp);
+export const SignInScreen: FC<SignInScreenProps> = ({ isSetUp }) => {
+  const model = useSignInScreen(isSetUp);
 
   return (
     <div className={page}>

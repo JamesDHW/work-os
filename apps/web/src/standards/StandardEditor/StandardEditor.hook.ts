@@ -4,7 +4,7 @@ import { useState, type ChangeEvent } from "react";
 import type { Standard } from "../../api/apiTypes.ts";
 import { apiClient } from "../../api/client.ts";
 import { describeFailure } from "../../api/describeFailure.ts";
-import { toReviewMode, toSaveStandardRequest, toStandardForm, toStandardTextField, type StandardForm } from "../standardForm.ts";
+import { toReviewMode, toSaveStandardRequest, toStandardForm, type StandardForm, type StandardTextField } from "../standardForm.ts";
 
 type TextControl = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
@@ -13,9 +13,9 @@ export type StandardEditorModel = {
   readonly errorMessage: string | null;
   readonly savedMessage: string | null;
   readonly isBusy: boolean;
-  readonly handleTextChange: (event: ChangeEvent<TextControl>) => void;
+  readonly handleTextChange: (field: StandardTextField) => (event: ChangeEvent<TextControl>) => void;
   readonly handleReviewChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-  readonly handleCapabilityToggle: (event: ChangeEvent<HTMLInputElement>) => void;
+  readonly handleCapabilityToggle: (capabilityId: string) => (event: ChangeEvent<HTMLInputElement>) => void;
   readonly handleSaveClick: () => Promise<void>;
 };
 
@@ -37,12 +37,8 @@ export const useStandardEditor = (workspaceId: string, standard: Standard): Stan
     await router.invalidate();
   };
 
-  // Each text control carries its form field as its name attribute.
-  const handleTextChange = (event: ChangeEvent<TextControl>): void => {
-    const { name, value } = event.target;
-    const field = toStandardTextField(name);
-    if (field === undefined) return;
-
+  const handleTextChange = (field: StandardTextField) => (event: ChangeEvent<TextControl>): void => {
+    const { value } = event.target;
     setForm((previousForm) => ({ ...previousForm, [field]: value }));
   };
 
@@ -53,8 +49,8 @@ export const useStandardEditor = (workspaceId: string, standard: Standard): Stan
     setForm((previousForm) => ({ ...previousForm, review }));
   };
 
-  const handleCapabilityToggle = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { checked: isChecked, value: capabilityId } = event.target;
+  const handleCapabilityToggle = (capabilityId: string) => (event: ChangeEvent<HTMLInputElement>): void => {
+    const { checked: isChecked } = event.target;
     setForm((previousForm) => {
       const capabilities = isChecked ? [...previousForm.capabilities, capabilityId] : previousForm.capabilities.filter((existingId) => existingId !== capabilityId);
       return { ...previousForm, capabilities };

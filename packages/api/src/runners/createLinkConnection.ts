@@ -6,6 +6,7 @@ import { tryCatch } from "@work-os/shared/tryCatch";
 import { WorkOsError } from "@work-os/shared/WorkOsError";
 
 import type { ApiServices } from "../ApiServices.ts";
+import { BEARER_PREFIX, RUNNER_LINK_UNAUTHORIZED_CLOSE_CODE } from "../http/http.constants.ts";
 
 export type LinkSocket = {
   readonly send: (text: string) => void;
@@ -13,60 +14,61 @@ export type LinkSocket = {
 };
 
 export type LinkConnection = {
-  readonly receive: (text: string, socket: LinkSocket) => Promise<undefined>;
+  readonly open: (socket: LinkSocket) => void;
+  readonly receive: (text: string) => Promise<undefined>;
   readonly close: () => Promise<undefined>;
 };
 
-type AttachedRunner = {
-  readonly runner: Runner;
-  readonly session: RunnerSession;
+// The runner sends its token with the WebSocket upgrade, so each connection knows its runner from the start.
+// The socket arrives once the upgrade completes; the session starts as soon as it does.
+export const createLinkConnection = async (services: ApiServices, authorization: string | undefined): Promise<LinkConnection> => {
+  const token = authorization?.startsWith(BEARER_PREFIX) === true ? authorization.slice(BEARER_PREFIX.length) : "";
+  const runner = await services.runners.authenticateRunner(token);
+  if (runner instanceof WorkOsError) return rejectedConnection(runner.message);
+
+  const opened = Promise.withResolvers<LinkSocket>();
+  const session = startSession(services, runner, opened.promise);
+  return {
+    open: (socket) => opened.resolve(socket),
+    receive: async (text) => receiveMessage(services, runner, text),
+    close: async () => {
+      const started = await session;
+      return started.disconnect();
+    },
+  };
 };
 
-export const createLinkConnection = (services: ApiServices): LinkConnection => {
-  const attachedRunners: AttachedRunner[] = [];
+const rejectedConnection = (reason: string): LinkConnection => ({
+  open: (socket) => socket.close(RUNNER_LINK_UNAUTHORIZED_CLOSE_CODE, reason),
+  receive: async () => undefined,
+  close: async () => undefined,
+});
 
-  const attach = async (token: string, socket: LinkSocket): Promise<undefined> => {
-    const runner = await services.runners.authenticateRunner(token);
-    if (runner instanceof WorkOsError) {
-      socket.close(4401, runner.message);
-      return undefined;
-    }
-    const send = (message: RunnerRequestMessage): void => socket.send(JSON.stringify(message));
-    attachedRunners.push({ runner, session: await services.runners.connectRunner(runner, { send }) });
+const startSession = async (services: ApiServices, runner: Runner, opened: Promise<LinkSocket>): Promise<RunnerSession> => {
+  const socket = await opened;
+  const send = (message: RunnerRequestMessage): void => socket.send(JSON.stringify(message));
+  return services.runners.connectRunner(runner, { send });
+};
+
+const receiveMessage = async (services: ApiServices, runner: Runner, text: string): Promise<undefined> => {
+  const parsed = RunnerLinkMessageSchema.safeParse(tryCatch((): unknown => JSON.parse(text)));
+  if (!parsed.success) {
+    services.logger.warn("Ignored an invalid runner message.", { problem: parsed.error.message });
     return undefined;
-  };
+  }
+  return handleMessage(services, runner, parsed.data);
+};
 
-  const handle = async (message: RunnerLinkMessage, socket: LinkSocket): Promise<undefined> => {
-    const attached = attachedRunners[0];
-    if (message.type === "hello") return attached === undefined ? attach(message.token, socket) : undefined;
-    if (attached === undefined) return undefined;
-
-    switch (message.type) {
-      case "succeeded":
-      case "failed":
-      case "output":
-        services.runners.runnerHub.receive(message);
-        return undefined;
-      case "egressBlocked":
-        return services.runners.recordEgressBlocked({ runnerId: attached.runner.id, runId: message.runId, host: message.host });
-      default:
-        return message satisfies never;
-    }
-  };
-
-  return {
-    receive: async (text, socket) => {
-      const parsed = RunnerLinkMessageSchema.safeParse(tryCatch((): unknown => JSON.parse(text)));
-      if (!parsed.success) {
-        services.logger.warn("Ignored an invalid runner message.", { problem: parsed.error.message });
-        return undefined;
-      }
-      return handle(parsed.data, socket);
-    },
-    close: async () => {
-      const attached = attachedRunners.splice(0);
-      await Promise.all(attached.map((entry) => entry.session.disconnect()));
+const handleMessage = async (services: ApiServices, runner: Runner, message: RunnerLinkMessage): Promise<undefined> => {
+  switch (message.type) {
+    case "succeeded":
+    case "failed":
+    case "output":
+      services.runners.runnerHub.receive(message);
       return undefined;
-    },
-  };
+    case "egressBlocked":
+      return services.runners.recordEgressBlocked({ runnerId: runner.id, runId: message.runId, host: message.host });
+    default:
+      return message satisfies never;
+  }
 };

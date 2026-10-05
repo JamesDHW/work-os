@@ -13,11 +13,14 @@ type LinkMessageEvent = {
 export const registerRunnerLinkRoute = (app: OpenAPIHono<ApiEnv>, services: ApiServices, upgradeWebSocket: UpgradeWebSocket): void => {
   app.get(
     "/api/runners/link",
-    upgradeWebSocket(() => {
-      const connection = createLinkConnection(services);
+    upgradeWebSocket(async (context) => {
+      const connection = await createLinkConnection(services, context.req.header("authorization"));
       return {
-        onMessage: (event: LinkMessageEvent, socket: WSContext) => {
-          void connection.receive(String(event.data), toLinkSocket(socket));
+        onOpen: (_event: Event, socket: WSContext) => {
+          connection.open(toLinkSocket(socket));
+        },
+        onMessage: (event: LinkMessageEvent) => {
+          void connection.receive(String(event.data));
         },
         onClose: () => {
           void connection.close();

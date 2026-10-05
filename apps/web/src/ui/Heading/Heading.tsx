@@ -7,14 +7,14 @@ export type HeadingProps = {
   readonly children: ReactNode;
 };
 
-export const Heading: FC<HeadingProps> = (props) => {
-  if (props.level === "page") return <h1 className={pageHeading}>{props.children}</h1>;
+export const Heading: FC<HeadingProps> = ({ level, children }) => {
+  if (level === "page") return <h1 className={pageHeading}>{children}</h1>;
 
-  return <h2 className={sectionHeading}>{props.children}</h2>;
+  return <h2 className={sectionHeading}>{children}</h2>;
 };
 
 export type MutedTextProps = {
   readonly children: ReactNode;
 };
 
-export const MutedText: FC<MutedTextProps> = (props) => <p className={muted}>{props.children}</p>;
+export const MutedText: FC<MutedTextProps> = ({ children }) => <p className={muted}>{children}</p>;

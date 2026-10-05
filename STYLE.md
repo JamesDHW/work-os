@@ -44,7 +44,8 @@ export const decideApproval = (call: CapabilityCall, grants: readonly Grant[]): 
 
 | Banned | Use instead |
 | --- | --- |
-| `let`, `var`, reassignment, `++`, `--`, `delete` | New `const` from a named transformation |
+| `let`, `var`, reassignment, `++`, `--`, `delete` | New `const` from a named transformation; a parameter instead of a counter; `AbortSignal` or a `Promise` instead of a flag |
+| Changing an array, object, `Map` or `Set` from a function other than the one that created it | Long-lived state in a `*.state.ts` module that exports named operations (`pendingRequests.state.ts`); build values inside one call |
 | `function` declarations | Arrow functions |
 | `interface` | `type` (exception: module augmentation for a third-party API) |
 | `enum`, `namespace` | Literal unions; modules |
@@ -157,13 +158,13 @@ Write none, unless the code cannot express it: an external constraint, a workaro
 
 | Need | The way |
 | --- | --- |
-| A component | `export const RunCard: FC<RunCardProps> = (props) => { ... }` with a named readonly props type in the same file. |
+| A component | `export const RunCard: FC<RunCardProps> = ({ run, onOpen }) => { ... }` with a named readonly props type in the same file. Props are always destructured in the parameter list; native attributes are forwarded with a rest element (`({ tone, ...buttonProps })`). |
 | Folder | A module folder per component: `RunCard/RunCard.tsx`, `RunCard.css.ts`, and `RunCard.hook.ts` when it has behaviour (+ `RunCard.constants.ts`). Screens live in concept folders (`src/inbox/`, `src/runs/`); primitives in `src/ui/`; chrome in `src/shell/`. No barrels. |
 | Behaviour | Exactly one component-specific hook returning a named model object (`RunCardModel`). Purely presentational components call no hooks. |
 | Server data | TanStack Router **loaders** in `routes/` return a `LoadResult` (`toReady` / `toFailure`). The route component renders an `ErrorNotice` for a failure and passes the values to the screen as props. Never `fetch` or `useEffect` for data. Live updates come from `shell/useServerEvents.ts` invalidating routes. Routes import through `#web/…`. |
 | Mutations | A named handler in the hook calls the client, then `router.invalidate()`. |
 | Render states | Guard returns for loading / failure / empty; the success state last. `&&` only for a small optional fragment with a boolean condition. |
-| Event handlers | Named in the hook (`handleApproveClick`); JSX only passes them, never calls them (`onClick={handleRemove(id)}` is out). An async handler is passed directly: React ignores the returned promise, and `no-misused-promises` does not check JSX props. |
+| Event handlers | Named in the hook (`handleApproveClick`); JSX passes them, or binds a row's value by calling one with plain values only: `onClick={model.handleRemoveClick(connection.id)}`. Inline arrows stay out. An async handler is passed directly: React ignores the returned promise, and `no-misused-promises` does not check JSX props. |
 | Derived values | Calculated in the hook during render; never stored in state. `useEffect` only for an isolated external integration, in one named hook. |
 | Styling | vanilla-extract only: a `recipe` (or `style`) in the component's `.css.ts`, referencing `vars` from `ui/theme.css.ts`. Variants are recipe variants, not conditional class names. No inline `style`, no raw colours, sizes or font values outside `@work-os/design-tokens`. |
 | Icons | `ui/Icon` with a typed `name` union over `@tabler/icons-react`. |

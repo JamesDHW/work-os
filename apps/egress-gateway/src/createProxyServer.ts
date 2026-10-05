@@ -1,7 +1,7 @@
 import { createServer, request, type IncomingMessage, type Server, type ServerResponse } from "http";
 import { connect, type Socket } from "net";
 
-import type { Allowlists } from "./createAllowlists.ts";
+import type { Allowlists } from "./allowlists.state.ts";
 
 export const createProxyServer = (allowlists: Allowlists): Server => {
   const server = createServer((incoming, response) => forwardPlainRequest(allowlists, incoming, response));

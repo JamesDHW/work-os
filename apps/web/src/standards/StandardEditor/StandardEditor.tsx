@@ -22,8 +22,8 @@ export type StandardEditorProps = {
   readonly capabilities: readonly Capability[];
 };
 
-export const StandardEditor: FC<StandardEditorProps> = (props) => {
-  const model = useStandardEditor(props.workspaceId, props.standard);
+export const StandardEditor: FC<StandardEditorProps> = ({ workspaceId, standard, agents, capabilities }) => {
+  const model = useStandardEditor(workspaceId, standard);
   const { form } = model;
   const saveButton = (
     <Button tone="primary" disabled={model.isBusy} onClick={model.handleSaveClick}>
@@ -33,30 +33,30 @@ export const StandardEditor: FC<StandardEditorProps> = (props) => {
 
   return (
     <Stack gap="lg">
-      <PageHeader title={props.standard.id} description="A standard says what good looks like for one kind of work." actions={saveButton} />
+      <PageHeader title={standard.id} description="A standard says what good looks like for one kind of work." actions={saveButton} />
       <ErrorNotice message={model.errorMessage} />
       {model.savedMessage === null ? null : <MutedText>{model.savedMessage}</MutedText>}
       <Card>
         <Field label="Describes">
-          <TextInput name="describes" value={form.describes} onChange={model.handleTextChange} />
+          <TextInput value={form.describes} onChange={model.handleTextChange("describes")} />
         </Field>
         <Field label="Consumer" hint="Who uses the result.">
-          <TextInput name="consumer" value={form.consumer} onChange={model.handleTextChange} />
+          <TextInput value={form.consumer} onChange={model.handleTextChange("consumer")} />
         </Field>
         <Field label="Prompt hint" hint="Shown when someone starts a run.">
-          <TextInput name="inputHint" value={form.inputHint} onChange={model.handleTextChange} />
+          <TextInput value={form.inputHint} onChange={model.handleTextChange("inputHint")} />
         </Field>
         <Field label="Criteria" hint="Markdown. What a finished result must satisfy.">
-          <TextArea name="criteria" value={form.criteria} onChange={model.handleTextChange} />
+          <TextArea value={form.criteria} onChange={model.handleTextChange("criteria")} />
         </Field>
         <Field label="Method" hint="Markdown. How the agent should work.">
-          <TextArea name="method" value={form.method} onChange={model.handleTextChange} />
+          <TextArea value={form.method} onChange={model.handleTextChange("method")} />
         </Field>
       </Card>
       <Card>
         <Field label="Agent">
-          <SelectInput name="agentId" value={form.agentId} onChange={model.handleTextChange}>
-            {props.agents.map((agent) => (
+          <SelectInput value={form.agentId} onChange={model.handleTextChange("agentId")}>
+            {agents.map((agent) => (
               <option key={agent.id} value={agent.id}>
                 {agent.name} ({agent.model})
               </option>
@@ -64,7 +64,7 @@ export const StandardEditor: FC<StandardEditorProps> = (props) => {
           </SelectInput>
         </Field>
         <Field label="Skills" hint="Comma separated skill ids.">
-          <TextInput name="skills" value={form.skills} onChange={model.handleTextChange} />
+          <TextInput value={form.skills} onChange={model.handleTextChange("skills")} />
         </Field>
         <Field label="Review">
           <SelectInput value={form.review} onChange={model.handleReviewChange}>
@@ -76,21 +76,20 @@ export const StandardEditor: FC<StandardEditorProps> = (props) => {
           </SelectInput>
         </Field>
         <Field label="Checks" hint="One per line, as name: command. They run in the container after the agent finishes.">
-          <TextArea name="checks" value={form.checks} onChange={model.handleTextChange} />
+          <TextArea value={form.checks} onChange={model.handleTextChange("checks")} />
         </Field>
         <Field label="Network access" hint="One host per line, in addition to the environment's.">
-          <TextArea name="egress" value={form.egress} onChange={model.handleTextChange} />
+          <TextArea value={form.egress} onChange={model.handleTextChange("egress")} />
         </Field>
       </Card>
       <Card>
         <Field label="Capabilities" hint="Actions outside the container. Reversible and irreversible ones ask for approval.">
-          {props.capabilities.map((capability) => (
+          {capabilities.map((capability) => (
             <Checkbox
               key={capability.id}
               label={`${capability.id} (${capability.effect}): ${capability.description}`}
-              value={capability.id}
               isChecked={form.capabilities.includes(capability.id)}
-              onChange={model.handleCapabilityToggle}
+              onChange={model.handleCapabilityToggle(capability.id)}
             />
           ))}
         </Field>

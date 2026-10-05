@@ -18,7 +18,7 @@ export const QuestionAnswer: FC<QuestionAnswerProps> = ({ model, question, optio
     {options.length > 0 ? (
       <Stack direction="row" gap="sm">
         {options.map((option) => (
-          <Button key={option} value={option} disabled={model.isBusy} onClick={model.handleOptionClick}>
+          <Button key={option} disabled={model.isBusy} onClick={model.handleOptionClick(option)}>
             {option}
           </Button>
         ))}

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { toRunId } from "@work-os/domain/identifiers/Identifiers";
 
-import { createAllowlists } from "./createAllowlists.ts";
+import { createAllowlists } from "./allowlists.state.ts";
 
 const runId = toRunId("run-1");
 

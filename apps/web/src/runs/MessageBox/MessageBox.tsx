@@ -14,23 +14,23 @@ export type MessageBoxProps = {
   readonly isFinished: boolean;
 };
 
-export const MessageBox: FC<MessageBoxProps> = (props) => {
-  const model = useMessageBox(props.workspaceId, props.runId);
+export const MessageBox: FC<MessageBoxProps> = ({ workspaceId, runId, isFinished, isAgentWorking }) => {
+  const model = useMessageBox(workspaceId, runId);
   const canSend = !model.isBusy && model.text.trim().length > 0;
-  const sendLabel = props.isFinished ? "Reopen with this message" : "Send";
+  const sendLabel = isFinished ? "Reopen with this message" : "Send";
 
   return (
     <Stack gap="sm">
       <TextArea value={model.text} onChange={model.handleTextChange} placeholder="Message the agent" aria-label="Message" />
       <ErrorNotice message={model.errorMessage} />
       <Stack direction="row" gap="sm" justify="end">
-        {props.isAgentWorking ? (
+        {isAgentWorking ? (
           <Button disabled={!canSend} onClick={model.handleSteerClick}>
             {MESSAGE_MODE_LABELS.steer}
           </Button>
         ) : null}
         <Button tone="primary" disabled={!canSend} onClick={model.handleFollowUpClick}>
-          {props.isAgentWorking ? MESSAGE_MODE_LABELS.followUp : sendLabel}
+          {isAgentWorking ? MESSAGE_MODE_LABELS.followUp : sendLabel}
         </Button>
       </Stack>
     </Stack>

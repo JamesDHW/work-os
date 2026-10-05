@@ -11,20 +11,20 @@ export type TranscriptProps = {
   readonly streamingText: string | null;
 };
 
-export const Transcript: FC<TranscriptProps> = (props) => {
-  const isEmpty = props.entries.length === 0 && props.streamingText === null;
+export const Transcript: FC<TranscriptProps> = ({ entries, streamingText }) => {
+  const isEmpty = entries.length === 0 && streamingText === null;
   if (isEmpty) return <EmptyState>The agent has not said anything yet.</EmptyState>;
 
   return (
     <ol className={transcript}>
-      {props.entries.map((entry) => (
+      {entries.map((entry) => (
         <li key={entry.id} className={entryRecipe({ role: entry.role, isError: entry.isError })}>
           <TranscriptText entry={entry} />
         </li>
       ))}
-      {props.streamingText === null ? null : (
+      {streamingText === null ? null : (
         <li className={entryRecipe({ role: "assistant", isError: false })}>
-          <Markdown text={props.streamingText} />
+          <Markdown text={streamingText} />
         </li>
       )}
     </ol>

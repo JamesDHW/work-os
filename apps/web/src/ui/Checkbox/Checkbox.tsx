@@ -4,14 +4,13 @@ import { checkbox, checkboxLabel } from "./Checkbox.css.ts";
 
 export type CheckboxProps = {
   readonly label: string;
-  readonly value: string;
   readonly isChecked: boolean;
   readonly onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const Checkbox: FC<CheckboxProps> = (props) => (
+export const Checkbox: FC<CheckboxProps> = ({ label, isChecked, onChange }) => (
   <label className={checkboxLabel}>
-    <input className={checkbox} type="checkbox" value={props.value} checked={props.isChecked} onChange={props.onChange} />
-    {props.label}
+    <input className={checkbox} type="checkbox" checked={isChecked} onChange={onChange} />
+    {label}
   </label>
 );

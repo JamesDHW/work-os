@@ -12,13 +12,13 @@ export type ChangedFilesProps = {
   readonly diff: string | null;
 };
 
-export const ChangedFiles: FC<ChangedFilesProps> = (props) => {
-  if (props.changedFiles.length === 0) return <EmptyState>No files have changed.</EmptyState>;
+export const ChangedFiles: FC<ChangedFilesProps> = ({ changedFiles, diff }) => {
+  if (changedFiles.length === 0) return <EmptyState>No files have changed.</EmptyState>;
 
   return (
     <Stack gap="sm">
       <ul className={fileList}>
-        {props.changedFiles.map((changedFile) => (
+        {changedFiles.map((changedFile) => (
           <li key={changedFile.path}>
             <span className={changeMark} title={changedFile.change}>
               {CHANGE_LABELS[changedFile.change]}
@@ -27,7 +27,7 @@ export const ChangedFiles: FC<ChangedFilesProps> = (props) => {
           </li>
         ))}
       </ul>
-      {props.diff === null ? null : <DiffView diff={props.diff} />}
+      {diff === null ? null : <DiffView diff={diff} />}
     </Stack>
   );
 };

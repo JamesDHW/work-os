@@ -21,7 +21,7 @@ export const sidebar = style({
 
 export const brand = style({ fontFamily: vars.font.display, fontWeight: 700, padding: vars.space.sm, color: vars.color.ink });
 
-export const workspaceName = style({ color: vars.color.ink3, fontSize: vars.size.small, padding: `0 ${vars.space.sm} ${vars.space.md}` });
+export const workspaceLabel = style({ color: vars.color.ink3, fontSize: vars.size.small, padding: `0 ${vars.space.sm} ${vars.space.md}` });
 
 export const footer = style({ marginTop: "auto", display: "flex", gap: vars.space.xs });
 

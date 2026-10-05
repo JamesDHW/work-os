@@ -19,7 +19,7 @@ export type CreateProjectDialogModel = {
   readonly handlePathChange: (event: ChangeEvent<HTMLInputElement>) => void;
   readonly handleFolderSelect: (path: string) => void;
   readonly handleEnvironmentChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-  readonly handleConnectionToggle: (event: ChangeEvent<HTMLInputElement>) => void;
+  readonly handleConnectionToggle: (connectionId: string) => (event: ChangeEvent<HTMLInputElement>) => void;
   readonly handleCreateClick: () => Promise<void>;
 };
 
@@ -76,8 +76,8 @@ export const useCreateProjectDialog = (workspaceId: string, defaults: CreateProj
     handlePathChange: (event) => setPath(event.target.value),
     handleFolderSelect,
     handleEnvironmentChange: (event) => setEnvironmentId(event.target.value),
-    handleConnectionToggle: (event) => {
-      const { checked: isChecked, value: connectionId } = event.target;
+    handleConnectionToggle: (connectionId) => (event) => {
+      const { checked: isChecked } = event.target;
       setConnectionIds((previousIds) => (isChecked ? [...previousIds, connectionId] : previousIds.filter((previousId) => previousId !== connectionId)));
     },
     handleCreateClick: createProject,

@@ -7,4 +7,4 @@ export type RunStatusBadgeProps = {
   readonly status: RunStatus;
 };
 
-export const RunStatusBadge: FC<RunStatusBadgeProps> = (props) => <StatusBadge tone={RUN_STATUS_TONES[props.status]} label={RUN_STATUS_LABELS[props.status]} />;
+export const RunStatusBadge: FC<RunStatusBadgeProps> = ({ status }) => <StatusBadge tone={RUN_STATUS_TONES[status]} label={RUN_STATUS_LABELS[status]} />;

@@ -1,6 +1,6 @@
 import process from "process";
 
-import { createAllowlists } from "./createAllowlists.ts";
+import { createAllowlists } from "./allowlists.state.ts";
 import { createControlServer } from "./createControlServer.ts";
 import { createProxyServer } from "./createProxyServer.ts";
 import { CONTROL_PORT, PROXY_PORT } from "./gateway.constants.ts";

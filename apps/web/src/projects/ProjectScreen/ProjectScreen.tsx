@@ -16,16 +16,16 @@ export type ProjectScreenProps = {
   readonly standards: readonly Standard[];
 };
 
-export const ProjectScreen: FC<ProjectScreenProps> = (props) => {
-  const runner = props.runners.find((candidate) => candidate.id === props.project.location.runnerId);
-  const actions = <StartRunDialog workspaceId={props.workspaceId} projects={[props.project]} standards={props.standards} projectId={props.project.id} />;
+export const ProjectScreen: FC<ProjectScreenProps> = ({ runners, project, workspaceId, standards, runs }) => {
+  const runner = runners.find((candidate) => candidate.id === project.location.runnerId);
+  const actions = <StartRunDialog workspaceId={workspaceId} projects={[project]} standards={standards} projectId={project.id} />;
 
   return (
     <Stack gap="lg">
-      <PageHeader title={props.project.name} actions={actions} />
-      <ProjectCard workspaceId={props.workspaceId} project={props.project} runner={runner} />
+      <PageHeader title={project.name} actions={actions} />
+      <ProjectCard workspaceId={workspaceId} project={project} runner={runner} />
       <Heading level="section">Runs</Heading>
-      <RunList workspaceId={props.workspaceId} runs={props.runs} emptyText="No runs on this project yet." />
+      <RunList workspaceId={workspaceId} runs={runs} emptyText="No runs on this project yet." />
     </Stack>
   );
 };

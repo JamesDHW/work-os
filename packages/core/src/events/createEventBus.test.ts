@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import type { WorkspaceEvent } from "@work-os/domain/events/WorkspaceEvent";
 import { toWorkspaceId } from "@work-os/domain/identifiers/Identifiers";
 
-import { createEventBus } from "./createEventBus.ts";
+import { createEventBus } from "./eventBus.state.ts";
 
 const workspaceId = toWorkspaceId("workspace-1");
 

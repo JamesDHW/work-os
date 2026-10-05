@@ -17,12 +17,12 @@ export type SettingsScreenProps = {
   readonly grants: readonly Grant[];
 };
 
-export const SettingsScreen: FC<SettingsScreenProps> = (props) => (
+export const SettingsScreen: FC<SettingsScreenProps> = ({ workspaceId, runners, connections, capabilities, grants }) => (
   <Stack gap="lg">
     <PageHeader title="Settings" description="Machines, connections, approvals and this device." />
-    <MachinesSection workspaceId={props.workspaceId} runners={props.runners} />
-    <ConnectionsSection workspaceId={props.workspaceId} connections={props.connections} capabilities={props.capabilities} />
-    <GrantsSection workspaceId={props.workspaceId} grants={props.grants} />
+    <MachinesSection workspaceId={workspaceId} runners={runners} />
+    <ConnectionsSection workspaceId={workspaceId} connections={connections} capabilities={capabilities} />
+    <GrantsSection workspaceId={workspaceId} grants={grants} />
     <PasskeysSection />
     <NotificationsSection />
   </Stack>

@@ -6,12 +6,12 @@ export type ErrorNoticeProps = {
   readonly message: string | null;
 };
 
-export const ErrorNotice: FC<ErrorNoticeProps> = (props) => {
-  if (props.message === null) return null;
+export const ErrorNotice: FC<ErrorNoticeProps> = ({ message }) => {
+  if (message === null) return null;
 
   return (
     <p role="alert" className={errorNotice}>
-      {props.message}
+      {message}
     </p>
   );
 };

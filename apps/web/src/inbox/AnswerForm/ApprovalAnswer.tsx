@@ -24,13 +24,13 @@ export const ApprovalAnswer: FC<ApprovalAnswerProps> = ({ model, payload }) => (
     <pre className={argumentList}>{JSON.stringify(payload.arguments, null, 2)}</pre>
     {payload.editableFields.map((field) => (
       <Field key={field} label={`Edit ${field}`}>
-        <TextArea name={field} value={model.editedFields[field] ?? ""} onChange={model.handleFieldChange} />
+        <TextArea value={model.editedFields[field] ?? ""} onChange={model.handleFieldChange(field)} />
       </Field>
     ))}
     <TextArea value={model.replyText} onChange={model.handleReplyChange} placeholder="Reason, if you reject" aria-label="Reason" />
     <Stack direction="row" gap="sm">
       {payload.durations.map((duration) => (
-        <Button key={duration} value={duration} tone="primary" disabled={model.isBusy} onClick={model.handleApproveClick}>
+        <Button key={duration} tone="primary" disabled={model.isBusy} onClick={model.handleApproveClick(duration)}>
           {DURATION_LABELS[duration]}
         </Button>
       ))}

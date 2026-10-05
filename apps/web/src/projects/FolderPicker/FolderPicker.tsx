@@ -13,14 +13,14 @@ export type FolderPickerProps = {
   readonly onSelect: (path: string) => void;
 };
 
-export const FolderPicker: FC<FolderPickerProps> = (props) => {
-  const model = useFolderPicker(props.workspaceId, props.runnerId, props.onSelect);
+export const FolderPicker: FC<FolderPickerProps> = ({ workspaceId, runnerId, onSelect }) => {
+  const model = useFolderPicker(workspaceId, runnerId, onSelect);
   const { listing } = model;
 
   if (listing === null) {
     return (
       <Stack gap="sm">
-        <Button value="" disabled={model.isBusy || props.runnerId.length === 0} onClick={model.handleBrowseClick}>
+        <Button disabled={model.isBusy || runnerId.length === 0} onClick={model.handleBrowseClick(undefined)}>
           <Icon name="folder" />
           Browse this machine
         </Button>
@@ -34,7 +34,7 @@ export const FolderPicker: FC<FolderPickerProps> = (props) => {
       <span className={currentPath}>{listing.path}</span>
       <Stack direction="row" gap="sm">
         {listing.parentPath === null ? null : (
-          <Button tone="ghost" value={listing.parentPath} disabled={model.isBusy} onClick={model.handleBrowseClick}>
+          <Button tone="ghost" disabled={model.isBusy} onClick={model.handleBrowseClick(listing.parentPath)}>
             Up
           </Button>
         )}
@@ -45,7 +45,7 @@ export const FolderPicker: FC<FolderPickerProps> = (props) => {
       <ul className={folderList}>
         {listing.folders.map((folder) => (
           <li key={folder.path}>
-            <button type="button" className={folderButton} value={folder.path} disabled={model.isBusy} onClick={model.handleBrowseClick}>
+            <button type="button" className={folderButton} disabled={model.isBusy} onClick={model.handleBrowseClick(folder.path)}>
               <Icon name="folder" />
               {folder.name}
               {folder.isGitRepository ? " · git" : ""}

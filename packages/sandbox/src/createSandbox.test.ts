@@ -12,7 +12,10 @@ import { createManifestStore } from "./outputs/createManifestStore.ts";
 const runId = toRunId("run-1");
 const folders = { root: "", project: "" };
 
-const createTestSandbox = () => createSandbox({ driver: createHostDriver(), manifestStore: createManifestStore(join(folders.root, "runs")) });
+const createTestSandbox = () => {
+  const manifestStore = createManifestStore(join(folders.root, "runs"));
+  return createSandbox({ driver: createHostDriver(manifestStore), manifestStore });
+};
 const ignoreOutput = (): void => undefined;
 
 beforeEach(async () => {

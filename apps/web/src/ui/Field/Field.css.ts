@@ -4,9 +4,9 @@ import { vars } from "../theme.css.ts";
 
 export const field = style({ display: "flex", flexDirection: "column", gap: vars.space.xs });
 
-export const label = style({ color: vars.color.ink2, fontSize: vars.size.small, fontWeight: 500 });
+export const fieldLabel = style({ color: vars.color.ink2, fontSize: vars.size.small, fontWeight: 500 });
 
-export const hint = style({ color: vars.color.ink3, fontSize: vars.size.small });
+export const fieldHint = style({ color: vars.color.ink3, fontSize: vars.size.small });
 
 export const control = style({
   background: vars.color.panel,

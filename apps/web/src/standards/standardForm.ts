@@ -1,5 +1,5 @@
 import type { SaveStandardRequest, Standard } from "../api/apiTypes.ts";
-import { REVIEW_MODES, STANDARD_TEXT_FIELDS } from "./standards.constants.ts";
+import { REVIEW_MODES } from "./standards.constants.ts";
 
 export type ReviewMode = Standard["review"];
 
@@ -17,7 +17,7 @@ export type StandardForm = {
   readonly method: string;
 };
 
-export type StandardTextField = (typeof STANDARD_TEXT_FIELDS)[number];
+export type StandardTextField = Exclude<keyof StandardForm, "capabilities" | "review">;
 
 const toLines = (text: string): readonly string[] =>
   text
@@ -33,8 +33,6 @@ const toCheck = (line: string): Standard["checks"][number] => {
 };
 
 export const toReviewMode = (value: string): ReviewMode | undefined => REVIEW_MODES.find((mode) => mode === value);
-
-export const toStandardTextField = (name: string): StandardTextField | undefined => STANDARD_TEXT_FIELDS.find((field) => field === name);
 
 export const toStandardForm = (standard: Standard): StandardForm => ({
   describes: standard.describes,

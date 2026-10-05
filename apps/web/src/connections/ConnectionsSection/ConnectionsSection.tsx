@@ -19,23 +19,23 @@ export type ConnectionsSectionProps = {
   readonly capabilities: readonly Capability[];
 };
 
-export const ConnectionsSection: FC<ConnectionsSectionProps> = (props) => {
-  const connectionKinds = [...new Set(props.capabilities.map((capability) => capability.connectionKind).filter((connectionKind) => connectionKind.length > 0))];
-  const model = useConnectionsSection(props.workspaceId, connectionKinds[0] ?? "");
+export const ConnectionsSection: FC<ConnectionsSectionProps> = ({ capabilities, workspaceId, connections }) => {
+  const connectionKinds = [...new Set(capabilities.map((capability) => capability.connectionKind).filter((connectionKind) => connectionKind.length > 0))];
+  const model = useConnectionsSection(workspaceId, connectionKinds[0] ?? "");
   const canAdd = !model.isBusy && model.kind.length > 0 && model.label.trim().length > 0 && model.secret.length > 0;
 
   return (
     <Card>
       <Heading level="section">Connections</Heading>
       <MutedText>Credentials for outside services. They stay encrypted on the server and never enter a container.</MutedText>
-      {props.connections.length === 0 ? <EmptyState>No connections yet.</EmptyState> : null}
+      {connections.length === 0 ? <EmptyState>No connections yet.</EmptyState> : null}
       <ul className={connectionList}>
-        {props.connections.map((connection) => (
+        {connections.map((connection) => (
           <li key={connection.id} className={connectionRow}>
             <span>
               {connection.label} <span className={connectionMeta}>({connection.kind})</span>
             </span>
-            <Button tone="ghost" value={connection.id} onClick={model.handleRemoveClick}>
+            <Button tone="ghost" onClick={model.handleRemoveClick(connection.id)}>
               Remove
             </Button>
           </li>

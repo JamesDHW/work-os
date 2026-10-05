@@ -15,9 +15,9 @@ export type HomeScreenProps = {
   readonly runs: readonly RunSummary[];
 };
 
-export const HomeScreen: FC<HomeScreenProps> = (props) => {
-  const blockingItems = props.inboxItems.filter((inboxItem) => inboxItem.status === "open" && inboxItem.isBlocking);
-  const activeRuns = props.runs.filter(isActiveRun);
+export const HomeScreen: FC<HomeScreenProps> = ({ inboxItems, runs, workspaceId }) => {
+  const blockingItems = inboxItems.filter((inboxItem) => inboxItem.status === "open" && inboxItem.isBlocking);
+  const activeRuns = runs.filter(isActiveRun);
 
   return (
     <Stack gap="lg">
@@ -25,10 +25,10 @@ export const HomeScreen: FC<HomeScreenProps> = (props) => {
       <Heading level="section">Needs you</Heading>
       {blockingItems.length === 0 ? <EmptyState>Nothing is waiting on you.</EmptyState> : null}
       {blockingItems.map((inboxItem) => (
-        <InboxItemCard key={inboxItem.id} workspaceId={props.workspaceId} inboxItem={inboxItem} />
+        <InboxItemCard key={inboxItem.id} workspaceId={workspaceId} inboxItem={inboxItem} />
       ))}
       <Heading level="section">Active runs</Heading>
-      <RunList workspaceId={props.workspaceId} runs={activeRuns} emptyText="No runs are active." />
+      <RunList workspaceId={workspaceId} runs={activeRuns} emptyText="No runs are active." />
     </Stack>
   );
 };

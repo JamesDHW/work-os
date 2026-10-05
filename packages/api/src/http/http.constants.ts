@@ -4,3 +4,4 @@ export const BEARER_PREFIX = "Bearer ";
 export const CHALLENGE_LIFETIME_MILLISECONDS = 300_000;
 export const JSON_CONTENT_TYPE = "application/json";
 export const EVENT_KEEP_ALIVE_MILLISECONDS = 25_000;
+export const RUNNER_LINK_UNAUTHORIZED_CLOSE_CODE = 4401;

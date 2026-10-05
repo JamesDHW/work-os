@@ -2,7 +2,7 @@ import { AllowlistRequestSchema, RevokeAllowlistRequestSchema } from "@work-os/p
 import { tryCatch } from "@work-os/shared/tryCatch";
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from "http";
 
-import type { Allowlists } from "./createAllowlists.ts";
+import type { Allowlists } from "./allowlists.state.ts";
 import { MAX_CONTROL_BODY_BYTES } from "./gateway.constants.ts";
 
 export const createControlServer = (allowlists: Allowlists, token: string): Server => {
