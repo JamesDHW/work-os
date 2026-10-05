@@ -3,7 +3,8 @@ import type { FC } from "react";
 import type { TranscriptEntry } from "../../api/apiTypes.ts";
 import { EmptyState } from "../../ui/EmptyState/EmptyState.tsx";
 import { Markdown } from "../../ui/Markdown/Markdown.tsx";
-import { entryRecipe, toolOutput, toolSummary, transcript } from "./Transcript.css.ts";
+import { entryRecipe, toolOutput, toolPreview, toolSummary, transcript } from "./Transcript.css.ts";
+import { toToolPreview } from "./toToolPreview.ts";
 
 export type TranscriptProps = {
   readonly entries: readonly TranscriptEntry[];
@@ -39,7 +40,9 @@ const TranscriptText: FC<TranscriptTextProps> = ({ entry }) => {
 
   return (
     <details>
-      <summary className={toolSummary}>{entry.toolName ?? "tool"}</summary>
+      <summary className={toolSummary}>
+        {entry.toolName ?? "tool"} <span className={toolPreview}>{toToolPreview(entry.text)}</span>
+      </summary>
       <pre className={toolOutput}>{entry.text}</pre>
     </details>
   );

@@ -44,6 +44,29 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 - Routes import through a `#web/*` subpath import (`apps/web/package.json` `imports`), which TypeScript, Vite and the checker all resolve. This replaces `../../../../` chains (`no-deep-relative-imports`).
 - Event handlers are named and return `void`. Async work starts through `startAction` (`api/startAction.ts`), which owns the promise (`no-misused-promises`). List items pass their id through the element's `value` or `name` attribute so one named handler serves every row (`named-jsx-handlers`).
 
+- Verified in a browser (Playwright, Chromium) against the built app served by the server: every main screen renders in light and dark themes, and the end-to-end test below drives the core loop through the UI.
+- After the first browser pass: tool entries in the transcript show a one-line preview of their arguments or output, the run page keeps the message box on finished runs (sending reopens the run, which the server already supports), and the connection-kind list skips capabilities that need no connection.
+
+## M5 — CLI, end-to-end test and lint report
+
+- **CLI** (`apps/cli`, `work-os`): `doctor` checks Node.js, Docker, the egress gateway image, this machine's runner pairing and the server; `pair <server URL> <code>` runs the runner's own pair command (the runner owns its credentials file); `install [--server-only | --runner-only]` writes a LaunchAgent (macOS) or a systemd user unit (Linux) per service and prints the command that starts it. It never starts or loads services itself.
+- **End-to-end test** (`pnpm e2e`, `e2e/coreLoop.spec.ts`): Playwright starts a throwaway server with the built web app, a scripted model and a fixed setup code (`scripts/e2e-server.sh`). The test creates the account through the setup screen, pairs a machine from Settings and starts a host-driver runner with the code shown on screen, adds a project through the dialog, starts a run, waits for review, accepts it from the inbox and checks the file on disk. Passes here in about 12 seconds. Set `WORK_OS_CHROMIUM` to use an installed Chromium instead of Playwright's download.
+- **Lint report:** `docs/lint-report.md` (findings by rule, every suppression with its reason, rules that never fired, configuration overrides).
+- **Docs:** `README.md` (how to run and check it). STYLE.md §7 now records the loader pattern (`LoadResult`, props into screens, `#web/…` imports) and the handler pattern (`startAction`, row ids through `value` or `name`).
+- **Final state:** typecheck clean (both programs), `architecture-check` clean, 96 unit tests, `pnpm smoke` passes with the host driver and with the Docker driver (local images), `pnpm e2e` passes.
+
+## Deviations from ARCHITECTURE.md
+
+- No `shiki`, `react-diff-view` or `cmdk`. The diff view is a small line-classifying component, code is not syntax-highlighted, and there is no command palette. The file types still allow these packages.
+- The CLI's `pair` starts the runner's pair command instead of reimplementing pairing, so the CLI must run from a checkout next to `apps/runner`.
+- The server ↔ runner link is tested through real processes (smoke and e2e) rather than in-process in Vitest.
+
+## Known issues
+
+- **Changed files were empty once.** The first Docker-driver smoke run of the final session reported `reviewing` with no changed files although `hello.txt` was written. Five reruns reported the file correctly, and the stored run record of a kept rerun had it. Not reproduced; worth watching on the first real runs.
+- **Shutdown warning.** Stopping the server while a runner is connected logs `Failed query: update "runners" set "last_seen_at"`: the database closes before the runner's disconnect handler records the time. Harmless; the next connection updates it.
+- **Peer dependency warning.** `@hono/node-ws` 1.3.1 declares `@hono/node-server ^1.19`; the build uses 2.1.1. WebSockets work (smoke and e2e), but `pnpm install` prints the warning.
+
 ## Decisions taken during the run
 
 - **D49 (web data loading)** was still proposed; took the recommendation (loaders + `router.invalidate()` from SSE, no client cache library).
@@ -73,6 +96,8 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 - `projects.tsconfigs` += `apps/web/tsconfig.json`: the web app is a separate TypeScript program (DOM lib, JSX).
 - `WEB_CONCEPTS` += `settings`: the settings screen and its sections.
 - `webUi.imports.external` += `react-markdown`, `remark-gfm`: the Markdown primitive lives in the UI layer.
+- `tooling.imports.internal` += `e2e`: the Playwright config reads the e2e port from `e2e/e2e.constants.ts`.
+- `e2e`: covers `e2e/**/*.ts` with `.spec` and `.constants` suffixes, and may use the `child_process`, `fs/promises`, `os` and `path` builtins (the spec starts a runner and creates a scratch project).
 - `webRouteTree.rules`: the generated route tree turns off the rules its generated code breaks (interfaces, `as any` casts, mutable maps, re-bound imports, length). The TanStack plugin's default `/* eslint-disable */` header is replaced through `routeTreeFileHeader`, because `reasoned-suppressions` is a mandatory structural check and rejects a file-wide disable.
 
 ## Recurring rule conflicts
@@ -86,11 +111,19 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 - **Device sync reused a stale file.** Committing a file to the user's machine under the same name as an earlier commit delivered the earlier content (the M2 sync landed the M1 bundle, so the repo looked unchanged). Fix: every sync uses a uniquely named bundle and the device checks its hash before fetching.
 - **architecture-check printed `context canceled` once** (after the harness slice) and passed on the immediate rerun. Not reproduced since.
 
+- **A `git checkout` of a file with uncommitted edits** (while looking for a checker option) reverted one earlier configuration change, `projects.tsconfigs` += `apps/web/tsconfig.json`. It was restored from the build log before the M4 commit, and every other change in that file was re-applied.
+
 ## Checker observations
 
 - **Reassigned `let` is not reported.** `export let value = 1; value = 2;` passes: `prefer-const` only fires when a binding is never reassigned, and no rule bans `let` itself. STYLE.md bans `let`; the code follows STYLE.md, the checker does not enforce it.
 
 ## To verify on your machine
+
+- **Install and run the browser test once:** `pnpm install`, then `pnpm exec playwright install chromium` and `pnpm e2e`.
+- **Passkeys from your phone over Tailscale:** WebAuthn needs HTTPS outside `localhost`. Run `tailscale serve --bg 4310` (HTTPS on the Mac's tailnet name, proxied to the server), start the server with `WORK_OS_PUBLIC_ORIGIN=https://<machine>.<tailnet>.ts.net` and `WORK_OS_WEB_DIST=apps/web/dist` (after `pnpm web:build`), then add a passkey on the phone from Settings > Passkeys while signed in on the Mac. Passkeys were not exercised here (no authenticator in a headless browser); the setup flow and sessions were.
+- **Push notifications:** after a passkey sign-in on the phone, add work-os to the home screen and use Settings > Notifications. Not exercised here.
+- **LM Studio:** `WORK_OS_LMSTUDIO_URL=http://localhost:1234/v1` and `models.default: lmstudio/<model id>` in the workspace's `workos.yaml`. The provider is wired and type-checked; no real model was called in this build (runs used the scripted model).
+- **CLI services:** `node apps/cli/src/main.ts install`, then the printed `launchctl bootstrap …` commands. The rendered files are unit-tested; loading them with launchd was not tried here.
 
 - Runner pairing writes `~/.work-os/runner/credentials.json` (mode 0600). Check the mode after `work-os-runner pair`.
 - Build the egress gateway image once: `pnpm egress:image` (pulls `node:24-alpine`).

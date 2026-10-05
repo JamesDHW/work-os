@@ -160,10 +160,10 @@ Write none, unless the code cannot express it: an external constraint, a workaro
 | A component | `export const RunCard: FC<RunCardProps> = (props) => { ... }` with a named readonly props type in the same file. |
 | Folder | A module folder per component: `RunCard/RunCard.tsx`, `RunCard.css.ts`, and `RunCard.hook.ts` when it has behaviour (+ `RunCard.constants.ts`). Screens live in concept folders (`src/inbox/`, `src/runs/`); primitives in `src/ui/`; chrome in `src/shell/`. No barrels. |
 | Behaviour | Exactly one component-specific hook returning a named model object (`RunCardModel`). Purely presentational components call no hooks. |
-| Server data | TanStack Router **loaders** in `routes/`, read with `useLoaderData` in the screen's hook. Never `fetch` or `useEffect` for data. Live updates come from `api/serverEvents.ts` invalidating routes. |
+| Server data | TanStack Router **loaders** in `routes/` return a `LoadResult` (`toReady` / `toFailure`). The route component renders an `ErrorNotice` for a failure and passes the values to the screen as props. Never `fetch` or `useEffect` for data. Live updates come from `shell/useServerEvents.ts` invalidating routes. Routes import through `#web/…`. |
 | Mutations | A named handler in the hook calls the client, then `router.invalidate()`. |
 | Render states | Guard returns for loading / failure / empty; the success state last. `&&` only for a small optional fragment with a boolean condition. |
-| Event handlers | Named in the hook (`handleApproveClick`); JSX only passes them. |
+| Event handlers | Named in the hook (`handleApproveClick`); JSX only passes them, never calls them (`onClick={handleRemove(id)}` is out). They return `void`: async work starts through `startAction(removeConnection)`, which owns the promise. One handler serves every list row by reading the row's id from the element's `value` or `name`. |
 | Derived values | Calculated in the hook during render; never stored in state. `useEffect` only for an isolated external integration, in one named hook. |
 | Styling | vanilla-extract only: a `recipe` (or `style`) in the component's `.css.ts`, referencing `vars` from `ui/theme.css.ts`. Variants are recipe variants, not conditional class names. No inline `style`, no raw colours, sizes or font values outside `@work-os/design-tokens`. |
 | Icons | `ui/Icon` with a typed `name` union over `@tabler/icons-react`. |

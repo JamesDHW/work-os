@@ -16,9 +16,11 @@
     "api-types": "scripts/generate-api-types.sh",
     "egress:image": "pnpm --filter @work-os/egress-gateway build && docker build --tag work-os/egress-gateway:local ${WORK_OS_NODE_IMAGE:+--build-arg NODE_IMAGE=$WORK_OS_NODE_IMAGE} apps/egress-gateway",
     "smoke": "scripts/smoke-host.sh",
-    "web:build": "pnpm --filter @work-os/web build"
+    "web:build": "pnpm --filter @work-os/web build",
+    "e2e": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "@types/node": "24.13.6",
     "architecture-rules": "github:JamesDHW/architecture-rules#eb48638febc4944aa00b0adb2aa00e860bb92174",
     "oxfmt": "0.68.0",

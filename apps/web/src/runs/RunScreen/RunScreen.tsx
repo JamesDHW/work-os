@@ -50,7 +50,7 @@ export const RunScreen: FC<RunScreenProps> = ({ workspaceId, detail, capabilitie
         <Stack>
           <Heading level="section">Conversation</Heading>
           <Transcript entries={detail.transcript} streamingText={detail.streamingText} />
-          {isActive ? <MessageBox workspaceId={workspaceId} runId={run.id} isAgentWorking={run.state.status === "running"} /> : null}
+          <MessageBox workspaceId={workspaceId} runId={run.id} isAgentWorking={run.state.status === "running"} isFinished={!isActive} />
         </Stack>
         <Stack>
           <Card>

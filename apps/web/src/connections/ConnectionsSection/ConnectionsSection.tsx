@@ -20,7 +20,7 @@ export type ConnectionsSectionProps = {
 };
 
 export const ConnectionsSection: FC<ConnectionsSectionProps> = (props) => {
-  const connectionKinds = [...new Set(props.capabilities.map((capability) => capability.connectionKind))];
+  const connectionKinds = [...new Set(props.capabilities.map((capability) => capability.connectionKind).filter((connectionKind) => connectionKind.length > 0))];
   const model = useConnectionsSection(props.workspaceId, connectionKinds[0] ?? "");
   const canAdd = !model.isBusy && model.kind.length > 0 && model.label.trim().length > 0 && model.secret.length > 0;
 

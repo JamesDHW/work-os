@@ -254,9 +254,9 @@ export default defineArchitecture({
     },
     e2e: {
       description: "End-to-end tests against a real server and runner.",
-      files: ["e2e/**/*.spec.ts"],
-      naming: { case: "camel", suffixes: [".spec"] },
-      imports: { internal: ["e2e", "apiTypes"], external: ["@playwright/test", "openapi-fetch"] },
+      files: ["e2e/**/*.ts"],
+      naming: { case: "camel", suffixes: [".spec", ".constants"] },
+      imports: { internal: ["e2e", "apiTypes"], external: ["@playwright/test", "openapi-fetch"], builtins: ["child_process", "fs/promises", "os", "path"] },
     },
     tooling: {
       description: "Build, lint, test and migration configuration.",
@@ -264,6 +264,7 @@ export default defineArchitecture({
       naming: { case: "camel", suffixes: [".config"] },
       rules: { "max-file-lines": { severity: "off", reason: "Declarative configuration tables; splitting them hides the whole picture." } },
       imports: {
+        internal: ["e2e"],
         external: [
           "architecture-rules", "oxlint", "oxfmt", "vitest/config", "@playwright/test", "drizzle-kit",
           "vite", "@vitejs/plugin-react", "@vanilla-extract/vite-plugin", "@tanstack/router-plugin/vite",

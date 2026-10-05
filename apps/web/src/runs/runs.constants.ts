@@ -56,3 +56,5 @@ export const MESSAGE_MODE_LABELS = {
   followUp: "After this turn",
   steer: "Interrupt now",
 } as const;
+
+export const TOOL_PREVIEW_LENGTH = 120;

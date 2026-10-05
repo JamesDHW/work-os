@@ -1,0 +1,14 @@
+{
+  "name": "@work-os/cli",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "work-os": "./src/main.ts"
+  },
+  "dependencies": {
+    "@work-os/api-types": "workspace:*",
+    "@work-os/config": "workspace:*",
+    "@work-os/shared": "workspace:*",
+    "openapi-fetch": "0.17.0"
+  }
+}

@@ -41,7 +41,7 @@ export const CreateProjectDialog: FC<CreateProjectDialogProps> = (props) => {
             ))}
           </SelectInput>
         </Field>
-        <Field label="Folder" hint="A local folder on that machine. Runs work on a copy inside a container.">
+        <Field label="Folder" hint="A folder on that machine. Runs mount it into their container.">
           <TextInput value={model.path} onChange={model.handlePathChange} placeholder="/Users/you/Repos/project" />
         </Field>
         <FolderPicker key={model.runnerId} workspaceId={props.workspaceId} runnerId={model.runnerId} onSelect={model.handleFolderSelect} />

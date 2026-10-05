@@ -19,4 +19,6 @@ export const entryRecipe = recipe({
 
 export const toolSummary = style({ cursor: "pointer", color: vars.color.ink2, fontFamily: vars.font.mono });
 
+export const toolPreview = style({ color: vars.color.ink3 });
+
 export const toolOutput = style({ margin: `${vars.space.sm} 0 0`, whiteSpace: "pre-wrap", overflowWrap: "anywhere", fontFamily: vars.font.mono, maxHeight: "320px", overflow: "auto" });
