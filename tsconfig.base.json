@@ -2,7 +2,7 @@
   "extends": "architecture-rules/tsconfig.base.json",
   "compilerOptions": {
     "target": "ES2024",
-    "lib": ["ES2024"],
+    "lib": ["ES2024", "ESNext.Array"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "verbatimModuleSyntax": true,

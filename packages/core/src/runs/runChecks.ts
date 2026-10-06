@@ -18,15 +18,10 @@ type RunChecksDependencies = {
 export type RunChecks = (run: Run) => Promise<readonly CheckFailure[]>;
 
 export const createRunChecks = (dependencies: RunChecksDependencies): RunChecks => {
+  // Checks run one at a time: they share the run's container and may depend on each other's output.
   return async (run) => {
-    const failures: CheckFailure[] = [];
-    for (const check of run.spec.standard.checks) {
-      const failure = await runCheck(dependencies, run, check);
-      if (failure !== undefined) {
-        failures.push(failure);
-      }
-    }
-    return failures;
+    const outcomes = await Array.fromAsync(run.spec.standard.checks, async (check) => runCheck(dependencies, run, check));
+    return outcomes.filter((failure) => failure !== undefined);
   };
 };
 

@@ -45,6 +45,7 @@ export const decideApproval = (call: CapabilityCall, grants: readonly Grant[]): 
 | Banned | Use instead |
 | --- | --- |
 | `let`, `var`, reassignment, `++`, `--`, `delete` | New `const` from a named transformation; a parameter instead of a counter; `AbortSignal` or a `Promise` instead of a flag |
+| `push`, `pop`, `shift`, `unshift`, `splice`, `sort`, `reverse`, `fill`, `copyWithin` | `map` / `filter` / `flatMap`, `Object.fromEntries`, `Array.fromAsync` for one-at-a-time async work, `toSorted` / `toReversed` / `toSpliced`, an iterator (`values()`); a reasoned suppression where in-place change is measurably faster and that matters |
 | Changing an array, object, `Map` or `Set` from a function other than the one that created it | Long-lived state in a `*.state.ts` module that exports named operations (`pendingRequests.state.ts`); build values inside one call |
 | `function` declarations | Arrow functions |
 | `interface` | `type` (exception: module augmentation for a third-party API) |

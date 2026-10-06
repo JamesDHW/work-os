@@ -77,6 +77,7 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
   - Live state lives in `*.state.ts` modules: `runnerConnections`, `pendingRequests`, `eventBus`, `inboxWaiters`, `pairingCodes`, `challengeStore`, `conversationWatchers`, `containerAddresses`, `outputBuffer` and the gateway's `allowlists`.
   - The CLI reads command output with `stream/consumers` instead of collecting chunks.
   - Tests and the e2e spec turn `no-captured-mutation` off: their fakes record the calls they receive.
+- **No in-place array changes:** new rule `no-array-mutation` (an error; `*.state.ts` modules exempt; a reasoned suppression for measured performance cases). Four places changed: checks and database batches run one at a time with `Array.fromAsync`, the runner file system's line reader uses an iterator, and the gateway reads request bodies with `stream/consumers`. `tsconfig.base.json` adds the `ESNext.Array` lib for `Array.fromAsync` (Node 24 has it natively). Tests turn the rule off (their fakes push the calls they record), and so does the e2e spec, because Playwright's `locator.fill` shares a name with `Array.prototype.fill`.
 
 ## Deviations from ARCHITECTURE.md
 

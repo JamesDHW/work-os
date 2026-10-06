@@ -76,7 +76,7 @@ No finding from these rules appeared in the build log. Some of them were never t
 
 ## Rules added after the build
 
-- `no-let`, `no-captured-mutation` (with `*.state.ts` modules as the one place for long-lived state), `destructured-props` and `no-shadow` were added to architecture-rules after the build, and work-os was changed to pass them. `named-jsx-handlers` now accepts a call whose arguments are all plain values.
+- `no-let`, `no-captured-mutation` (with `*.state.ts` modules as the one place for long-lived state), `no-array-mutation`, `destructured-props` and `no-shadow` were added to architecture-rules after the build, and work-os was changed to pass them. `named-jsx-handlers` now accepts a call whose arguments are all plain values.
 
 ## Configuration overrides
 
@@ -87,7 +87,7 @@ Each override is also logged with its reason in `BUILD-NOTES.md`.
 - Import widenings: `test` += `zod`; `harness` += `@earendil-works/*/**`; `serverApp` += `@hono/node-server/**` and `fs/promises`; `egressGateway` internal += `domain`; `runnerApp` builtins += `process`, `fs/promises`, `path`, `crypto`; `webUi` += `react-markdown`, `remark-gfm`; `tooling` internal += `e2e` (the Playwright config reads the e2e port).
 - File types: `tooling` += `apps/*/vite.config.ts`; `WEB_CONCEPTS` += `settings`; `e2e` covers `e2e/**/*.ts` with `.spec` and `.constants` suffixes and the `child_process`, `fs/promises`, `os` and `path` builtins (the spec starts a runner and makes a scratch project).
 - Generated files: `apiTypes` and `webRouteTree` are marked `generated: { reason }`.
-- `defaults.naming.suffixes` += `.state`; the `test` and `e2e` file types turn `no-captured-mutation` off (test fakes record calls); `cli` builtins += `stream/consumers`.
+- `defaults.naming.suffixes` += `.state`; the `test` and `e2e` file types turn `no-captured-mutation` and `no-array-mutation` off (test fakes record calls; Playwright's `fill`); `cli` and `egressGateway` builtins += `stream/consumers`.
 
 ## Observations for the rules
 

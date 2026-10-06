@@ -145,7 +145,7 @@ export default defineArchitecture({
       description: "Allowlisting proxy: the only route out of a run's container.",
       files: ["apps/egress-gateway/src/**/*.ts"],
       exclude: TESTS,
-      imports: { internal: ["egressGateway", "protocol", "domain", "shared"], builtins: ["http", "net", "process"] },
+      imports: { internal: ["egressGateway", "protocol", "domain", "shared"], builtins: ["http", "net", "process", "stream/consumers"] },
     },
     cli: {
       description: "work-os command: install services, pair a runner, doctor.",
@@ -228,7 +228,10 @@ export default defineArchitecture({
       description: "Colocated unit and hook tests.",
       files: TESTS,
       naming: { case: "pascalOrCamel", suffixes: [".test"] },
-      rules: { "no-captured-mutation": { severity: "off", reason: "Test fakes record the calls they receive, and beforeEach/afterEach share fixture folders." } },
+      rules: {
+        "no-captured-mutation": { severity: "off", reason: "Test fakes record the calls they receive, and beforeEach/afterEach share fixture folders." },
+        "no-array-mutation": { severity: "off", reason: "Test fakes record the calls they receive by pushing them onto arrays." },
+      },
       imports: {
         internal: [
           "shared", "domain", "protocol", "config", "core", "api", "db", "harness", "secrets", "push", "packageStore",
@@ -242,7 +245,10 @@ export default defineArchitecture({
       description: "End-to-end tests against a real server and runner.",
       files: ["e2e/**/*.ts"],
       naming: { case: "camel", suffixes: [".spec", ".constants"] },
-      rules: { "no-captured-mutation": { severity: "off", reason: "The spec records the runner processes it starts so afterAll can stop them." } },
+      rules: {
+        "no-captured-mutation": { severity: "off", reason: "The spec records the runner processes it starts so afterAll can stop them." },
+        "no-array-mutation": { severity: "off", reason: "Playwright's locator.fill shares a name with Array.prototype.fill; the spec has no arrays to change." },
+      },
       imports: { internal: ["e2e", "apiTypes"], external: ["@playwright/test", "openapi-fetch"], builtins: ["child_process", "fs/promises", "os", "path"] },
     },
     tooling: {

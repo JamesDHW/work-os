@@ -50,13 +50,8 @@ type BatchEntry = {
 
 const createBatchCallback = (sqlite: DatabaseSync) => {
   const runQuery = createQueryCallback(sqlite);
-  const runEntries = async (batch: readonly BatchEntry[]) => {
-    const results = [];
-    for (const entry of batch) {
-      results.push(await runQuery(entry.sql, entry.params, entry.method));
-    }
-    return results;
-  };
+  // Statements run in order inside the transaction.
+  const runEntries = async (batch: readonly BatchEntry[]) => Array.fromAsync(batch, async (entry) => runQuery(entry.sql, entry.params, entry.method));
 
   return async (batch: BatchEntry[]) => {
     sqlite.exec("BEGIN");

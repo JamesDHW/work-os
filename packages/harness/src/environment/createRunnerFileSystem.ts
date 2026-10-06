@@ -92,8 +92,9 @@ const removeFlags = (removeOptions: RemoveOptions): string => {
 const createLineReader = (text: string): TextLineReader => {
   const remainingLines = text.split("\n").map((line, index, lines) => ({ text: line, terminated: index < lines.length - 1 }));
   const unread = remainingLines.at(-1)?.text === "" ? remainingLines.slice(0, -1) : remainingLines;
+  const lines = unread.values();
   return {
-    readLine: async () => ok<TextLine | undefined, FileError>(unread.shift()),
+    readLine: async () => ok<TextLine | undefined, FileError>(lines.next().value),
     close: async () => undefined,
   };
 };

@@ -1,6 +1,7 @@
 import { AllowlistRequestSchema, RevokeAllowlistRequestSchema } from "@work-os/protocol/egress/egressControl.schema";
 import { tryCatch } from "@work-os/shared/tryCatch";
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from "http";
+import { buffer } from "stream/consumers";
 
 import type { Allowlists } from "./allowlists.state.ts";
 import { MAX_CONTROL_BODY_BYTES } from "./gateway.constants.ts";
@@ -69,13 +70,8 @@ const removeAllowlist = (request: ControlRequest): void => {
 };
 
 const readBody = async (incoming: IncomingMessage): Promise<unknown> => {
-  const chunks: Buffer[] = [];
-  for await (const chunk of incoming) {
-    if (Buffer.isBuffer(chunk)) {
-      chunks.push(chunk);
-    }
-  }
-  const text = Buffer.concat(chunks).subarray(0, MAX_CONTROL_BODY_BYTES).toString("utf8");
+  const body = await buffer(incoming);
+  const text = body.subarray(0, MAX_CONTROL_BODY_BYTES).toString("utf8");
   return text.length === 0 ? {} : tryCatch((): unknown => JSON.parse(text));
 };
 
