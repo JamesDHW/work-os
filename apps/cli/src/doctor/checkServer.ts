@@ -8,9 +8,9 @@ import type { DoctorCheck } from "./DoctorCheck.ts";
 export const checkServer = async (serverUrl: string): Promise<DoctorCheck> => {
   const client = createClient<paths>({ baseUrl: serverUrl });
   const setupStatus = await tryCatchAsync(async () => client.GET("/api/setup"));
-  if (setupStatus instanceof WorkOsError) return { name: "Server", status: "fail", detail: `not reachable at ${serverUrl}. Start it with: node apps/server/src/main.ts` };
+  if (setupStatus instanceof WorkOsError) return { name: "Server", status: "fail", detail: `not reachable at ${serverUrl}. Start it with: work-os start server` };
   if (setupStatus.data === undefined) return { name: "Server", status: "fail", detail: `${serverUrl} answered ${setupStatus.response.status}.` };
 
-  const detail = setupStatus.data.isSetUp ? `running at ${serverUrl}` : `running at ${serverUrl}, waiting for setup (the setup code is in the server log)`;
+  const detail = setupStatus.data.isSetUp ? `running at ${serverUrl}` : `running at ${serverUrl}, waiting for setup (work-os status shows the address; the setup code is in work-os logs server)`;
   return { name: "Server", status: "ok", detail };
 };

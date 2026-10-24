@@ -10,6 +10,7 @@ import type { ObservationStore } from "@work-os/core/observations/ObservationSto
 import type { ProjectStore } from "@work-os/core/projects/ProjectStore";
 import type { RunnerStore } from "@work-os/core/runners/RunnerStore";
 import type { RunStore } from "@work-os/core/runs/RunStore";
+import type { ModelProviderStore } from "@work-os/core/models/ModelProviderStore";
 import type { SettingsStore } from "@work-os/core/system/SettingsStore";
 import type { WorkspaceStore } from "@work-os/core/workspaces/WorkspaceStore";
 import type { WorkOsDatabase } from "@work-os/db/WorkOsDatabase";
@@ -25,6 +26,7 @@ import { createObservationStore } from "@work-os/db/observations/createObservati
 import { createProjectStore } from "@work-os/db/projects/createProjectStore";
 import { createRunnerStore } from "@work-os/db/runners/createRunnerStore";
 import { createRunStore } from "@work-os/db/runs/createRunStore";
+import { createModelProviderStore } from "@work-os/db/models/createModelProviderStore";
 import { createSettingsStore } from "@work-os/db/system/createSettingsStore";
 import { createWorkspaceStore } from "@work-os/db/workspaces/createWorkspaceStore";
 
@@ -43,6 +45,7 @@ export type Stores = {
   readonly pushSubscriptionStore: PushSubscriptionStore;
   readonly observationStore: ObservationStore;
   readonly settingsStore: SettingsStore;
+  readonly modelProviderStore: ModelProviderStore;
 };
 
 export const composeStores = (database: WorkOsDatabase): Stores => ({
@@ -60,4 +63,5 @@ export const composeStores = (database: WorkOsDatabase): Stores => ({
   pushSubscriptionStore: createPushSubscriptionStore(database),
   observationStore: createObservationStore(database),
   settingsStore: createSettingsStore(database),
+  modelProviderStore: createModelProviderStore(database),
 });

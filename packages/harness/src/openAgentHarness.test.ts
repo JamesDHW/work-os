@@ -5,7 +5,7 @@ import { toAgentId, toEnvironmentId, toProjectId, toRunId, toRunnerId, toStandar
 import type { RunSpec } from "@work-os/domain/runs/RunSpec";
 import { WorkOsError } from "@work-os/shared/WorkOsError";
 
-import { createModelAccess } from "./models/createModelAccess.ts";
+import { createModelCatalogue } from "./models/createModelCatalogue.ts";
 import { createScriptedProvider } from "./models/createScriptedProvider.ts";
 import type { ScriptedResponse } from "./models/ScriptedResponse.ts";
 import { openAgentHarness } from "./openAgentHarness.ts";
@@ -40,8 +40,7 @@ const startScriptedRun = async (responses: readonly ScriptedResponse[], override
     reportRunActivity: async () => undefined,
     ...overrides,
   };
-  const models = await createModelAccess({ lmStudioUrl: null, extraProviders: [createScriptedProvider(responses)] });
-  if (models instanceof WorkOsError) return expect.unreachable(models.message);
+  const { models } = createModelCatalogue({ extraProviders: [createScriptedProvider(responses)], environment: {} });
   const harness = await openAgentHarness({ storage: { kind: "memory" }, models, handlers, logger: silentLogger });
   if (harness instanceof WorkOsError) return expect.unreachable(harness.message);
 

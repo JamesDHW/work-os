@@ -7,4 +7,6 @@ export type UserStore = {
   readonly countUsers: () => Promise<number | WorkOsError>;
   readonly createUser: (user: User) => Promise<User | WorkOsError>;
   readonly findUser: (userId: UserId) => Promise<User | NotFoundError | WorkOsError>;
+  /** The account created at setup; v1 has exactly one. */
+  readonly findFirstUser: () => Promise<User | NotFoundError | WorkOsError>;
 };

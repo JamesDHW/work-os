@@ -12,16 +12,22 @@ import { useSignInScreen, type SignInScreenModel } from "./SignInScreen.hook.ts"
 
 export type SignInScreenProps = {
   readonly isSetUp: boolean;
+  readonly publicOrigin: string;
 };
 
-export const SignInScreen: FC<SignInScreenProps> = ({ isSetUp }) => {
-  const model = useSignInScreen(isSetUp);
+export const SignInScreen: FC<SignInScreenProps> = ({ isSetUp, publicOrigin }) => {
+  const model = useSignInScreen(isSetUp, publicOrigin);
 
   return (
     <div className={page}>
       <div className={panel}>
         <Card>
           <Heading level="page">work-os</Heading>
+          {model.expectedOrigin === null ? null : (
+            <MutedText>
+              This work-os expects to be opened at {model.expectedOrigin}. Passkeys only work there, so sign in from that address.
+            </MutedText>
+          )}
           <SignInStepContent model={model} />
           <ErrorNotice message={model.errorMessage} />
         </Card>
@@ -43,7 +49,29 @@ const SignInStepContent: FC<SignInStepContentProps> = ({ model }) => {
           <Button tone="primary" disabled={model.isBusy} onClick={model.handlePasskeySignInClick}>
             Sign in with a passkey
           </Button>
+          <Button tone="ghost" onClick={model.handleUseCodeClick}>
+            Use a sign-in code instead
+          </Button>
         </Stack>
+      );
+    case "signInCode":
+      return (
+        <form onSubmit={model.handleSignInCodeSubmit}>
+          <Stack>
+            <MutedText>On the machine that runs the server, run `work-os sign-in-code` and enter the code it prints. You can add a passkey afterwards.</MutedText>
+            <Field label="Sign-in code">
+              <TextInput value={model.signInCode} onChange={model.handleSignInCodeChange} autoComplete="off" />
+            </Field>
+            <Stack direction="row">
+              <Button tone="primary" type="submit" disabled={model.isBusy || model.signInCode.trim().length === 0}>
+                Sign in
+              </Button>
+              <Button tone="ghost" type="button" onClick={model.handleBackClick}>
+                Back
+              </Button>
+            </Stack>
+          </Stack>
+        </form>
       );
     case "setup":
       return (
@@ -65,7 +93,7 @@ const SignInStepContent: FC<SignInStepContentProps> = ({ model }) => {
     case "createPasskey":
       return (
         <Stack>
-          <MutedText>Create a passkey so you can sign in from this and your other devices.</MutedText>
+          <MutedText>Create a passkey so you can sign in from this and your other devices. It only works at this address.</MutedText>
           <Stack direction="row">
             <Button tone="primary" disabled={model.isBusy} onClick={model.handleCreatePasskeyClick}>
               Create a passkey
@@ -74,6 +102,7 @@ const SignInStepContent: FC<SignInStepContentProps> = ({ model }) => {
               Later
             </Button>
           </Stack>
+          <MutedText>Without a passkey, the only way back in is `work-os sign-in-code` on the server&apos;s machine.</MutedText>
         </Stack>
       );
     default:

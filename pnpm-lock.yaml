@@ -44,6 +44,9 @@ importers:
       '@work-os/config':
         specifier: workspace:*
         version: link:../../packages/config
+      '@work-os/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
       '@work-os/shared':
         specifier: workspace:*
         version: link:../../packages/shared

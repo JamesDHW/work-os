@@ -551,3 +551,19 @@ STYLE.md requires a 14-day minimum release age. Pi Durable 1.0.x, pi-ai and chor
 
 **Decision:** pin `@earendil-works/pi-durable`, `@earendil-works/pi-ai` and `@earendil-works/chord` at 1.0.2 exactly, excluded from the release-age rule. Every other dependency follows the rule.
 **Status:** Accepted, 2026-10-04.
+
+### D53 — Profiles, one CLI and a signed-in dev loop
+
+Running work-os needed environment variables, a `workos.yaml` edit by hand, `launchctl`, `tailscale serve` and three terminals, and the installed and development setups shared nothing. Setting the public origin after creating the account locked the passkeys out, and the default model pointed at a provider nobody had configured.
+
+**Decision:**
+
+- **Profiles.** Everything one installation keeps lives under `~/.work-os/<profile>/`: `server.env` and `runner.env` (only what a process needs before it can read its database: port, host, public origin, master key on Linux, runner driver), `server/` and `runner/` data, logs. `default` is everyday use, `dev` is development, any other name is another server. The server and runner read `WORK_OS_PROFILE`; the old `~/.work-os/server` layout is moved into `default` by `work-os setup`.
+- **One command.** `work-os` (`pnpm work-os` in a checkout) owns setup, start/stop/restart/status/logs, dev, pair, doctor, sign-in-code, update, reset and uninstall. launchd and systemd are wrapped; nobody types `launchctl`. `work-os setup --expose tailscale` runs `tailscale serve`, reads the tailnet name and writes the origin before the account exists.
+- **Development signs itself in.** `work-os dev` starts the server (watching), Vite and a runner in one terminal, creates the account with a fixed setup code, pairs the runner through the API, adds a local LM Studio when one answers, and the sign-in route calls `/api/dev-sign-in`, which only a server started with `WORK_OS_DEV_AUTO_SIGN_IN=1` on a loopback host offers. Passkeys stay a production concern.
+- **Settings in the app, not files.** Model providers (LM Studio, Anthropic, any OpenAI-compatible endpoint) are rows in the database with keys in the vault, applied to pi-ai while the server runs; the workspace's default model is edited from Settings and committed to `workos.yaml`. A new workspace's default is chosen from what is configured. Ambient credentials (an AWS profile) never count as a configured provider. `WORK_OS_LMSTUDIO_URL` only seeds a provider the first time; `ANTHROPIC_API_KEY` in the environment still works and shows as "from environment".
+- **Recovery.** `work-os sign-in-code` writes a one-time code into the server's data folder; `POST /api/sign-in-code` signs the account in and leads to creating a passkey. The sign-in screen says which address passkeys belong to.
+- **Binary.** `scripts/build-cli.sh` compiles the CLI with Bun (`bun build --compile`). The services keep running on Node from a checkout: `node:sqlite`, native modules and the devcontainer CLI cannot be embedded. The binary is the installer and controller; `work-os update` clones or pulls the checkout, installs, rebuilds and restarts. Bun is a build-time dependency only.
+
+**Alternatives considered:** keeping two script sets (`dev:*` and `install`), rejected because every difference between them became a support problem; a `config.yaml` holding model providers, rejected because providers are user settings that change at runtime; compiling the whole server with Bun, deferred until `node:sqlite` and the native dependencies are known to work under it.
+**Status:** Accepted, 2026-10-24.

@@ -4,43 +4,74 @@ A personal AI backbone: you start runs against your local projects, each run fol
 
 `CONTEXT.md` explains why, `DECISIONS.md` records the decisions, `ARCHITECTURE.md` describes the system, `STYLE.md` is the code style, and `BUILD-NOTES.md` is the log of the v1 build, including what still needs checking on a real machine.
 
-## Run it in development
+## Run it
 
-Requires Node.js 24 or later, pnpm 11 and Docker Desktop. Three terminals:
+Everything goes through one command, `work-os`. Inside the checkout it is `pnpm work-os …`; `pnpm dev` is short for `pnpm work-os dev`. Each installation is a **profile** under `~/.work-os/<profile>/`: its two settings files (`server.env`, `runner.env`), its data and its logs. `default` is everyday use and `dev` is development, so the two never touch each other's accounts, runs or pairings.
+
+Requires Node.js 24 or later, pnpm 11 and, for runs in containers, Docker Desktop.
+
+### Develop on this machine
 
 ```sh
 pnpm install
-pnpm dev:server          # API on :4311, restarts on any source change, data in ~/.work-os/dev-server
-pnpm dev:web             # the web app with hot reload on http://localhost:5173 (proxies /api to :4311)
+pnpm dev
 ```
 
-Give `dev:server` a model first: `ANTHROPIC_API_KEY=… pnpm dev:server`, or `WORK_OS_LMSTUDIO_URL=http://localhost:1234/v1` for LM Studio. Open http://localhost:5173 and enter the setup code from the `dev:server` output. In Settings > Machines, pair a machine, then in the third terminal:
+One terminal runs the server (restarting on source changes), the web app with hot reload and a runner, all under the `dev` profile. It creates the account, signs the browser in automatically (`http://localhost:5173`), pairs the runner, builds the egress gateway image if Docker is running (otherwise runs use the `unsafeHost` driver, with a warning), and adds LM Studio as a model provider when one answers at `http://localhost:1234`. Put an `ANTHROPIC_API_KEY=…` line in `~/.work-os/dev/server.env` to use Anthropic instead, or add any provider in Settings > Models. `pnpm work-os reset --profile dev` throws the dev data away.
+
+### Use it for real on one Mac
 
 ```sh
-pnpm dev:runner pair http://localhost:4311 <code>     # credentials in ~/.work-os/dev-runner
-pnpm dev:runner
+pnpm work-os setup --expose tailscale
 ```
 
-The development setup uses its own port and data folders, so it runs beside an installed work-os. One limit: only one Docker-driver runner can run per machine (they share the egress gateway container). While the installed runner is running, either stop it (`launchctl bootout gui/$(id -u)/dev.work-os.runner`) or run `WORK_OS_RUNNER_DRIVER=unsafeHost pnpm dev:runner`, which runs commands directly in the project folder with no container; use that only on scratch folders.
+`setup` builds the web app and the gateway image, writes the profile's settings, installs the server and runner as login services and starts them. With `--expose tailscale` it runs `tailscale serve` and uses the Mac's tailnet name over HTTPS as the address, which is what lets your phone sign in with a passkey. Use `--expose none` for localhost only, or `--origin https://…` for an address you manage yourself. It then prints the address and the setup code.
 
-## Run it for real
+Open that address, enter the code and **create a passkey at that same address**: passkeys only work where they were created. Then, in Settings:
 
-On the Mac that keeps your projects:
+- **Models:** add a provider (LM Studio, an Anthropic key, or an OpenAI-compatible endpoint) and pick the default model.
+- **Machines:** run `pnpm work-os pair` once (no arguments) on this Mac; it pairs the local runner through a one-time sign-in code. Re-running `setup` after the account exists does the same. Another machine is paired with a code from this screen, see below.
+
+Day to day:
 
 ```sh
-pnpm install && pnpm web:build && pnpm egress:image
-node apps/cli/src/main.ts install
+pnpm work-os status                 # what is installed, running and reachable
+pnpm work-os logs server -f         # or runner
+pnpm work-os restart                # after pulling changes (or: pnpm work-os update)
+pnpm work-os doctor                 # Node, Docker, the gateway image, pairing, the server
+pnpm work-os sign-in-code           # a one-time code when no passkey works (prints the address to open)
 ```
 
-`install` writes two LaunchAgents (server and runner, started at login and restarted if they exit) and two settings files, `~/.work-os/server.env` and `~/.work-os/runner.env`, readable only by you. Put your model key in `server.env` (`ANTHROPIC_API_KEY=…` or `WORK_OS_LMSTUDIO_URL=…`), then load both services with the `launchctl bootstrap` commands it printed.
+### Server on a Mac mini, runners on laptops
 
-Open http://localhost:4310 and enter the setup code from `~/.work-os/server.log`. Pair the machine from Settings > Machines with `node apps/cli/src/main.ts pair http://localhost:4310 <code>`; the runner service keeps retrying until it is paired. `node apps/cli/src/main.ts doctor` checks the whole setup.
+On the Mac mini:
 
-- **From your phone:** run `tailscale serve --bg 4310`, set `WORK_OS_PUBLIC_ORIGIN=https://<mac>.<tailnet>.ts.net` in `server.env`, restart the server, and add a passkey on the phone from Settings > Passkeys.
-- **After pulling changes:** `pnpm install && pnpm web:build`, then `launchctl kickstart -k gui/$(id -u)/dev.work-os.server` (and `dev.work-os.runner`).
-- **Logs:** `~/.work-os/server.log` and `~/.work-os/runner.log`.
+```sh
+pnpm work-os setup --role server --expose tailscale
+```
 
-The server listens on 127.0.0.1 only; reach it from other devices through Tailscale, not by opening the port.
+On each laptop, from its own checkout, with a pairing code from Settings > Machines:
+
+```sh
+pnpm work-os setup --role runner --server https://<mini>.<tailnet>.ts.net --code <code>
+```
+
+A laptop that sleeps pauses its runs; they resume when its runner reconnects.
+
+### The `work-os` binary
+
+`pnpm cli:build` compiles the CLI into `dist/work-os` with Bun. The services still run on Node from a checkout, so on a machine without one `work-os update` clones the app into `~/.work-os/app` (or `WORK_OS_APP_DIR`), installs it and keeps it current; `setup` and the other commands then use that checkout.
+
+### Where things are
+
+| | `dev` profile | `default` profile |
+| --- | --- | --- |
+| Address | `http://localhost:5173` | `http://localhost:4310`, or the Tailscale address |
+| Settings | `~/.work-os/dev/server.env`, `runner.env` | `~/.work-os/default/server.env`, `runner.env` |
+| Data and logs | `~/.work-os/dev/` | `~/.work-os/default/` |
+| Starts with | `pnpm dev` | login services (`work-os start`) |
+
+The settings files hold only what a process needs before it can read its database: port, address, a master key on Linux (macOS uses the keychain), the runner driver. Model providers, the default model, projects and standards are all set in the app. The server listens on 127.0.0.1 only; reach it from other devices through Tailscale, not by opening the port.
 
 ## Check it
 
@@ -53,3 +84,5 @@ pnpm e2e                                  # the same loop through the web app (P
 ```
 
 `WORK_OS_RUNNER_DRIVER=docker pnpm smoke` runs the smoke test in a real container. `docs/lint-report.md` lists every suppression and configuration override.
+
+Runs in `pnpm dev` use the same server code as the installed profile; only the profile, the auto sign-in flag and Vite differ.

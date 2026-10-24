@@ -8,7 +8,17 @@ export const SetupRequestSchema = z
   .object({ setupCode: z.string().min(1), displayName: z.string().min(1).max(100) })
   .meta({ id: "SetupRequest" });
 
-export const SetupStatusResponseSchema = z.object({ isSetUp: z.boolean() }).meta({ id: "SetupStatusResponse" });
+export const SetupStatusResponseSchema = z
+  .object({
+    isSetUp: z.boolean(),
+    /** The address passkeys are bound to; the sign-in screen warns when it is opened anywhere else. */
+    publicOrigin: z.string(),
+    /** True only for a development server, which signs its one account in without a passkey. */
+    isAutoSignIn: z.boolean(),
+  })
+  .meta({ id: "SetupStatusResponse" });
+
+export const SignInCodeRequestSchema = z.object({ code: z.string().min(1).max(40) }).meta({ id: "SignInCodeRequest" });
 
 export const PasskeyOptionsResponseSchema = z.object({ options: OpaqueJsonObjectSchema }).meta({ id: "PasskeyOptionsResponse" });
 

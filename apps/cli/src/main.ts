@@ -1,19 +1,29 @@
-import { DEFAULT_SERVER_PORT } from "@work-os/config/config.constants";
-import { parseRunnerConfig } from "@work-os/config/RunnerConfig";
+import { DEV_PROFILE } from "@work-os/config/config.constants";
 import { WorkOsError } from "@work-os/shared/WorkOsError";
 import { homedir } from "os";
 import { dirname, resolve } from "path";
 import process from "process";
 
+import { resolveAppDirectory } from "./appDirectory.ts";
+import type { CliContext } from "./CliContext.ts";
 import { USAGE } from "./cli.constants.ts";
-import { runDoctor } from "./doctor/runDoctor.ts";
-import { pairRunner } from "./pairRunner.ts";
+import { runDev } from "./commands/dev/runDev.ts";
+import { runDoctorCommand } from "./commands/doctor.ts";
+import { runLogs } from "./commands/logs.ts";
+import { runPair } from "./commands/pair.ts";
+import { runReset, runUninstall } from "./commands/reset.ts";
+import { runServiceAction } from "./commands/serviceCommands.ts";
+import { runSetup } from "./commands/setup.ts";
+import { runSignInCode } from "./commands/signInCode.ts";
+import { runStatus } from "./commands/status.ts";
+import { runUpdate } from "./commands/update.ts";
 import { parseCommandLine, type CommandLine } from "./parseCommandLine.ts";
-import { describeServices } from "./services/describeServices.ts";
-import { installServices } from "./services/installServices.ts";
+import { resolveProfile } from "./profile/resolveProfile.ts";
+import { resolveNodePath } from "./resolveNodePath.ts";
+import { createServiceManager } from "./services/createServiceManager.ts";
 import { writeLine } from "./writeLine.ts";
 
-const repositoryRoot = resolve(import.meta.dirname, "..", "..", "..");
+const sourceRoot = resolve(import.meta.dirname, "..", "..", "..");
 
 const fail = (message: string): undefined => {
   process.stderr.write(`${message}\n`);
@@ -21,56 +31,66 @@ const fail = (message: string): undefined => {
   return undefined;
 };
 
-const doctor = async (commandLine: CommandLine): Promise<undefined> => {
-  const runnerConfig = parseRunnerConfig({ environment: process.env, homeDirectory: homedir() });
-  if (runnerConfig instanceof WorkOsError) return fail(runnerConfig.message);
+const createContext = async (commandLine: CommandLine): Promise<CliContext | WorkOsError> => {
+  const homeDirectory = homedir();
+  const paths = resolveProfile({ flag: commandLine.profile, environment: process.env, homeDirectory, fallback: commandLine.command === "dev" ? DEV_PROFILE : undefined });
+  if (paths instanceof WorkOsError) return paths;
 
-  const serverUrl = commandLine.serverUrl ?? `http://localhost:${DEFAULT_SERVER_PORT}`;
-  const isHealthy = await runDoctor({ nodeVersion: process.versions.node, serverUrl, runnerDataDirectory: runnerConfig.dataDirectory });
-  if (!isHealthy) return fail("Some checks failed.");
-  return undefined;
+  const services = createServiceManager({ platform: process.platform, homeDirectory, userId: process.getuid?.() });
+  if (services instanceof WorkOsError) return services;
+
+  const nodePath = await resolveNodePath();
+  if (nodePath instanceof WorkOsError) return nodePath;
+
+  const appDirectory = await resolveAppDirectory({ flag: commandLine.appDirectory, environment: process.env, sourceRoot, homeDirectory });
+  const searchPath = `${dirname(nodePath)}:${process.env["PATH"] ?? "/usr/bin:/bin"}`;
+  return { commandLine, paths, appDirectory, homeDirectory, nodePath, searchPath, platform: process.platform, userId: process.getuid?.(), environment: process.env, services };
 };
 
-const pair = async (commandLine: CommandLine): Promise<undefined> => {
-  const [serverUrl, code] = commandLine.positionals;
-  const hasArguments = serverUrl !== undefined && code !== undefined;
-  if (!hasArguments) return fail("Usage: work-os pair <server URL> <code>");
-
-  const exitCode = await pairRunner({ nodePath: process.execPath, repositoryRoot, serverUrl, code });
-  if (exitCode instanceof WorkOsError) return fail(exitCode.message);
-  if (exitCode !== 0) return fail("Pairing failed.");
-  writeLine("Paired. Start the runner with: work-os install --runner-only, or node apps/runner/src/main.ts");
-  return undefined;
-};
-
-const install = async (commandLine: CommandLine): Promise<undefined> => {
-  const isBothExcluded = commandLine.isServerOnly && commandLine.isRunnerOnly;
-  if (isBothExcluded) return fail("Choose --server-only or --runner-only, not both.");
-
-  const names = [...(commandLine.isRunnerOnly ? [] : ["server" as const]), ...(commandLine.isServerOnly ? [] : ["runner" as const])];
-  const searchPath = `${dirname(process.execPath)}:${process.env["PATH"] ?? "/usr/bin:/bin"}`;
-  const services = describeServices({ nodePath: process.execPath, repositoryRoot, homeDirectory: homedir(), searchPath, names });
-  const installed = await installServices({ platform: process.platform, homeDirectory: homedir(), services });
-  if (installed instanceof WorkOsError) return fail(installed.message);
-  return undefined;
+const dispatch = async (context: CliContext): Promise<WorkOsError | undefined> => {
+  switch (context.commandLine.command) {
+    case "dev":
+      return runDev(context);
+    case "setup":
+      return runSetup(context);
+    case "start":
+      return runServiceAction(context, "start");
+    case "stop":
+      return runServiceAction(context, "stop");
+    case "restart":
+      return runServiceAction(context, "restart");
+    case "status":
+      return runStatus(context);
+    case "logs":
+      return runLogs(context);
+    case "doctor":
+      return runDoctorCommand(context);
+    case "pair":
+      return runPair(context);
+    case "sign-in-code":
+      return runSignInCode(context);
+    case "update":
+      return runUpdate(context);
+    case "reset":
+      return runReset(context);
+    case "uninstall":
+      return runUninstall(context);
+    case undefined:
+    default:
+      writeLine(USAGE);
+      return undefined;
+  }
 };
 
 const start = async (): Promise<undefined> => {
   const commandLine = parseCommandLine(process.argv.slice(2));
   if (commandLine instanceof WorkOsError) return fail(`${commandLine.message}\n${USAGE}`);
 
-  switch (commandLine.command) {
-    case "doctor":
-      return doctor(commandLine);
-    case "pair":
-      return pair(commandLine);
-    case "install":
-      return install(commandLine);
-    case undefined:
-    default:
-      writeLine(USAGE);
-      return undefined;
-  }
+  const context = await createContext(commandLine);
+  if (context instanceof WorkOsError) return fail(context.message);
+
+  const outcome = await dispatch(context);
+  return outcome instanceof WorkOsError ? fail(outcome.message) : undefined;
 };
 
 void start();

@@ -3,7 +3,8 @@ import type { ServiceDefinition } from "./ServiceDefinition.ts";
 
 const quote = (text: string): string => `"${text.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`;
 
-export const systemdUnitName = (service: ServiceDefinition): string => `${SYSTEMD_UNIT_PREFIX}-${service.name}.service`;
+export const systemdUnitName = (service: Pick<ServiceDefinition, "profile" | "name">): string =>
+  `${SYSTEMD_UNIT_PREFIX}-${service.profile}-${service.name}.service`;
 
 // A systemd user unit that starts the service at login and restarts it when it fails.
 export const renderSystemdUnit = (service: ServiceDefinition): string =>
@@ -15,7 +16,7 @@ export const renderSystemdUnit = (service: ServiceDefinition): string =>
     "[Service]",
     `ExecStart=${service.programArguments.map(quote).join(" ")}`,
     `WorkingDirectory=${service.workingDirectory}`,
-    `Environment=${quote(`PATH=${service.searchPath}`)}`,
+    ...Object.entries(service.environment).map(([name, value]) => `Environment=${quote(`${name}=${value}`)}`),
     "Restart=on-failure",
     "RestartSec=5",
     "",

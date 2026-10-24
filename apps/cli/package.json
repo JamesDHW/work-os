@@ -8,6 +8,7 @@
   "dependencies": {
     "@work-os/api-types": "workspace:*",
     "@work-os/config": "workspace:*",
+    "@work-os/domain": "workspace:*",
     "@work-os/shared": "workspace:*",
     "openapi-fetch": "0.17.0"
   }

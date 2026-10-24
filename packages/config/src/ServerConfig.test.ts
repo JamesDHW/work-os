@@ -10,18 +10,33 @@ describe("parseServerConfig", () => {
     const config = parseServerConfig({ ...source, environment: {} });
 
     expect(config).toEqual({
-      dataDirectory: "/Users/ada/.work-os/server",
+      profile: "default",
+      dataDirectory: "/Users/ada/.work-os/default/server",
+      signInCodeFile: "/Users/ada/.work-os/default/server/sign-in-code.json",
       port: 4310,
       host: "127.0.0.1",
       publicOrigin: "http://localhost:4310",
       webDistDirectory: null,
       lmStudioUrl: null,
       bundledPackagesDirectory: "/opt/work-os/bundled",
-      defaultModel: "anthropic/claude-sonnet-5-5",
+      defaultModel: null,
       masterKey: null,
       scriptedResponses: null,
       setupCode: null,
+      isDevAutoSignIn: false,
     });
+  });
+
+  it("keeps each profile's data apart", () => {
+    const config = parseServerConfig({ ...source, environment: { WORK_OS_PROFILE: "dev" } });
+
+    expect(config).toMatchObject({ profile: "dev", dataDirectory: "/Users/ada/.work-os/dev/server" });
+  });
+
+  it("rejects a profile name with unsafe characters", () => {
+    const config = parseServerConfig({ ...source, environment: { WORK_OS_PROFILE: "../etc" } });
+
+    expect(config).toBeInstanceOf(ConfigError);
   });
 
   it("reads the port and public origin from the environment", () => {

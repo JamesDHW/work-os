@@ -35,10 +35,9 @@ export const MachinesSection: FC<MachinesSectionProps> = ({ workspaceId, runners
       </ul>
       {model.pairingCode === null ? null : (
         <>
-          <MutedText>Run this on the machine within ten minutes, then start the runner:</MutedText>
+          <MutedText>Run this on that machine within ten minutes (from a work-os checkout: pnpm work-os …). Its runner picks the pairing up when it next starts.</MutedText>
           <pre className={commandText}>
-            work-os-runner pair {window.location.origin} {model.pairingCode.code}
-            {"\n"}work-os-runner
+            work-os pair {window.location.origin} {model.pairingCode.code}
           </pre>
         </>
       )}

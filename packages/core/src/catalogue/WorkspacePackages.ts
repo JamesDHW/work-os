@@ -24,4 +24,5 @@ export type WorkspacePackages = {
   ) => Promise<EnvironmentDefinition | NotFoundError | WorkOsError>;
   readonly readSkill: (workspaceId: WorkspaceId, name: string) => Promise<Skill | NotFoundError | WorkOsError>;
   readonly readModelAliases: (workspaceId: WorkspaceId) => Promise<ModelAliases | WorkOsError>;
+  readonly saveDefaultModel: (workspaceId: WorkspaceId, model: string) => Promise<WorkOsError | undefined>;
 };

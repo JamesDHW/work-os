@@ -13,12 +13,14 @@ import { resolvePackageChain } from "./manifest/resolvePackageChain.ts";
 import { readSkill } from "./skills/readSkill.ts";
 import { readStandard } from "./standards/readStandard.ts";
 import { createEnsurePackage } from "./workspace/ensurePackage.ts";
+import { createSaveDefaultModel } from "./workspace/saveDefaultModel.ts";
 import { createSaveStandardFiles } from "./workspace/saveStandardFiles.ts";
 
 export type WorkspacePackagesOptions = {
   readonly workspacesDirectory: string;
   readonly bundledDirectory: string;
-  readonly defaultModel: string;
+  /** The model a new workspace starts with, decided when the workspace is created from what is configured then. */
+  readonly chooseDefaultModel: () => Promise<string>;
   readonly defaultExtends: readonly string[];
 };
 
@@ -55,5 +57,6 @@ export const createWorkspacePackages = (options: WorkspacePackagesOptions): Work
       if (chain instanceof WorkOsError) return chain;
       return readModelAliases(chain);
     },
+    saveDefaultModel: createSaveDefaultModel({ workspaceDirectory }),
   };
 };

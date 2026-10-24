@@ -3,12 +3,14 @@ import type { WorkspacePackages } from "@work-os/core/catalogue/WorkspacePackage
 import type { SecretVault } from "@work-os/core/connections/SecretVault";
 import type { EventBus } from "@work-os/core/events/EventBus";
 import type { InboxWaiters } from "@work-os/core/inbox/InboxWaiters";
+import type { RefreshModelCatalogue } from "@work-os/core/models/refreshModelCatalogue";
 import type { PushSender } from "@work-os/core/notifications/PushSender";
 import type { PairingCodes } from "@work-os/core/runners/PairingCodes";
 import type { RunnerHub } from "@work-os/core/runners/RunnerHub";
 import type { Logger } from "@work-os/core/system/Logger";
 import type { RandomSource } from "@work-os/core/system/RandomSource";
 import type { SystemClock } from "@work-os/core/system/SystemClock";
+import type { OpenedModelCatalogue } from "@work-os/harness/models/createModelCatalogue";
 
 import type { Stores } from "./composeStores.ts";
 
@@ -25,4 +27,6 @@ export type ServerContext = {
   readonly capabilityRegistry: CapabilityRegistry;
   readonly secretVault: SecretVault;
   readonly pushSender: PushSender;
+  readonly modelCatalogue: OpenedModelCatalogue;
+  readonly refreshModelCatalogue: RefreshModelCatalogue;
 };

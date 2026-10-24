@@ -9,11 +9,18 @@ import type { AuthenticateSession } from "@work-os/core/identity/authenticateSes
 import type { CompleteSetup } from "@work-os/core/identity/completeSetup";
 import type { PasskeyStore } from "@work-os/core/identity/PasskeyStore";
 import type { RegisterPasskey } from "@work-os/core/identity/registerPasskey";
+import type { SignInForDevelopment } from "@work-os/core/identity/signInForDevelopment";
+import type { SignInWithCode } from "@work-os/core/identity/signInWithCode";
 import type { SignInWithPasskey } from "@work-os/core/identity/signInWithPasskey";
 import type { SignOut } from "@work-os/core/identity/signOut";
 import type { UserStore } from "@work-os/core/identity/UserStore";
 import type { AnswerInboxItem } from "@work-os/core/inbox/answerInboxItem";
 import type { ListInbox } from "@work-os/core/inbox/listInbox";
+import type { DeleteModelProvider } from "@work-os/core/models/deleteModelProvider";
+import type { ListModelProviders } from "@work-os/core/models/listModelProviders";
+import type { ModelCatalogue } from "@work-os/core/models/ModelCatalogue";
+import type { ReadDefaultModel } from "@work-os/core/models/readDefaultModel";
+import type { SaveModelProvider } from "@work-os/core/models/saveModelProvider";
 import type { PushSubscriptionStore } from "@work-os/core/notifications/PushSubscriptionStore";
 import type { SubscribeToPush } from "@work-os/core/notifications/subscribeToPush";
 import type { CreateProject } from "@work-os/core/projects/createProject";
@@ -43,6 +50,7 @@ export type ApiSettings = {
   readonly relyingPartyName: string;
   readonly isSecureCookie: boolean;
   readonly serverVersion: string;
+  readonly isDevAutoSignIn: boolean;
 };
 
 export type ApiServices = {
@@ -57,6 +65,8 @@ export type ApiServices = {
     readonly passkeyStore: Pick<PasskeyStore, "listPasskeysForUser">;
     readonly registerPasskey: RegisterPasskey;
     readonly signInWithPasskey: SignInWithPasskey;
+    readonly signInWithCode: SignInWithCode;
+    readonly signInForDevelopment: SignInForDevelopment;
   };
   readonly workspaces: {
     readonly workspaceStore: Pick<WorkspaceStore, "listWorkspacesForUser">;
@@ -99,6 +109,14 @@ export type ApiServices = {
   };
   readonly grants: {
     readonly grantStore: Pick<GrantStore, "listGrants" | "revokeGrant">;
+  };
+  readonly models: {
+    readonly listModelProviders: ListModelProviders;
+    readonly saveModelProvider: SaveModelProvider;
+    readonly deleteModelProvider: DeleteModelProvider;
+    readonly listAvailableModels: ModelCatalogue["listAvailableModels"];
+    readonly readDefaultModel: ReadDefaultModel;
+    readonly saveDefaultModel: WorkspacePackages["saveDefaultModel"];
   };
   readonly push: {
     readonly publicKey: string;

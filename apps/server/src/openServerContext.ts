@@ -1,3 +1,4 @@
+import { DEFAULT_MODEL } from "@work-os/config/config.constants";
 import type { ServerConfig } from "@work-os/config/ServerConfig";
 import { createEventBus } from "@work-os/core/events/eventBus.state";
 import { createInboxWaiters } from "@work-os/core/inbox/inboxWaiters.state";
@@ -5,6 +6,7 @@ import { createEnsurePushKeys } from "@work-os/core/notifications/ensurePushKeys
 import { createPairingCodes } from "@work-os/core/runners/pairingCodes.state";
 import { createRunnerHub } from "@work-os/core/runners/createRunnerHub";
 import type { Logger } from "@work-os/core/system/Logger";
+import { chooseDefaultModel } from "@work-os/domain/models/chooseDefaultModel";
 import { openDatabase } from "@work-os/db/openDatabase";
 import { createWorkspacePackages } from "@work-os/package-store/createWorkspacePackages";
 import { createCapabilityRegistry } from "@work-os/package-store/extensions/createCapabilityRegistry";
@@ -18,6 +20,7 @@ import { WorkOsError } from "@work-os/shared/WorkOsError";
 import { mkdir } from "fs/promises";
 
 import { composeStores } from "./composeStores.ts";
+import { openModelCatalogue } from "./openModelCatalogue.ts";
 import { parsePushKeys } from "./parsePushKeys.ts";
 import type { ServerContext } from "./ServerContext.ts";
 import { DEFAULT_EXTENDS, PUSH_SUBJECT_FALLBACK } from "./server.constants.ts";
@@ -45,6 +48,15 @@ export const openServerContext = async (config: ServerConfig, logger: Logger): P
 
   const randomSource = createRandomSource();
   const clock = { now: () => new Date().toISOString() };
+  const modelLayer = await openModelCatalogue({ config, modelProviderStore: stores.modelProviderStore, secretVault, clock });
+  if (modelLayer instanceof WorkOsError) return modelLayer;
+
+  const chooseWorkspaceDefaultModel = async (): Promise<string> => {
+    if (config.defaultModel !== null) return config.defaultModel;
+
+    const available = await modelLayer.modelCatalogue.catalogue.listAvailableModels();
+    return chooseDefaultModel(available instanceof WorkOsError ? [] : available, DEFAULT_MODEL);
+  };
   const eventBus = createEventBus();
   const bundledDirectory = config.bundledPackagesDirectory;
   const context: ServerContext = {
@@ -56,7 +68,7 @@ export const openServerContext = async (config: ServerConfig, logger: Logger): P
     inboxWaiters: createInboxWaiters(),
     runnerHub: createRunnerHub({ randomSource }),
     pairingCodes: createPairingCodes({ randomSource, clock }),
-    workspacePackages: createWorkspacePackages({ workspacesDirectory, bundledDirectory, defaultModel: config.defaultModel, defaultExtends: DEFAULT_EXTENDS }),
+    workspacePackages: createWorkspacePackages({ workspacesDirectory, bundledDirectory, chooseDefaultModel: chooseWorkspaceDefaultModel, defaultExtends: DEFAULT_EXTENDS }),
     capabilityRegistry: createCapabilityRegistry({
       workspacesDirectory,
       bundledDirectory,
@@ -64,6 +76,7 @@ export const openServerContext = async (config: ServerConfig, logger: Logger): P
     }),
     secretVault,
     pushSender: createPushSender({ keys: pushKeys, subject: pushSubject(config.publicOrigin) }),
+    ...modelLayer,
   };
   return { context, close: opened.close };
 };

@@ -15,7 +15,7 @@ export const checkDocker = async (): Promise<DoctorCheck> => {
 export const checkEgressImage = async (): Promise<DoctorCheck> => {
   const image = await runCommand("docker", ["image", "inspect", "--format", "{{.Id}}", EGRESS_GATEWAY_IMAGE]);
   const isPresent = !(image instanceof WorkOsError) && image.exitCode === 0;
-  if (!isPresent) return { name: "Egress gateway image", status: "warn", detail: `${EGRESS_GATEWAY_IMAGE} is missing. Build it with: pnpm egress:image` };
+  if (!isPresent) return { name: "Egress gateway image", status: "warn", detail: `${EGRESS_GATEWAY_IMAGE} is missing. Build it with: work-os setup (or pnpm egress:image)` };
 
   return { name: "Egress gateway image", status: "ok", detail: EGRESS_GATEWAY_IMAGE };
 };

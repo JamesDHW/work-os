@@ -110,7 +110,7 @@ export default defineArchitecture({
       exclude: TESTS,
       dependencies: {
         internal: ["serverApp", "config", "core", "api", "db", "harness", "secrets", "push", "packageStore", "protocol", "domain", "shared"],
-        external: ["hono", "@hono/node-server", "@hono/node-server/**", "@hono/node-ws", "node:process", "node:fs/promises"],
+        external: ["hono", "@hono/node-server", "@hono/node-server/**", "@hono/node-ws", "node:process", "node:fs", "node:fs/promises"],
       },
     },
 
@@ -147,10 +147,11 @@ export default defineArchitecture({
       files: ["apps/cli/src/**/*.ts"],
       exclude: TESTS,
       dependencies: {
-        internal: ["cli", "apiTypes", "config", "shared"],
+        internal: ["cli", "apiTypes", "config", "domain", "shared"],
         external: [
           "openapi-fetch",
           "node:util", "node:fs/promises", "node:path", "node:os", "node:child_process", "node:process", "node:stream/consumers",
+          "node:crypto", "node:readline/promises", "node:timers/promises",
         ],
       },
     },

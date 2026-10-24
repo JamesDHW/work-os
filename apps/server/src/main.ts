@@ -1,15 +1,18 @@
 import { parseServerConfig } from "@work-os/config/ServerConfig";
 import { WorkOsError } from "@work-os/shared/WorkOsError";
+import { existsSync } from "fs";
 import process from "process";
 
 import { createConsoleLogger } from "./createConsoleLogger.ts";
 import { startServer } from "./startServer.ts";
 
 const logger = createConsoleLogger((line) => process.stdout.write(`${line}\n`));
+const builtWebApp = new URL("../../web/dist", import.meta.url).pathname;
 const config = parseServerConfig({
   environment: process.env,
   homeDirectory: process.env["HOME"] ?? ".",
   bundledPackagesDirectory: new URL("../../../bundled", import.meta.url).pathname,
+  defaultWebDistDirectory: existsSync(builtWebApp) ? builtWebApp : null,
 });
 
 const run = async (): Promise<undefined> => {

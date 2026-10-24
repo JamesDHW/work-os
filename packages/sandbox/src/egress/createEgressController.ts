@@ -3,6 +3,7 @@ import { WorkOsError } from "@work-os/shared/WorkOsError";
 import { runDockerExpectingSuccess } from "../docker/runDocker.ts";
 import { EGRESS_CONTROL_PORT, EGRESS_GATEWAY_CONTAINER, EGRESS_NETWORK } from "../sandbox.constants.ts";
 import { createContainerAddresses } from "./containerAddresses.state.ts";
+import { createGatewayStart } from "./gatewayStart.state.ts";
 import { createGatewayClient, type GatewayClient } from "./createGatewayClient.ts";
 import type { EgressController } from "./EgressController.ts";
 import { waitUntilHealthy } from "./waitUntilHealthy.ts";
@@ -13,14 +14,15 @@ export type EgressControllerOptions = {
   readonly controlPort: number;
 };
 
-// The gateway starts once, when the controller is created; every caller awaits that same start.
+// The gateway starts when the controller is created and every caller awaits that same start; a failed start is retried.
 export const createEgressController = (options: EgressControllerOptions): EgressController => {
   const gateway = createGatewayClient(`http://127.0.0.1:${options.controlPort}`, options.token);
   const containerAddresses = createContainerAddresses();
-  const ready = startGateway(options, gateway);
+  const gatewayStart = createGatewayStart(() => startGateway(options, gateway));
+  void gatewayStart.ensure();
 
   return {
-    ensureReady: async () => ready,
+    ensureReady: async () => gatewayStart.ensure(),
     allow: async (grant) => {
       const sourceIp = await runDockerExpectingSuccess(["inspect", "--format", `{{(index .NetworkSettings.Networks "${EGRESS_NETWORK}").IPAddress}}`, grant.containerId]);
       if (sourceIp instanceof WorkOsError) return sourceIp;

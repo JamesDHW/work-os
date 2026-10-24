@@ -5,9 +5,15 @@ import { createAuthenticateSession } from "@work-os/core/identity/authenticateSe
 import { createCompleteSetup } from "@work-os/core/identity/completeSetup";
 import { createIssueSession } from "@work-os/core/identity/issueSession";
 import { createRegisterPasskey } from "@work-os/core/identity/registerPasskey";
+import { createSignInForDevelopment } from "@work-os/core/identity/signInForDevelopment";
+import { createSignInWithCode } from "@work-os/core/identity/signInWithCode";
 import { createSignInWithPasskey } from "@work-os/core/identity/signInWithPasskey";
 import { createSignOut } from "@work-os/core/identity/signOut";
 import { createListInbox } from "@work-os/core/inbox/listInbox";
+import { createDeleteModelProvider } from "@work-os/core/models/deleteModelProvider";
+import { createListModelProviders } from "@work-os/core/models/listModelProviders";
+import { createReadDefaultModel } from "@work-os/core/models/readDefaultModel";
+import { createSaveModelProvider } from "@work-os/core/models/saveModelProvider";
 import { createSubscribeToPush } from "@work-os/core/notifications/subscribeToPush";
 import { createCreateProject } from "@work-os/core/projects/createProject";
 import { createAuthenticateRunner } from "@work-os/core/runners/authenticateRunner";
@@ -19,6 +25,8 @@ import { createRecordEgressBlocked } from "@work-os/core/runners/recordEgressBlo
 import { createCreatePersonalWorkspace } from "@work-os/core/workspaces/createPersonalWorkspace";
 import { createRequireMembership } from "@work-os/core/workspaces/requireMembership";
 
+import type { SignInCodes } from "@work-os/core/identity/SignInCodes";
+
 import type { RunOperations } from "./composeRunOperations.ts";
 import type { SharedOperations } from "./composeSharedOperations.ts";
 import type { ServerContext } from "./ServerContext.ts";
@@ -29,6 +37,7 @@ export type ApiServicesInput = {
   readonly runs: RunOperations;
   readonly settings: ApiSettings;
   readonly readSetupCode: () => string;
+  readonly signInCodes: SignInCodes;
 };
 
 export const composeApiServices = (input: ApiServicesInput): ApiServices => {
@@ -50,6 +59,8 @@ export const composeApiServices = (input: ApiServicesInput): ApiServices => {
       passkeyStore: stores.passkeyStore,
       registerPasskey: createRegisterPasskey({ ...stores, clock }),
       signInWithPasskey: createSignInWithPasskey({ ...stores, issueSession }),
+      signInWithCode: createSignInWithCode({ ...stores, signInCodes: input.signInCodes, issueSession, clock }),
+      signInForDevelopment: createSignInForDevelopment({ ...stores, isEnabled: input.settings.isDevAutoSignIn, issueSession }),
     },
     workspaces: { workspaceStore: stores.workspaceStore, requireMembership: createRequireMembership({ ...stores }) },
     runners: {
@@ -78,6 +89,14 @@ export const composeApiServices = (input: ApiServicesInput): ApiServices => {
     runs: { runStore: stores.runStore, ...runs },
     inbox: { listInbox: createListInbox({ ...stores }), answerInboxItem: runs.answerInboxItem },
     grants: { grantStore: stores.grantStore },
+    models: {
+      listModelProviders: createListModelProviders({ ...stores, modelCatalogue: context.modelCatalogue.catalogue }),
+      saveModelProvider: createSaveModelProvider({ ...stores, secretVault: context.secretVault, refreshModelCatalogue: context.refreshModelCatalogue, clock }),
+      deleteModelProvider: createDeleteModelProvider({ ...stores, refreshModelCatalogue: context.refreshModelCatalogue }),
+      listAvailableModels: context.modelCatalogue.catalogue.listAvailableModels,
+      readDefaultModel: createReadDefaultModel({ workspacePackages: context.workspacePackages }),
+      saveDefaultModel: context.workspacePackages.saveDefaultModel,
+    },
     push: {
       publicKey: context.pushSender.publicKey,
       subscribeToPush: createSubscribeToPush({ ...stores, clock }),

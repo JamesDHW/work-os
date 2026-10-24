@@ -23,3 +23,6 @@ export type User = Schemas["User"];
 export type Workspace = Schemas["Workspace"];
 export type SaveStandardRequest = Schemas["SaveStandardRequest"];
 export type PushSubscriptionBody = Schemas["PushSubscription"];
+export type ModelProvider = Schemas["ModelProvider"];
+export type ModelProviderKind = Schemas["ModelProviderKind"];
+export type ModelSummary = Schemas["ModelSummary"];

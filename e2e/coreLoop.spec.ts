@@ -40,7 +40,7 @@ const createAccount = async (page: Page): Promise<void> => {
 const pairMachine = async (page: Page, dataDirectory: string): Promise<void> => {
   await openSection(page, "Settings");
   await page.getByRole("button", { name: "Pair a machine" }).click();
-  const command = await page.getByText("work-os-runner pair").textContent();
+  const command = await page.getByText("work-os pair").textContent();
   const code = /pair \S+ (\S+)/u.exec(command ?? "")?.[1] ?? "";
   expect(code).not.toBe("");
   expect(await waitForExit(startRunner(["pair", E2E_SERVER_URL, code], dataDirectory))).toBe(0);

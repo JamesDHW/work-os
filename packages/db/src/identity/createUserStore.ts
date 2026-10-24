@@ -4,7 +4,7 @@ import type { User } from "@work-os/domain/workspaces/User";
 import { NotFoundError } from "@work-os/shared/NotFoundError";
 import { tryCatchAsync } from "@work-os/shared/tryCatch";
 import { WorkOsError } from "@work-os/shared/WorkOsError";
-import { count, eq } from "drizzle-orm";
+import { asc, count, eq } from "drizzle-orm";
 
 import { users } from "../tables/users.ts";
 import type { WorkOsDatabase } from "../WorkOsDatabase.ts";
@@ -33,5 +33,14 @@ export const createUserStore = (database: WorkOsDatabase): UserStore => {
     return { ...row, id: toUserId(row.id) };
   };
 
-  return { countUsers, createUser, findUser };
+  const findFirstUser = async (): Promise<User | WorkOsError> => {
+    const rows = await tryCatchAsync(() => database.select().from(users).orderBy(asc(users.createdAt)).limit(1));
+    if (rows instanceof WorkOsError) return rows;
+
+    const row = rows[0];
+    if (row === undefined) return new NotFoundError("work-os has no account yet.");
+    return { ...row, id: toUserId(row.id) };
+  };
+
+  return { countUsers, createUser, findUser, findFirstUser };
 };

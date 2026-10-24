@@ -3,6 +3,7 @@ import { connections } from "./tables/connections.ts";
 import { grants } from "./tables/grants.ts";
 import { inboxItems } from "./tables/inboxItems.ts";
 import { memberships } from "./tables/memberships.ts";
+import { modelProviders } from "./tables/modelProviders.ts";
 import { observations } from "./tables/observations.ts";
 import { passkeys } from "./tables/passkeys.ts";
 import { projects } from "./tables/projects.ts";
@@ -30,4 +31,5 @@ export const workOsSchema = {
   pushSubscriptions,
   observations,
   settings,
+  modelProviders,
 };

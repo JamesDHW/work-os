@@ -68,7 +68,7 @@ work-os/
 │   ├── runner/                        pairing, link client, handlers that call sandbox
 │   ├── egress-gateway/                allowlisting HTTP(S) proxy, built as a small OCI image
 │   ├── web/                           React SPA + installable web app (Atelier layout, §7)
-│   └── cli/                           `work-os` command: install services, pair a runner, doctor
+│   └── cli/                           `work-os` command: dev loop, setup, service control, pair, doctor, update
 │
 ├── packages/                          libraries
 │   ├── shared/                        WorkOsError hierarchy, tryCatch                (Work shared)
@@ -155,7 +155,7 @@ Authentication uses passkeys: `@simplewebauthn/server` in `api` (verification is
 | `sandbox` | `environments/` (effective devcontainer config, up/down), `tools/` (shell, read, write, edit, search in the container), `checks/`, `outputs/` (hash manifests, `git status`/`git diff`), `hostCommands/` (approved folder-bound commands with a per-call credential, D43), `folders/` (browse local folders), `egress/` (gateway control) | `@devcontainers/cli` (invoked as a subprocess) | `child_process`, `fs/promises`, `path`, `crypto`, `os` |
 | `apps/runner` | Pairing, outbound link with reconnection, handlers mapping link messages to `sandbox` | — (global `WebSocket`, `fetch`) | `process` |
 | `apps/egress-gateway` | CONNECT-based allowlisting by hostname, per-container run mapping, blocked-request reports | — | `http`, `net`, `process` |
-| `apps/cli` | Install launchd/systemd services, pair a runner, doctor | `openapi-fetch` | `util` (`parseArgs`), `fs/promises`, `path`, `os`, `child_process`, `process` |
+| `apps/cli` | Profiles under `~/.work-os/<profile>/`; `dev` loop; `setup`, `start`/`stop`/`status`/`logs` over launchd/systemd; pair, doctor, sign-in-code, update, reset | `openapi-fetch` | `util` (`parseArgs`, `parseEnv`), `fs/promises`, `path`, `os`, `child_process`, `process`, `crypto`, `readline/promises`, `timers/promises` |
 
 Host requirement for runners: Docker Desktop or Docker Engine.
 

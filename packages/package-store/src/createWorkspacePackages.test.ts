@@ -14,7 +14,7 @@ const workspace = { id: toWorkspaceId("workspace-1"), name: "Ada's workspace", k
 const folder = { path: "" };
 
 const createPackages = () =>
-  createWorkspacePackages({ workspacesDirectory: folder.path, bundledDirectory, defaultModel: "faux/scripted", defaultExtends: ["base", "github"] });
+  createWorkspacePackages({ workspacesDirectory: folder.path, bundledDirectory, chooseDefaultModel: async () => "faux/scripted", defaultExtends: ["base", "github"] });
 
 beforeEach(async () => {
   folder.path = await mkdtemp(join(tmpdir(), "work-os-packages-"));

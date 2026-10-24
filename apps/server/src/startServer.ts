@@ -11,6 +11,8 @@ import { createRootApp, type RootApp } from "./createRootApp.ts";
 import { openAgentLayer } from "./openAgentLayer.ts";
 import { openServerContext } from "./openServerContext.ts";
 import { announceSetupCode } from "./announceSetupCode.ts";
+import { createSignInCodes } from "./createSignInCodes.ts";
+import { isLoopbackHost } from "./isLoopbackHost.ts";
 import { RELYING_PARTY_NAME, SERVER_VERSION } from "./server.constants.ts";
 
 export type RunningServer = {
@@ -44,7 +46,7 @@ export const composeServer = async (config: ServerConfig, logger: Logger): Promi
 
   const { context } = opened;
   const shared = composeSharedOperations(context);
-  const agent = await openAgentLayer(config, composeRunToolHandlers(context, shared), logger);
+  const agent = await openAgentLayer(config, context, composeRunToolHandlers(context, shared), logger);
   if (agent instanceof WorkOsError) return agent;
 
   const runs = composeRunOperations(context, shared, agent.agentRuntime);
@@ -56,8 +58,9 @@ export const composeServer = async (config: ServerConfig, logger: Logger): Promi
     relyingPartyName: RELYING_PARTY_NAME,
     isSecureCookie: origin.protocol === "https:",
     serverVersion: SERVER_VERSION,
+    isDevAutoSignIn: config.isDevAutoSignIn && isLoopbackHost(config.host),
   };
-  const services = composeApiServices({ context, shared, runs, settings, readSetupCode: () => setupCode });
+  const services = composeApiServices({ context, shared, runs, settings, readSetupCode: () => setupCode, signInCodes: createSignInCodes(config.signInCodeFile) });
   const close = async (): Promise<undefined> => {
     await agent.close();
     opened.close();

@@ -17,6 +17,7 @@ import { registerProjectRoutes } from "./projects/projectRoutes.ts";
 import { registerPushRoutes } from "./push/pushRoutes.ts";
 import { registerRunnerLinkRoute } from "./runners/runnerLinkRoute.ts";
 import { registerRunnerRoutes } from "./runners/runnerRoutes.ts";
+import { registerModelRoutes } from "./models/modelRoutes.ts";
 import { registerRunRoutes } from "./runs/runRoutes.ts";
 
 export type ApiApp = OpenAPIHono<ApiEnv>;
@@ -39,6 +40,7 @@ export const createApiApp = (services: ApiServices, upgradeWebSocket: UpgradeWeb
   registerRunRoutes(app, services);
   registerInboxRoutes(app, services);
   registerGrantRoutes(app, services);
+  registerModelRoutes(app, services);
   registerPushRoutes(app, services);
   registerEventRoutes(app, services);
   app.doc31("/api/openapi.json", { openapi: "3.1.0", info: { title: "work-os", version: services.settings.serverVersion } });

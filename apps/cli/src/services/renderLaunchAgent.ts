@@ -5,7 +5,7 @@ const escapeXml = (text: string): string => text.replaceAll("&", "&amp;").replac
 
 const xmlString = (text: string): string => `<string>${escapeXml(text)}</string>`;
 
-export const launchAgentLabel = (service: ServiceDefinition): string => `${LAUNCH_AGENT_PREFIX}.${service.name}`;
+export const launchAgentLabel = (service: Pick<ServiceDefinition, "profile" | "name">): string => `${LAUNCH_AGENT_PREFIX}.${service.profile}.${service.name}`;
 
 // A macOS LaunchAgent that starts the service at login and restarts it if it exits.
 export const renderLaunchAgent = (service: ServiceDefinition): string =>
@@ -20,7 +20,10 @@ export const renderLaunchAgent = (service: ServiceDefinition): string =>
     ...service.programArguments.map((programArgument) => `    ${xmlString(programArgument)}`),
     "  </array>",
     `  <key>WorkingDirectory</key>${xmlString(service.workingDirectory)}`,
-    `  <key>EnvironmentVariables</key><dict><key>PATH</key>${xmlString(service.searchPath)}</dict>`,
+    "  <key>EnvironmentVariables</key>",
+    "  <dict>",
+    ...Object.entries(service.environment).map(([name, value]) => `    <key>${escapeXml(name)}</key>${xmlString(value)}`),
+    "  </dict>",
     "  <key>RunAtLoad</key><true/>",
     "  <key>KeepAlive</key><true/>",
     `  <key>StandardOutPath</key>${xmlString(service.logPath)}`,

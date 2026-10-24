@@ -12,7 +12,7 @@ import { runGit } from "../git/runGit.ts";
 
 type EnsurePackageOptions = {
   readonly workspaceDirectory: (workspaceId: WorkspaceId) => string;
-  readonly defaultModel: string;
+  readonly chooseDefaultModel: () => Promise<string>;
   readonly defaultExtends: readonly string[];
 };
 
@@ -33,7 +33,8 @@ export const createEnsurePackage = (options: EnsurePackageOptions) => {
 };
 
 const writeInitialPackage = async (directory: string, options: EnsurePackageOptions, workspace: Workspace) => {
-  const manifest = { name: workspace.name, extends: options.defaultExtends, models: { default: options.defaultModel } };
+  const defaultModel = await options.chooseDefaultModel();
+  const manifest = { name: workspace.name, extends: options.defaultExtends, models: { default: defaultModel } };
   return tryCatchAsync(async () => {
     await mkdir(join(directory, STANDARDS_FOLDER), { recursive: true });
     await writeFile(join(directory, STANDARDS_FOLDER, ".gitkeep"), "");
