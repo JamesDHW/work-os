@@ -181,7 +181,7 @@ Write none, unless the code cannot express it: an external constraint, a workaro
 ## 8. Checking as you go
 
 - Run `pnpm typecheck`, `pnpm architecture:check` and `pnpm lint` after finishing each slice (a package or feature folder), not after every edit. Run everything, including tests, at each milestone.
-- Fix type errors and structural failures (file types, naming, imports, compiler policy). These cannot be suppressed; restructure the code instead.
+- Fix type errors and structural failures (layers, naming, dependencies, compiler policy). These cannot be suppressed; restructure the code instead.
 - Fix a lint finding when complying improves the code. When complying would make the code worse, suppress that one line with the rule name and the concrete cost:
 
 ```ts
@@ -204,7 +204,7 @@ Write none, unless the code cannot express it: an external constraint, a workaro
 
 ## 10. Dependencies
 
-- Use only the libraries `ARCHITECTURE.md` lists for that file type. Adding a library needs the user's approval first: explain the need, the options and the trade-offs.
+- Use only the libraries `ARCHITECTURE.md` lists for that layer. Adding a library needs the user's approval first: explain the need, the options and the trade-offs.
 - Before writing a helper, check the language, the platform and installed libraries for an existing operation.
 - Exact versions, committed lockfile, 14-day minimum release age (exception: the experimental `@earendil-works/*` packages, D52).
 - Never commit secrets, including in examples and tests.

@@ -62,7 +62,7 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
 
 ## Rule changes after the build
 
-- **architecture-rules is linked locally** (`"architecture-rules": "link:../architecture-rules"`), so work-os uses the sibling checkout's committed `dist` instead of the pushed GitHub commit. Switch back to a `github:` spec once those commits are pushed.
+- **architecture-rules is linked locally** (`"architecture-rules": "link:../architecture-rules"`), so work-os uses the sibling checkout's committed `dist` instead of the pushed GitHub commit. Switch back to a `github:` spec once those commits are pushed. Until then, any architecture-rules commit changes work-os's checks immediately; the layers change below is an example.
 - **Generated file types:** `apiTypes` and `webRouteTree` are marked `generated: { reason }` and lost their 13 rule overrides. The TanStack plugin writes its default header again.
 - **Configuration files may default-export:** architecture-rules exempts `*.config.ts` (and the `.mts`, `.cts`, `.js`, `.mjs` and `.cjs` forms) from `named-exports`, so the five suppressions are gone.
 - `apps/web/vite.config.ts` is now in the root `tsconfig.json`. It was in neither TypeScript program, so it was never type-checked or linted.
@@ -78,6 +78,11 @@ Running log of the uninterrupted v1 build described in `BUILD.md`. Newest entrie
   - The CLI reads command output with `stream/consumers` instead of collecting chunks.
   - Tests and the e2e spec turn `no-captured-mutation` off: their fakes record the calls they receive.
 - **No in-place array changes:** new rule `no-array-mutation` (an error; `*.state.ts` modules exempt; a reasoned suppression for measured performance cases). Four places changed: checks and database batches run one at a time with `Array.fromAsync`, the runner file system's line reader uses an iterator, and the gateway reads request bodies with `stream/consumers`. `tsconfig.base.json` adds the `ESNext.Array` lib for `Array.fromAsync` (Node 24 has it natively). Tests turn the rule off (their fakes push the calls they record), and so does the e2e spec, because Playwright's `locator.fill` shares a name with `Array.prototype.fill`.
+- **Layers configuration (architecture-rules 6d19d2e):** architecture-rules renamed its configuration, and because it is linked locally, work-os broke as soon as that commit landed. `pnpm typecheck` and the Vite dev server failed with "Package subpath is not defined by exports", and `architecture-check` rejected the configuration. Changes:
+  - `tsconfig.base.json` extends `architecture-rules/presets/tsconfig.json` (was `architecture-rules/tsconfig.base.json`). The compiler options are identical.
+  - `architecture.config.ts` uses `layers` (was `fileTypes`) and `dependencies` (was `imports`). Node built-ins move into `external` with the `node:` prefix. `defaults.naming` and `defaults.rules` become top-level `naming` and `rules`, and the naming cases use the new names (`camelCase`, or `["PascalCase", "camelCase"]` for `pascalOrCamel`).
+  - A script compared the normalized configuration before and after for all 30 layers: files, excludes, naming, internal and external dependencies, assets, generated settings and rule overrides. It found no differences.
+  - `typescript/no-unsafe-type-assertion` is off by default now, so the two brand-constructor suppressions name only `architecture/no-type-assertions`.
 
 ## Deviations from ARCHITECTURE.md
 

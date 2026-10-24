@@ -20,7 +20,7 @@ The counts below come from the checker output captured in the build log. They ar
 | one-path-one-result | architecture/one-path-one-result | 5 | Single return path per branch. |
 | simple-ternaries | architecture/simple-ternaries | 5 | Nested ternaries became guards or switches. |
 | explicit-jsx-props | react/jsx-props-no-spreading | 5 | Route components pass each screen prop by name. |
-| allowed-imports | architecture/allowed-imports | 4 | Moved code to the layer allowed to import it, or widened a file type in the configuration (listed below). |
+| allowed-imports | architecture/allowed-imports | 4 | Moved code to the layer allowed to import it, or widened a layer in the configuration (listed below). |
 | no-unsafe-return | typescript/no-unsafe-return | 4 | Parsed through a schema before returning. |
 | prefer-switch | architecture/prefer-switch | 3 | `if` chains on one discriminant became `switch`. |
 | terminal-switch-cases | architecture/terminal-switch-cases | 2 | Every case returns. |
@@ -40,7 +40,7 @@ The counts below come from the checker output captured in the build log. They ar
 
 ### Generated code
 
-The TanStack Router route tree and the OpenAPI types are file types marked `generated: { reason }` (added to architecture-rules after the build). They are still classified, named, import-checked and type-checked, but never linted, and their generators' file-wide disables are not checked. During the build they needed 13 rule overrides and a replaced plugin header instead.
+The TanStack Router route tree and the OpenAPI types are layers marked `generated: { reason }` (added to architecture-rules after the build). They are still classified, named, import-checked and type-checked, but never linted, and their generators' file-wide disables are not checked. During the build they needed 13 rule overrides and a replaced plugin header instead.
 
 ## Every suppression
 
@@ -58,8 +58,8 @@ There are 13 `oxlint-disable-next-line` comments. (There were 18; the five defau
 | `packages/api/src/events/writeEvent.ts:4` | `eslint/id-denylist` | Hono's server-sent event message names its payload field `data`. |
 | `packages/api/src/runners/runnerLinkRoute.ts:9` | `eslint/id-denylist` | WebSocket message events name their payload field `data`. |
 | `packages/protocol/src/common/openAiModelList.schema.ts:4` | `eslint/id-denylist` | OpenAI-compatible model lists name this field `data`. |
-| `packages/domain/src/identifiers/Branded.ts:4` | `architecture/no-type-assertions`, `typescript/no-unsafe-type-assertion` | Attaching a brand to an already validated string is this function's only purpose. |
-| `packages/harness/src/runs/toConversationId.ts:8` | `architecture/no-type-assertions`, `typescript/no-unsafe-type-assertion` | Pi Durable brands conversation ids and exports no constructor; this text came from `createConversation`. |
+| `packages/domain/src/identifiers/Branded.ts:4` | `architecture/no-type-assertions` | Attaching a brand to an already validated string is this function's only purpose. |
+| `packages/harness/src/runs/toConversationId.ts:8` | `architecture/no-type-assertions` | Pi Durable brands conversation ids and exports no constructor; this text came from `createConversation`. |
 | `packages/package-store/src/extensions/loadExtension.ts:18` | `architecture/allowed-imports` | Bundled extensions are named in `workos.yaml`, so their entry path is only known at runtime. |
 
 By kind: six thrown-value boundaries (two of them `tryCatch` itself, three TanStack redirects, one WebAuthn adapter), three external `data` fields, two brand constructors, one interface merge and one runtime import.
@@ -82,12 +82,12 @@ No finding from these rules appeared in the build log. Some of them were never t
 
 Each override is also logged with its reason in `BUILD-NOTES.md`.
 
-- `defaults.rules["unnecessary-conditions"]`: `checkTypePredicates: false`. Type predicates over `unknown` are the narrowing contract at boundaries (decided before the build).
+- `rules["unnecessary-conditions"]` (project-wide): `checkTypePredicates: false`. Type predicates over `unknown` are the narrowing contract at boundaries (decided before the build).
 - `projects.tsconfigs` += `apps/web/tsconfig.json`.
-- Import widenings: `test` += `zod`; `harness` += `@earendil-works/*/**`; `serverApp` += `@hono/node-server/**` and `fs/promises`; `egressGateway` internal += `domain`; `runnerApp` builtins += `process`, `fs/promises`, `path`, `crypto`; `webUi` += `react-markdown`, `remark-gfm`; `tooling` internal += `e2e` (the Playwright config reads the e2e port).
-- File types: `tooling` += `apps/*/vite.config.ts`; `WEB_CONCEPTS` += `settings`; `e2e` covers `e2e/**/*.ts` with `.spec` and `.constants` suffixes and the `child_process`, `fs/promises`, `os` and `path` builtins (the spec starts a runner and makes a scratch project).
+- Import widenings: `test` += `zod`; `harness` += `@earendil-works/*/**`; `serverApp` += `@hono/node-server/**` and `node:fs/promises`; `egressGateway` internal += `domain`; `runnerApp` external += `node:process`, `node:fs/promises`, `node:path`, `node:crypto`; `webUi` += `react-markdown`, `remark-gfm`; `tooling` internal += `e2e` (the Playwright config reads the e2e port).
+- Layers: `tooling` += `apps/*/vite.config.ts`; `WEB_CONCEPTS` += `settings`; `e2e` covers `e2e/**/*.ts` with `.spec` and `.constants` suffixes and the `node:child_process`, `node:fs/promises`, `node:os` and `node:path` built-ins (the spec starts a runner and makes a scratch project).
 - Generated files: `apiTypes` and `webRouteTree` are marked `generated: { reason }`.
-- `defaults.naming.suffixes` += `.state`; the `test` and `e2e` file types turn `no-captured-mutation` and `no-array-mutation` off (test fakes record calls; Playwright's `fill`); `cli` and `egressGateway` builtins += `stream/consumers`.
+- `naming.suffixes` (project-wide) += `.state`; the `test` and `e2e` layers turn `no-captured-mutation` and `no-array-mutation` off (test fakes record calls; Playwright's `fill`); `cli` and `egressGateway` external += `node:stream/consumers`.
 
 ## Observations for the rules
 

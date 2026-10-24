@@ -227,9 +227,9 @@ apps/web/src/
 | Tool | Purpose |
 | --- | --- |
 | `pnpm` workspaces, Node 24 LTS | Package management and runtime |
-| `typescript` 7 | Type checking, extending `architecture-rules/tsconfig.base.json` |
+| `typescript` 7 | Type checking, extending the `architecture-rules/presets/tsconfig.json` compiler preset |
 | `oxlint`, `oxlint-tsgolint`, `oxfmt` | Lint and format |
-| `architecture-rules` | File types, naming, import boundaries, custom rules |
+| `architecture-rules` | Layers, naming, dependency boundaries, custom rules |
 | `vitest`, `@testing-library/react` | Unit and hook tests, colocated `*.test.ts(x)` |
 | `@playwright/test` | End-to-end tests in `e2e/*.spec.ts` |
 
